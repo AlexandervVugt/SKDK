@@ -98,11 +98,11 @@ namespace Stexchange.Controllers
 
                         List<Task> tasks = new List<Task>();
                         // Insert byte[] image into database
-                        tasks.Add(Task.Run(() => OnPostUploadAsync(files, finishedListing)));
+                        await OnPostUploadAsync(files, finishedListing);
                         // loops through filterlist to add each advertisementfilter
-                        tasks.Add(Task.Run(() => _database.AddRangeAsync(filterListings)));
+                        await _database.AddRangeAsync(filterListings);
 
-                        await Task.WhenAll(tasks);
+                        
 
                         //passing data to the view
                         TempData["Title"] = finishedListing.Title;
@@ -210,7 +210,7 @@ namespace Stexchange.Controllers
         {
             long token = Convert.ToInt64(Request.Cookies["SessionToken"]);
 
-            if (ServerController.GetSessionData((long)token, out Tuple<int, string> data)) 
+            if (GetSessionData((long)token, out Tuple<int, string> data)) 
             {
                 var user_id = data.Item1; 
                 return user_id;

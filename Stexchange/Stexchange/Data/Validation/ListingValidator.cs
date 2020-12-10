@@ -10,7 +10,6 @@ namespace Stexchange.Data.Validation
         private int MaxDescriptionSize = 500;
         private int MinDescriptionSize = 10;
         private int MaxNlNameLength = 50;
-        private int MaxLtNameLength = 50;
 
         public ListingValidator()
         {
