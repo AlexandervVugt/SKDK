@@ -25,7 +25,5 @@ namespace Stexchange.Data.Models
         public bool IsVerified { get; set; }
         [NotMapped]
         public UserVerification Verification { get; set; }
-        [NotMapped]
-        public List<Listing> Listings { get; set; }
     }
 }

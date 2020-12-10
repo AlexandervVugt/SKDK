@@ -68,7 +68,7 @@ namespace Stexchange.Data
 
 			modelBuilder.Entity<Listing>()
 				.HasOne(l => l.Owner)
-				.WithMany(u => u.Listings)
+				.WithMany()
 				.HasForeignKey(l => l.UserId)
 				.HasPrincipalKey(u => u.Id);
 

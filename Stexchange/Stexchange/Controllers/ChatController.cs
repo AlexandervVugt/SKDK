@@ -57,6 +57,10 @@ namespace Stexchange.Controllers
                                     from user in _db.Users
                                     where user.Id == chat.ResponderId
                                     select user).First())
+                                .SetProperty("Listing", (
+                                    from listing in _db.Listings
+                                    where listing.Id == chat.AdId
+                                    select listing).First())
                                 .Complete()).ToList();
             chats = (from chat in chats
                      where chat.Messages.Any()
