@@ -1,13 +1,13 @@
-﻿$lightgreen: #b2e8d4;
-$green: #4ecd92;
-$darkgreen: #015e54;
+﻿$lightgreen: #80ff8d;
+$green: #19ff30;
+$darkgreen: #005709;
 $lightshadow: rgba(0,0,0,0.1);
 $shadow: #b2e8d4;
 $darkshadow: rgba(0,0,0,0.8);
 $lightshadowwhite: rgba(255,255,255,0.1);
 $shadowwhite: rgba(255,255,255,0.3);
 $darkshadowwhite: rgba(255,255,255,0.8);
-$greenshadow: rgba(78, 205, 146, 0.5);
+$greenshadow: rgba(25, 255, 48, 0.5);
 
 * {
     margin: 0;
@@ -87,7 +87,6 @@ html {
         }
 
         #forms {
-            background-color: $lightshadow;
             color: $green;
             padding-left: 3vh;
             width: 15%;
@@ -169,6 +168,10 @@ html {
                 color: $darkgreen;
                 background: $green;
             }
+
+            .sort-range-display {
+                color: $darkgreen;
+            }
         }
 
         #listings {
@@ -218,7 +221,7 @@ html {
                     text-transform: uppercase;
                     margin-left: 2%;
                     width: 50%;
-                    color: $green;
+                    color: $lightgreen;
                     font-size: 1.5vh;
                 }
 
@@ -251,7 +254,7 @@ html {
                     float: right;
                     width: 27%;
                     margin-right: 2%;
-                    color: $green;
+                    color: $lightgreen;
                     line-height: 2vh;
                     text-align: right;
                     font-size: 1.5vh;
