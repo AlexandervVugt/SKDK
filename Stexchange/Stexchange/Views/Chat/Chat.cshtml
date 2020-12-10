@@ -38,5 +38,11 @@
     temp.forEach(function (chat) {
         ChatInbox[chat.Id] = chat;
     });
+    var activeChat = @(TempData["Active"] ?? -1);
+    document.onload = function (event) {
+        if (activeChat != -1) {
+            displayConvo(activeChat);
+        }
+    };
 </script>
 <script type="text/javascript" src="~/js/chat/conversation_switcher.js" asp-append-version="true"></script>
