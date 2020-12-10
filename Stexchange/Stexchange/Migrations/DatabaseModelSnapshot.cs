@@ -245,6 +245,11 @@ namespace Stexchange.Migrations
                         .HasColumnName("created_at")
                         .HasColumnType("timestamp");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnName("created_at")
+                        .HasColumnType("timestamp");
+
                     b.Property<byte[]>("Guid")
                         .IsRequired()
                         .HasColumnName("verification_code")

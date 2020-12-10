@@ -49,64 +49,30 @@ html {
         display: block; }
       html body ul .span, html body #filter_list .span {
         vertical-align: middle; }
-    html body #search {
-      float: left;
-      width: 75%; }
-    html body #listings {
-      width: 75%;
-      float: left; }
-      html body #listings .advertisement {
-        width: 25%;
-        margin-left: 2%;
-        float: left;
-        background-color: rgba(0, 0, 0, 0.8);
-        border-radius: 0.2vh;
-        line-height: 1vh;
-        margin-bottom: 3vh; }
-        html body #listings .advertisement .picture {
-          display: block;
-          float: left;
-          width: 96%;
-          padding: 2%;
-          height: calc(20vh);
-          object-fit: cover;
-          margin-left: auto;
-          margin-right: auto;
-          border-radius: 1vh; }
-        html body #listings .advertisement .title {
-          padding: 2%;
-          width: 98%;
-          float: left;
-          color: #4ecd92;
-          text-transform: uppercase; }
-        html body #listings .advertisement .description {
-          padding: 2%;
-          width: 98%;
-          float: left;
-          color: white;
-          text-transform: uppercase;
-          font-size: 80%; }
-        html body #listings .advertisement .owner {
-          padding: 2%;
-          width: 98%;
-          float: right;
-          color: #4ecd92;
-          text-transform: uppercase;
-          font-size: 60%;
-          text-align: right; }
     html body #filter_list {
       margin: 0px;
       padding: 0px; }
     html body #forms {
-      background-color: #e8e8e8;
+      background-color: rgba(0, 0, 0, 0.1);
       color: #4ecd92;
-      padding-left: 3%;
-      padding-right: 3%;
+      padding-left: 3vh;
       width: 15%;
-      height: 100%;
-      border-right: 0.3vh solid rgba(0, 0, 0, 0.1);
+      height: calc(100vh);
       float: left;
+      margin-right: 8px;
+      padding-right: 16px;
       font-size: 1.5vh; }
+      html body #forms .sort {
+        float: left;
+        width: 100%;
+        line-height: 2vh;
+        margin-top: 20%; }
+      html body #forms .chose {
+        float: left;
+        width: 100%;
+        line-height: 2vh;
+        padding-bottom: 1vh;
+        border-bottom: 0.1vh solid #4ecd92; }
       html body #forms li {
         border-top: 0.1vh solid #4ecd92; }
       html body #forms #apply_filter {
@@ -150,11 +116,119 @@ html {
         float: left;
         color: #015e54;
         background: #4ecd92; }
-      html body #forms .Advertisement {
+    html body #listings {
+      float: left;
+      width: 75%; }
+      html body #listings .Advertisement {
+        float: left;
         width: 30%;
-        float: left; }
-      html body #forms img.picture {
-        width: 80%;
-        margin-left: 10%;
-        margin-top: 10%;
-        border-radius: 10px; }
+        margin-right: 3%;
+        margin-bottom: 3%;
+        background-color: rgba(0, 0, 0, 0.8); }
+        html body #listings .Advertisement .distance {
+          float: left;
+          line-height: 2vh;
+          text-transform: uppercase;
+          width: 80%;
+          color: white;
+          font-size: 1vh;
+          margin-left: 2%;
+          font-weight: 200; }
+        html body #listings .Advertisement .since {
+          float: left;
+          line-height: 2vh;
+          text-transform: uppercase;
+          width: 80%;
+          color: white;
+          font-size: 1vh;
+          margin-left: 2%;
+          font-weight: 200; }
+        html body #listings .Advertisement .picture {
+          width: 96%;
+          height: calc(30vh);
+          object-fit: cover;
+          margin-left: 2%;
+          margin-top: 2%; }
+        html body #listings .Advertisement .title {
+          float: left;
+          line-height: 2vh;
+          text-transform: uppercase;
+          margin-left: 2%;
+          width: 50%;
+          color: #4ecd92;
+          font-size: 1.5vh; }
+        html body #listings .Advertisement .description {
+          float: left;
+          margin-left: 2%;
+          width: 80%;
+          color: white; }
+        html body #listings .Advertisement .filters {
+          display: inline-block; }
+          html body #listings .Advertisement .filters .filter_tag {
+            font-size: 1.2vh;
+            line-height: 1.5vh;
+            float: left;
+            margin-left: 2%;
+            margin-right: 2%;
+            margin-top: 2%;
+            color: white;
+            background-color: rgba(78, 205, 146, 0.5);
+            padding: 0.2vh 0.5vh 0.2vh;
+            border-radius: 0.2vh;
+            text-transform: uppercase; }
+        html body #listings .Advertisement .owner {
+          float: right;
+          width: 27%;
+          margin-right: 2%;
+          color: #4ecd92;
+          line-height: 2vh;
+          text-align: right;
+          font-size: 1.5vh;
+          text-transform: uppercase; }
+    html body .fullwidth {
+      width: 100%;
+      float: left; }
+      html body .fullwidth .searchbar {
+        float: right;
+        width: 25%;
+        text-align: right;
+        margin-right: 2%;
+        background-color: rgba(0, 0, 0, 0.8); }
+        html body .fullwidth .searchbar input[type=text] {
+          float: left;
+          background-color: white;
+          margin-left: 1%;
+          margin-top: 1%;
+          margin-bottom: 1%;
+          width: 86%;
+          height: calc(3vh);
+          padding: 1%;
+          border: none;
+          font-size: 2vh;
+          color: #4ecd92; }
+        html body .fullwidth .searchbar button {
+          width: 10%;
+          float: left;
+          color: #b2e8d4;
+          font-size: 2vh;
+          margin-right: 1%;
+          line-height: 1vh;
+          background-color: none;
+          border: none;
+          background: none;
+          margin-top: 3%;
+          cursor: pointer;
+          transition: 0.5s; }
+        html body .fullwidth .searchbar button:hover {
+          color: #015e54; }
+        html body .fullwidth .searchbar label {
+          display: none;
+          transition: 1s; }
+      html body .fullwidth .searchbar:hover label {
+        display: block;
+        display: block;
+        color: white;
+        font-size: 1.2vh;
+        margin-right: 11%;
+        margin-bottom: 1%;
+        line-height: 3vh; }

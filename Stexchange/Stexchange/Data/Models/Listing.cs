@@ -41,9 +41,6 @@ namespace Stexchange.Data.Models
         [NotMapped]
         public string OwningUserName { get; set; }
 
-        [NotMapped]
-        public List<string> Categories { get; set; }
-
         [Column("created_at", TypeName = "timestamp"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedAt { get; set; }
 
@@ -61,14 +58,5 @@ namespace Stexchange.Data.Models
 
         [NotMapped]
         public List<string> Filters { get; set; }
-
-        /// <summary>
-        /// Calculate the distance between the users zipCode and the posters zipCode.
-        /// </summary>
-        /// <param name="myZipCode">The users zipCode</param>
-        public void SetDistance(string myZipCode)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -1,10 +1,45 @@
 ﻿@model TradeViewModel
 @using Stexchange.Data.Models
+@using System.Globalization;
 @{
     ViewData["Title"] = "Ruiloverzicht";
 }
+@functions{
+    public static string TimeSpanDisplay(DateTime since)
+    {
+        var timespan = DateTime.Now - since;
+        if(timespan >= TimeSpan.FromDays(7))
+        {
+            return TimeSpanDisplayHelper(timespan.TotalDays, 7, " week", " weken");
+        } else if(timespan >= TimeSpan.FromHours(24))
+        {
+            return TimeSpanDisplayHelper(timespan.TotalHours, 24, " dag", " dagen");
+        } else if(timespan >= TimeSpan.FromMinutes(60))
+        {
+            return TimeSpanDisplayHelper(timespan.TotalMinutes, 60, " uur", " uur");
+        } else
+        {
+            return "Zojuist";
+        }
+    }
+
+    private static string TimeSpanDisplayHelper(double property, int divider, string suffix_singular, string suffix_plural)
+    {
+        int amount = (int)Math.Floor(property / divider);
+        amount += (property % divider > divider / 2.0) ? 1 : 0;
+        return amount + (amount > 1 ? suffix_plural : suffix_singular) + " geleden";
+    }
+}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/css/trade.css" />
+<div class="fullwidth">
+    <div class="searchbar" id="search">
+        <input type="text" placeholder="Zoek op trefwoord..." name="searchbar" id="searchbar" />
+        <button id="searchquery"><i class="fa fa-search"></i></button>
+        <input type="checkbox" name="search_description" id="search_description" value="search_description" />
+        <label for="search_description">Doorzoek ook de beschrijving</label>
+    </div>
+</div>
 <div class="" id="forms">
     <form id="filer_form">
         <strong>Filters</strong>
@@ -122,15 +157,8 @@
         <button type="submit" id="apply_filter">Filters toepassen</button>
     </form>
     <form id="sort_form">
-        <strong>Sorteren</strong>
-        <br />
-        <label for="sort">Kies een criterium om op te sorteren</label>
-        <select name="sort" id="sort">
-            <option value="recent">Meest recent</option>
-            <option value="distance">Afstand oplopend</option>
-            <option value="rating">Beoordeling aflopend</option>
-        </select>
-        <br />
+        <strong class="sort">Sorteren</strong>
+        <label class="chose" for="sort">Kies een criterium om op te sorteren</label>
 
         <input type="checkbox" class="sort-range-toggle" name="distance_toggle" id="distance_toggle" />
         <label for="distance_toggle">Afstand begrenzen</label>
@@ -142,7 +170,7 @@
         <input type="range" class="sort-range" name="recent" id="recent" min="1" max="57" value="1" disabled />
         <span class="sort-range-display" name="recent_amount" id="recent_amount" hidden><span>1</span> dagen</span><p></p>
 
-        <input type="checkbox" class="sort-range-toggle" name="rating_toggle" id="rating_toggle"/>
+        <input type="checkbox" class="sort-range-toggle" name="rating_toggle" id="rating_toggle" />
         <label for="rating_toggle">Minimum beoordeling</label>
         <input type="range" class="sort-range" name="rating" id="rating" min="1" max="5" value="3" disabled />
         <span class="sort-range-display" name="rating_amount" id="rating_amount" hidden><span>3</span> sterren</span><p></p>
@@ -150,21 +178,30 @@
         <button type="submit" id="apply_sort">Criteria toepassen</button>
     </form>
 </div>
-<div class="" id="search">
-    <input type="text" placeholder="Zoek op trefwoord..." name="searchbar" id="searchbar"/>
-    <button id="searchquery"><i class="fa fa-search"></i></button>
-    <input type="checkbox" name="search_description" id="search_description" value="search_description" />
-    <label for="search_description">Doorzoek ook de beschrijving</label>
-</div>
 <div class="" id="listings">
-    @foreach (Listing listing in Model.RetrieveListings(-1))
+    @foreach (Listing listing in Model.Listings)
     {
-        <div class="advertisement">
-            <img class="picture" src="https://cdn.pixabay.com/photo/2015/04/19/08/33/flower-729512__340.jpg" alt="Italian Trulli">
-            <code class="title">@listing.Title</code>
-            <code class="description">@listing.Description</code>
-            <code class="owner">@listing.OwningUserName</code>
-        </div>
+        <a href="@Url.Action("Detail", "Trade", new { listingId = listing.Id })">
+            <div class="Advertisement">
+                <img class="picture" src="@listing.Pictures.First().GetImage()" alt="Foto van de plant">
+                <code class="title">@listing.Title</code>
+                <code class="owner">@listing.OwningUserName</code>
+                <span class="distance">Distance: <code>@listing.Distance</code> km</span>
+                <span class="since">Uploaded: 
+                    <code>@(TimeSpanDisplay(listing.CreatedAt))</code>
+                </span>
+
+                <div class="filters">
+                    @if (listing.Filters is object)
+                    {
+                        @foreach (string filter in listing.Filters)
+                        {
+                            <code class="filter_tag">@filter</code>
+                        }
+                    }
+                </div>
+            </div>
+        </a>
     }
 </div>
 

@@ -12,7 +12,7 @@ namespace Stexchange.Data.Models
     {
         [Column("id", TypeName = "serial"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
+
         [Column("listing_id", TypeName = "bigint(20) unsigned")]
         public int ListingId { get; set; }
 
@@ -20,5 +20,12 @@ namespace Stexchange.Data.Models
         public byte[] Image { get; set; }
 
         public Listing Listing { get; set; }
+
+        public string GetImage()
+        {
+            // Convert byte arry to base64string   
+            string base64string = Convert.ToBase64String(Image);
+            return string.Format("data:image/png;base64,{0}", base64string);
+        }
     }
 }

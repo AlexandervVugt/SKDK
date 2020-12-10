@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder\**" />
+    <Content Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
+    <None Remove="Views\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20201116165817_listing_table.cs" />
     <Compile Remove="Migrations\20201116165817_listing_table.Designer.cs" />
     <Compile Remove="Migrations\20201118123233_refactored_u_uv.cs" />
@@ -78,6 +85,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Views\NewFolder\" />
+    <Folder Include="Views\DetailAdvertisement\" />
   </ItemGroup>
 </Project>
