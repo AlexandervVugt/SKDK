@@ -112,7 +112,7 @@ namespace Stexchange.Data
 				.HasMany(c => c.Messages)
 				.WithOne()
 				.HasForeignKey(m => m.ChatId)
-				.HasForeignKey(c => c.Id);
+				.HasPrincipalKey(c => c.Id);
 
 			modelBuilder.Entity<Message>(entity =>
 			{
