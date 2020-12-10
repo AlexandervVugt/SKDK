@@ -100,7 +100,7 @@ namespace Stexchange.Controllers
         private void RenewListingCache(ref ConcurrentDictionary<int, Listing> cache)
         {
             var newOrModified = (from listing in _db.Listings
-                                 where (!_readable || listing.LastModified >= _cacheBirth)
+                                 where (!_readable || listing.LastModified >= _cacheBirth) && listing.Visible
                                  orderby listing.CreatedAt
                                  select new EntityBuilder<Listing>(listing)
                                     .SetProperty("Pictures",
