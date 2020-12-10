@@ -47,6 +47,7 @@ namespace Stexchange.Controllers
             //Shallow copy, this was accounted for in the design of this method.
             var listings = _listingCache.Values.ToList();
             listings.ForEach(listing => PrepareListing(ref listing));
+            listings = (from listing in listings orderby listing.CreatedAt descending select listing).ToList();
             var tradeModel = new TradeViewModel(listings);
 
             //TODO: move releasing the resource to this class' Dispose method
@@ -101,7 +102,6 @@ namespace Stexchange.Controllers
         {
             var newOrModified = (from listing in _db.Listings
                                  where (!_readable || listing.LastModified >= _cacheBirth) && listing.Visible
-                                 orderby listing.CreatedAt
                                  select new EntityBuilder<Listing>(listing)
                                     .SetProperty("Pictures",
                                         (from img in _db.Images
