@@ -1,12 +1,12 @@
-﻿var acc = document.getElementsByClassName("accordion");
-var filter = document.getElementById("extrafilters");
+﻿let acc = document.getElementsByClassName("accordion");
+let filter = document.getElementById("extrafilters");
 
 /* hides extrafilter field*/
 filter.style.display = "none";
 
 /* click function for hiding/showing panel*/
 acc[0].addEventListener("click", function () {
-    var panel = this.nextElementSibling;
+    let panel = this.nextElementSibling;
 
     if (panel.style.display === "block") {
         panel.style.display = "none";
@@ -15,68 +15,71 @@ acc[0].addEventListener("click", function () {
     }
 });
 /* message*/
-var message = document.getElementById("messagepicture");
+let message = document.getElementById("messagepicture");
 
 /* previous button*/
-var previous = document.getElementsByClassName("previous");
+let previous = document.getElementsByClassName("previous");
 
 /* next button*/
-var next = document.getElementsByClassName("next");
+let next = document.getElementsByClassName("next");
 previous[0].style.display = "none";
 next[0].style.display = "none";
 
 /* image field*/
-var image = document.getElementById("imgoutput");
+let image = document.getElementById("imgoutput");
 
 /* image files*/
-var files = document.getElementById("imginput").files;
+let files = document.getElementById("imginput").files;
 
 /* span text*/
-var imagecounter = document.getElementById("imagecounter")
+let imagecounter = document.getElementById("imagecounter")
 
-var currentImage = 0;
+let currentImage = 0;
+function decCurrentImage() {
+    currentImage = currentImage > 0 ? --currentImage : currentImage + 2;
+}
 
 /* inserts first image in list into img field*/
-var loadFile = function (event) {
-    filereader(0); /*display first image*/
-    imagecount();
-    message.style.display = "none";
-    previous[0].style.display = "inline";
-    imagecounter.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-    next[0].style.display = "inline";
+let loadFile = function (event) {
+    let files = document.getElementById("imginput").files[0];
+    if (files) {
+        filereader(files); /*display first image*/
+        imagecount();
+        message.style.display = "none";
+        previous[0].style.display = "inline";
+        imagecounter.style.display = "inline";
+        imagecounter.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        next[0].style.display = "inline";
+        image.style.display = "block";
+    } else {
+        message.style.display = "inline";
+        imagecounter.style.display = "none";
+        previous[0].style.display = "none";
+        next[0].style.display = "none";
+        image.style.display = "none";
+    }
 };
 
 /* inserts next file into img field*/
-function nextImg(n) {
-    var files = document.getElementById("imginput").files;
-    if (currentImage == files.length - 1) {
-        currentImage = 0;
-    }
-    else {
-        currentImage += n;
-    }
-    filereader(currentImage);
+function nextImg() {
+    let files = document.getElementById("imginput").files;
+    currentImage++;
+    filereader(currentImage % files.length);
     imagecount();
 }
 
-
 /* inserts previous file into img field*/
-function previousImg(n) {
-    var files = document.getElementById("imginput").files;
-    if (currentImage > 0) {
-        currentImage -= n;
-    } else {
-        currentImage = files.length - 1;
-    }
-    filereader(currentImage);
+function previousImg() {
+    let files = document.getElementById("imginput").files;
+    decCurrentImage();
+    filereader(currentImage % files.length);
     imagecount();
 }
 
 /*reads file as a data url*/
-function filereader(n) {
-    var files = document.getElementById("imginput").files[n];
+function filereader(files) {
     if (files) {
-        var fileReader = new FileReader();
+        let fileReader = new FileReader();
 
         fileReader.onload = function (event) {
             image.src = fileReader.result;
@@ -87,8 +90,8 @@ function filereader(n) {
 
 /*image counter*/
 function imagecount() {
-    var files = document.getElementById("imginput").files;
-    imagecounter.textContent = (currentImage + 1) + "/" + files.length;
+    let files = document.getElementById("imginput").files;
+    imagecounter.textContent = ((currentImage % files.length) + 1) + "/" + files.length;
 }
 
 
