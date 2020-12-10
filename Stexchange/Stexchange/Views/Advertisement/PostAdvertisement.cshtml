@@ -3,7 +3,7 @@
 }
 <link rel="stylesheet" href="~/css/postadvertisement.css" />
 
-<h2>Advertentie plaatsen</h2>
+<h2>ADVERTENTIE PLAATSEN</h2>
 <h3>Vul de volgende gegevens in om een advertentie te plaatsen.</h3>
 <h3><strong>Aangeboden planten mogen geen pesticiden bevatten!</strong></h3><br>
 <form action="PostAdvertisement" method="post" class="advertisementform" enctype="multipart/form-data">
@@ -40,30 +40,44 @@
         <input class="labelinput" name="quantity" type="number" min="1" required />
     </p>
     <p>
-        <label for="light">Hoeveel licht heeft de plant nodig</label>
-        <select name="light" id="light" >
-            <option value="light_volle_zon">Volle zon</option>
-            <option value="light_halfschaduw">Halfschaduw</option>
-            <option value="light_schaduw">Schaduw</option>
+        <label for="plant_type">Wat voor soort plant is het?</label>
+        <select name="plant_type" id="plant_type" required>
+            <option value="plant_type_plant">Plant</option>
+            <option value="plant_type_zaad">Zaad</option>
+            <option value="plant_type_stek">Stek</option>
         </select>
     </p>
     <p>
-        <label for="water">Hoeveel vocht heeft de plant nodig</label>          
-        <select name="water" id="water" >
-            <option value="water_wisselnat">Wisselnat</option>
-            <option value="water_nat">Nat</option>
-            <option value="water_normaal">Normaal</option>
-            <option value="water_droog">Droog</option>
+        <label for="with_pot">De plant is voorzien van een pot</label>
+        <select name="with_pot" id="with_pot" required>
+            <option value="with_pot_ja">Ja</option>
+            <option value="with_pot_nee">Nee</option>
         </select>
     </p>
-    <div class="accordion">Extra filters</div>
+    <p>
+        <label for="give_away">De plant is gratis weg te geven</label>
+        <select name="give_away" id="give_away" value="nee" required>
+            <option value="give_away_ja">Ja</option>
+            <option value="give_away_nee">Nee</option>
+        </select>
+    </p>
+    <div class="accordion"><p>Extra filters</p></div>
     <div id="extrafilters">
         <p>
-            <label for="plant_type">Wat voor soort plant is het?</label>
-            <select name="plant_type" id="plant_type" required>
-                <option value="plant_type_plant">Plant</option>
-                <option value="plant_type_zaad">Zaad</option>
-                <option value="plant_type_stek">Stek</option>
+            <label for="light">Hoeveel licht heeft de plant nodig</label>
+            <select name="light" id="light">
+                <option value="light_volle_zon">Volle zon</option>
+                <option value="light_halfschaduw">Halfschaduw</option>
+                <option value="light_schaduw">Schaduw</option>
+            </select>
+        </p>
+        <p>
+            <label for="water">Hoeveel vocht heeft de plant nodig</label>
+            <select name="water" id="water">
+                <option value="water_wisselnat">Wisselnat</option>
+                <option value="water_nat">Nat</option>
+                <option value="water_normaal">Normaal</option>
+                <option value="water_droog">Droog</option>
             </select>
         </p>
         <p>
@@ -91,20 +105,6 @@
                 <option value="indigenous_null">Geen idee</option>
                 <option value="indigenous_inheems">Inheems</option>
                 <option value="indigenous_niet_inheems">Niet inheems</option>
-            </select>
-        </p>
-        <p>
-            <label for="with_pot">De plant is voorzien van een pot</label>
-            <select name="with_pot" id="with_pot" required>
-                <option value="with_pot_ja">Ja</option>
-                <option value="with_pot_nee">Nee</option>
-            </select>
-        </p>
-        <p>
-            <label for="give_away">De plant is gratis weg te geven</label>
-            <select name="give_away" id="give_away" value="nee" required>
-                <option value="give_away_ja">Ja</option>
-                <option value="give_away_nee">Nee</option>
             </select>
         </p>
     </div>

@@ -42,6 +42,7 @@ var loadFile = function (event) {
     imagecount();
     message.style.display = "none";
     previous[0].style.display = "inline";
+    imagecounter.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
     next[0].style.display = "inline";
 };
 

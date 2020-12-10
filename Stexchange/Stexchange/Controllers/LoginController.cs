@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Stexchange.Controllers
 {
-	public class LoginController : Controller
+	public class LoginController : StexChangeController
 	{
 		public LoginController(Database db, IConfiguration config, EmailService emailService)
 		{
@@ -255,7 +255,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
         }
         private void AddCookie(int Id, string Postal_Code)
 		{
-			long sessionToken = ServerController.CreateSession(new Tuple<int, string>(Id, Postal_Code));
+			long sessionToken = CreateSession(new Tuple<int, string>(Id, Postal_Code));
 			var cookieOptions = new CookieOptions
 			{
 				// Set the cookie to HTTP only, meaning it can only be accessed on the server.
@@ -265,7 +265,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 				// the user will remain logged in unless the session is expired.
 				SameSite = SameSiteMode.Lax
 			};
-			Response.Cookies.Append("SessionToken", sessionToken.ToString(), cookieOptions);
+			Response.Cookies.Append(Cookies.SessionToken, sessionToken.ToString(), cookieOptions);
 		}
 
 		/// <summary>
@@ -277,7 +277,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 
 		public IActionResult Logout()
 		{
-			Response.Cookies.Delete("SessionToken");
+			Response.Cookies.Delete(Cookies.SessionToken);
 			return RedirectToAction("Login");
 		}
 	}

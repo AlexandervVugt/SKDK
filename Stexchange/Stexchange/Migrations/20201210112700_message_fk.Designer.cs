@@ -9,8 +9,8 @@ using Stexchange.Data;
 namespace Stexchange.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20201206170852_Initialize")]
-    partial class Initialize
+    [Migration("20201210112700_message_fk")]
+    partial class message_fk
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -184,6 +184,8 @@ namespace Stexchange.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ChatId");
+
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
@@ -312,7 +314,7 @@ namespace Stexchange.Migrations
                 {
                     b.HasOne("Stexchange.Data.Models.Chat", null)
                         .WithMany("Messages")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

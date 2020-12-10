@@ -182,6 +182,8 @@ namespace Stexchange.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ChatId");
+
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
@@ -310,7 +312,7 @@ namespace Stexchange.Migrations
                 {
                     b.HasOne("Stexchange.Data.Models.Chat", null)
                         .WithMany("Messages")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -2,68 +2,75 @@
 $color-lightgreen: #3eaf91;
 
 body {
+    width: 100%;
+
     .accordion {
         background-color: $color-darkgreen;
         color: white;
         cursor: pointer;
-        padding: 18px;
-        width: 100%;
         text-align: left;
         border: none;
+        width: 80%;
         outline: none;
         transition: 0.4s;
+        margin-left: 10%;
+        margin-right: 10%;
+        display: flex;
+        margin-top: 1%;
+
+        p {
+            margin-left: 1%;
+            width: 97%;
+            margin-right: 0;
+        }
     }
-    /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+    /* Add a background color to the button if it is clicked on and when you move the mouse over it (hover) */
     .active, .accordion:hover {
         background-color: $color-lightgreen;
     }
-    /* Style the accordion panel. Note: hidden by default */
+    /* Style the accordion panel. Hidden by default */
     .panel {
         padding: 0 18px;
         background-color: white;
         display: none;
         overflow: hidden;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     .accordion:after {
-        content: '\02795'; /* Unicode character for "plus" sign (+) */
+        content: '\02795';
         font-size: 13px;
         color: #777;
         float: right;
-        margin-left: 5px;
+        margin-right: 1%;
     }
 
     .active:after {
         content: "\2796"; /* Unicode character for "minus" sign (-) */
     }
 
-    .button {
-        background-color: $color-darkgreen;
-        border: none;
-        padding: 15px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin-top: -4%;
-    }
-
     input[type=text] {
         border: 1.5px solid $color-darkgreen;
         border-radius: 2px;
-        width: 100%;
+        width: 80%;
         padding: 12px 20px;
         margin: 8px 0;
         box-sizing: border-box;
         text-overflow: ellipsis;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     [name="description"] {
-        margin: 1px;
+        border: 1.5px solid $color-darkgreen;
         padding: 1px;
-        width: 100%;
+        width: 80%;
         height: 200px;
         resize: none;
+        margin-left: 10%;
+        margin-right: 10%;
+        font-size: 25px;
     }
 
     input[type=text]:focus {
@@ -73,10 +80,12 @@ body {
     input[type=number] {
         border: 1.5px solid $color-darkgreen;
         border-radius: 2px;
-        width: 100%;
+        width: 80%;
         padding: 12px 20px;
         margin: 8px 0;
         box-sizing: border-box;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     input[type=number]:focus {
@@ -84,42 +93,118 @@ body {
     }
 
     select {
-        width: 100%;
+        width: 80%;
         padding: 16px 20px;
-        border: none;
+        border: 2.5px solid $color-darkgreen;
         border-radius: 4px;
         color: $color-darkgreen;
         background-color: #f1f1f1;
+        margin-left: 10%;
+        margin-right: 10%;
+        height: calc(5vh);
+        font-size: 25px;
     }
 
     #imgoutput {
         display: block;
         border: 0.5px solid $color-lightgreen;
-        width: 100%;
+        width: 80%;
         background-color: white;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        margin-bottom: 25px;
+        margin-bottom: 1%;
         object-fit: cover;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     h3 {
-        font-size: 19px;
+        font-size: 25px;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     a {
         cursor: pointer;
         position: center;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     .imageslides {
         display: flex;
         justify-content: center;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     input[type=file] {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
-        float: left;
         padding: 2px 1.5px;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    input {
+        height: calc(5vh);
+        font-size: 25px;
+    }
+
+    label {
+        margin-left: 10%;
+        margin-right: 10%;
+        font-size: 25px;
+    }
+
+    span {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    h2 {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    button {
+        margin-left: 10%;
+        margin-right: 10%;
+        background-color: #015e54;
+        width: 15%;
+        height: calc(7vh);
+        font-size: 2vh;
+        color: white;
+        float: right;
+        margin-top: 1%;
+    }
+
+    .advertisementform {
+        .imageslides {
+            .previous {
+                background-color: #015e54;
+                padding: 2%;
+                border-radius: 50vh;
+                line-height: 0;
+                color: white;
+            }
+
+            #imagecounter {
+                margin-left: 10%;
+                margin-right: 10%;
+                line-height: 0;
+                padding: 2%;
+                color: white;
+            }
+
+            .next {
+                background-color: #015e54;
+                padding: 2%;
+                border-radius: 50vh;
+                line-height: 0;
+                color: white;
+            }
+        }
     }
 }
+
+

@@ -1,92 +1,153 @@
 ﻿body {
-  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-  /* Style the accordion panel. Note: hidden by default */ }
+  width: 100%;
+  /* Add a background color to the button if it is clicked on and when you move the mouse over it (hover) */
+  /* Style the accordion panel. Hidden by default */ }
   body .accordion {
     background-color: #015e54;
     color: white;
     cursor: pointer;
-    padding: 18px;
-    width: 100%;
     text-align: left;
     border: none;
+    width: 80%;
     outline: none;
-    transition: 0.4s; }
+    transition: 0.4s;
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    margin-top: 1%; }
+    body .accordion p {
+      margin-left: 1%;
+      width: 97%;
+      margin-right: 0; }
   body .active, body .accordion:hover {
     background-color: #3eaf91; }
   body .panel {
     padding: 0 18px;
     background-color: white;
     display: none;
-    overflow: hidden; }
+    overflow: hidden;
+    margin-left: 10%;
+    margin-right: 10%; }
   body .accordion:after {
     content: '\02795';
-    /* Unicode character for "plus" sign (+) */
     font-size: 13px;
     color: #777;
     float: right;
-    margin-left: 5px; }
+    margin-right: 1%; }
   body .active:after {
     content: "\2796";
     /* Unicode character for "minus" sign (-) */ }
-  body .button {
-    background-color: #015e54;
-    border: none;
-    padding: 15px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: -4%; }
   body input[type=text] {
     border: 1.5px solid #015e54;
     border-radius: 2px;
-    width: 100%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    margin-left: 10%;
+    margin-right: 10%; }
   body [name="description"] {
-    margin: 1px;
+    border: 1.5px solid #015e54;
     padding: 1px;
-    width: 100%;
+    width: 80%;
     height: 200px;
-    resize: none; }
+    resize: none;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 25px; }
   body input[type=text]:focus {
     border: 2.5px solid #015e54; }
   body input[type=number] {
     border: 1.5px solid #015e54;
     border-radius: 2px;
-    width: 100%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
-    box-sizing: border-box; }
+    box-sizing: border-box;
+    margin-left: 10%;
+    margin-right: 10%; }
   body input[type=number]:focus {
     border: 2.5px solid #015e54; }
   body select {
-    width: 100%;
+    width: 80%;
     padding: 16px 20px;
-    border: none;
+    border: 2.5px solid #015e54;
     border-radius: 4px;
     color: #015e54;
-    background-color: #f1f1f1; }
+    background-color: #f1f1f1;
+    margin-left: 10%;
+    margin-right: 10%;
+    height: calc(5vh);
+    font-size: 25px; }
   body #imgoutput {
     display: block;
     border: 0.5px solid #3eaf91;
-    width: 100%;
+    width: 80%;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-bottom: 25px;
-    object-fit: cover; }
+    margin-bottom: 1%;
+    object-fit: cover;
+    margin-left: 10%;
+    margin-right: 10%; }
   body h3 {
-    font-size: 19px; }
+    font-size: 25px;
+    margin-left: 10%;
+    margin-right: 10%; }
   body a {
     cursor: pointer;
-    position: center; }
+    position: center;
+    margin-left: 10%;
+    margin-right: 10%; }
   body .imageslides {
     display: flex;
-    justify-content: center; }
+    justify-content: center;
+    margin-left: 10%;
+    margin-right: 10%; }
   body input[type=file] {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    float: left;
-    padding: 2px 1.5px; }
+    padding: 2px 1.5px;
+    margin-left: 10%;
+    margin-right: 10%; }
+  body input {
+    height: calc(5vh);
+    font-size: 25px; }
+  body label {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 25px; }
+  body span {
+    margin-left: 10%;
+    margin-right: 10%; }
+  body h2 {
+    margin-left: 10%;
+    margin-right: 10%; }
+  body button {
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: #015e54;
+    width: 15%;
+    height: calc(7vh);
+    font-size: 2vh;
+    color: white;
+    float: right;
+    margin-top: 1%; }
+  body .advertisementform .imageslides .previous {
+    background-color: #015e54;
+    padding: 2%;
+    border-radius: 50vh;
+    line-height: 0;
+    color: white; }
+  body .advertisementform .imageslides #imagecounter {
+    margin-left: 10%;
+    margin-right: 10%;
+    line-height: 0;
+    padding: 2%;
+    color: white; }
+  body .advertisementform .imageslides .next {
+    background-color: #015e54;
+    padding: 2%;
+    border-radius: 50vh;
+    line-height: 0;
+    color: white; }

@@ -20,5 +20,12 @@ namespace Stexchange.Data.Models
         public byte[] Image { get; set; }
 
         public Listing Listing { get; set; }
+
+        public string GetImage()
+        {
+            // Convert byte arry to base64string   
+            string base64string = Convert.ToBase64String(Image);
+            return string.Format("data:image/png;base64,{0}", base64string);
+        }
     }
 }
