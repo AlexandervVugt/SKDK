@@ -33,9 +33,9 @@ namespace Stexchange.Controllers
             if(!_readable || (_cacheAge() > TimeSpan.FromSeconds(60) && !_blocked))
             {
                 _blocked = true;
-                _cacheBirth = DateTime.Now;
                 RenewListingCache(ref _listingCache);
                 RenewUserCache(ref _userCache);
+                _cacheBirth = DateTime.Now;
                 _readable = true;
                 _blocked = false;
             }
