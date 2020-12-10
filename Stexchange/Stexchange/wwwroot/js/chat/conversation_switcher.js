@@ -1,4 +1,6 @@
-﻿function displayConvo(chatId) {
+﻿
+function displayConvo(chatId) {
+    document.getElementById("active_chat").value = chatId;
     document.getElementById("chattitle").innerHTML = ChatInbox[chatId].Listing.Title;
     let chatDiv = document.getElementById("messagelist");
     chatDiv.innerHTML = "";
