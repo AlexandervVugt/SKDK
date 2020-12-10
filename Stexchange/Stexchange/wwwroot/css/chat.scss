@@ -56,6 +56,11 @@ html {
                 background: $darkshadowwhite;
                 display: grid;
                 grid-area: messagelist;
+                overflow-y: scroll;
+
+                .message_content {
+                    word-wrap = break-word;
+                }
             }
 
             #chatform {

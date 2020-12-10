@@ -31,7 +31,8 @@
   html body #chatcontainer #messagelist {
     background: rgba(255, 255, 255, 0.8);
     display: grid;
-    grid-area: messagelist; }
+    grid-area: messagelist;
+    overflow-y: scroll; }
   html body #chatcontainer #chatform {
     display: grid;
     grid-area: chatform;

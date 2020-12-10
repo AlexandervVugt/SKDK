@@ -17,4 +17,5 @@
         span.appendChild(content);
         chatDiv.appendChild(span);
     });
+    chatDiv.scrollTop = chatDiv.scrollHeight;
 }
