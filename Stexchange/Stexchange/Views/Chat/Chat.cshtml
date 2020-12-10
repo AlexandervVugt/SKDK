@@ -38,8 +38,8 @@
     temp.forEach(function (chat) {
         ChatInbox[chat.Id] = chat;
     });
-    var activeChat = @(TempData["Active"] ?? -1);
-    document.onload = function (event) {
+    window.onload = () => {
+        let activeChat = @(TempData["Active"] ?? -1);
         if (activeChat != -1) {
             displayConvo(activeChat);
         }
