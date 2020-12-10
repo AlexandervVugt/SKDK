@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
 using Stexchange.Data.Models;
@@ -26,6 +27,7 @@ namespace Stexchange.Controllers
         /// the client will be redirected to the Login view.
         /// </summary>
         /// <returns>The Chat view for the user.</returns>
+        /// 
         public IActionResult Chat()
         {
             int userId;
@@ -83,7 +85,8 @@ namespace Stexchange.Controllers
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IActionResult PostMessage(string message, int activeId)
+        [HttpPost]
+        public async Task<IActionResult> PostMessage(string message, int activeId)
         {
             int userId;
             TempData["Active"] = activeId;
@@ -111,11 +114,40 @@ namespace Stexchange.Controllers
 
             //TODO: implement user blocking
             //TODO: implement chat content filter
-            _db.Messages.Add(newMessage);
-            _db.SaveChanges();
+            await _db.Messages.AddAsync(newMessage);
+            await _db.SaveChangesAsync();
             return RedirectToAction("Chat");
         }
+        [HttpPost]
+        public async Task<IActionResult> NewChat(int listId, string message)
+        {
+            int userId = GetUserId();
+            try
+            {
+                var newChat = new Chat
+                {
+                    ResponderId = userId,
+                    AdId = listId
 
-        
+                };
+                await _db.Chats.AddAsync(newChat);
+                await _db.SaveChangesAsync();
+                await PostMessage(message, newChat.Id);
+
+            }
+            catch (MySqlException)
+            {
+                int ChatId = (from c in _db.Chats
+                                where (c.AdId == listId && c.ResponderId == userId)
+                                select c.Id).FirstOrDefault();
+                await PostMessage(message, ChatId ); ;
+            }
+            return RedirectToAction("Chat");
+
+
+        }
+
+
+
     }
 }
