@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Stexchange.Controllers
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -18,35 +19,35 @@
 <body>
 	<header>
 		<nav class="navbar-default">
-			<ul>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">OVER</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Rules">WERKWIJZE</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark" asp-area="" asp-controller="Trade" asp-action="Trade">RUILEN</a>
-				</li>
-				@if (!(Context.Request.Cookies.ContainsKey("SessionToken")))
-				{
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
-					</li>
-				}
-				else
-				{
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="MyAccount" asp-action="MyAccount">Mijn Account</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Uitloggen</a>
-					</li>
-				}
-			</ul>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">OVER</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Rules">WERKWIJZE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Trade" asp-action="Trade">RUILEN</a>
+                </li>
+                @if (!(Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken)))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">LOGIN</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="MyAccount" asp-action="MyAccount">MIJN ACCOUNT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">UITLOGGEN</a>
+                    </li>
+                }
+            </ul>
 		</nav>
 	</header>
 	<main role="main" class="pb-3" id="startchange">

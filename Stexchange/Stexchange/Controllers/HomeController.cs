@@ -9,7 +9,7 @@ using Stexchange.Models;
 
 namespace Stexchange.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : StexChangeController
     {
         private readonly ILogger<HomeController> _logger;
 
