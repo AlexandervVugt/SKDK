@@ -45,7 +45,7 @@ namespace Stexchange.Controllers
                                 .SetProperty("Messages", (
                                     from message in _db.Messages
                                     where message.ChatId == chat.Id
-                                    orderby message.Timestamp descending
+                                    orderby message.Timestamp ascending
                                     select message
                                 ).ToList())
                                 .SetProperty("Poster", (
