@@ -83,7 +83,7 @@ namespace Stexchange.Controllers
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IActionResult PostMessage(Message message)
+        public IActionResult PostMessage(string message, int activeId)
         {
             int userId;
          
@@ -96,21 +96,22 @@ namespace Stexchange.Controllers
             } catch (InvalidSessionException) {
                 return RedirectToAction("Login", "Login");
             }
-            if(message.ChatId == -1)
-            {
-                //TODO: create a new chat
-            }
-            //var newMessage = new Message()
+            //if(message.ChatId == -1)
             //{
-            //    ChatId = ,
-            //    Content = message,
-            //    Sender = userId
+                //TODO: create a new chat
+            //}
+            var newMessage = new Message
+            {
+                ChatId = activeId,
+                Content = message,
+                SenderId = userId
 
-            //};
+            };
 
             //TODO: implement user blocking
             //TODO: implement chat content filter
-            _db.Messages.Add(message);
+            _db.Messages.Add(newMessage);
+            _db.SaveChanges();
             return RedirectToAction("Chat");
         }
 
