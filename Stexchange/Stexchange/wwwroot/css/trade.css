@@ -187,7 +187,8 @@ html {
           text-transform: uppercase; }
     html body .fullwidth {
       width: 100%;
-      float: left; }
+      float: left;
+      margin-bottom: 2vh; }
       html body .fullwidth .searchbar {
         float: right;
         width: 25%;
