@@ -86,7 +86,8 @@ namespace Stexchange.Controllers
         public IActionResult PostMessage(string message, int activeId)
         {
             int userId;
-         
+            TempData["Active"] = activeId;
+            TempData.Keep("Active");
             try
             {
                 userId = GetUserId();
