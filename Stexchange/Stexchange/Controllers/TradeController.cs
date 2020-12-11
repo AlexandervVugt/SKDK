@@ -43,13 +43,13 @@ namespace Stexchange.Controllers
                 _blocked = false;
             }
         }
-        public IActionResult Trade()
+        public async Task<IActionResult> Trade()
         {
             BlockedPoller(); //Wait for our turn to read the resource
 
             //Shallow copy, this was accounted for in the design of this method.
             var listings = _listingCache.Values.ToList();
-            listings.ForEach(listing => PrepareListing(ref listing));
+            listings.ForEach(async listing => listing = await PrepareListing(listing));
             listings = (from listing in listings orderby listing.CreatedAt descending select listing).ToList();
             var tradeModel = new TradeViewModel(listings);
 
@@ -58,12 +58,12 @@ namespace Stexchange.Controllers
             return View(model: tradeModel);
         }
 
-        public IActionResult Detail(int listingId)
+        public async Task<IActionResult> Detail(int listingId)
         {
             BlockedPoller(); //Wait for our turn to read the resource
 
             var listing = _listingCache[listingId];
-            PrepareListing(ref listing);
+            listing = await PrepareListing(listing);
 
             //TODO: move releasing the resource to this class' Dispose method
             _blocked = false; //Release the resource
@@ -165,7 +165,7 @@ namespace Stexchange.Controllers
         /// </summary>
         /// <param name="token">The user whose data to use, if logged in.</param>
         /// <param name="listing">The given listing</param>
-        private async Task PrepareListing(ref Listing listing)
+        private async Task<Listing> PrepareListing(Listing listing)
         {
             listing.Owner = _userCache[listing.UserId];
             try
@@ -181,6 +181,7 @@ namespace Stexchange.Controllers
             }
             listing.OwningUserName = listing.Owner.Username;
             listing.Owner = null;
+            return listing;
         }
 
 
@@ -192,13 +193,13 @@ namespace Stexchange.Controllers
         {
             long token = Convert.ToInt64(Request.Cookies["SessionToken"]);
 
-            if (GetSessionData((long)token, out Tuple<int, string> data))
+            if (GetSessionData(token, out Tuple<int, string> data))
             {
                 string user_postal = data.Item2;
                 return user_postal;
             }
 
-            return "1111AA";
+            return "3011AM";
         }
 
 

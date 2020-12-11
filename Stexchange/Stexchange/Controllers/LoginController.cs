@@ -32,7 +32,6 @@ namespace Stexchange.Controllers
 		private IConfiguration Config { get; }
 		public IActionResult Login()
         {
-            GetLocationAsync();
             return View();
 		}
 		public IActionResult Verify()
