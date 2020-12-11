@@ -77,8 +77,8 @@ html {
         font-size: 1vh;
         position: relative;
         border: none;
-        background: #015e54;
-        color: white;
+        background: #80ff8d;
+        color: black;
         padding-left: 2vh;
         padding-right: 2vh;
         padding-top: 1vh;
@@ -87,15 +87,15 @@ html {
         border-radius: 100vh;
         transition: all 0.3s ease 0s; }
       html body #forms #apply_filter:hover {
-        color: #005709;
+        color: white;
         background-color: #80ff8d;
         transition: all 0.3s ease 0s; }
       html body #forms #apply_sort {
         font-size: 1vh;
         position: relative;
         border: none;
-        background: #015e54;
-        color: white;
+        background: #80ff8d;
+        color: black;
         padding-left: 2vh;
         padding-right: 2vh;
         padding-top: 1vh;
@@ -104,7 +104,7 @@ html {
         border-radius: 100vh;
         transition: all 0.3s ease 0s; }
       html body #forms #apply_sort:hover {
-        color: #005709;
+        color: white;
         background-color: #80ff8d;
         transition: all 0.3s ease 0s; }
       html body #forms .nested {

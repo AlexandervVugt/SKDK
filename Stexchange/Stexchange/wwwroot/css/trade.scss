@@ -119,8 +119,8 @@ html {
                 font-size: 1vh;
                 position: relative;
                 border: none;
-                background: #015e54;
-                color: white;
+                background: $lightgreen;
+                color: black;
                 padding-left: 2vh;
                 padding-right: 2vh;
                 padding-top: 1vh;
@@ -131,7 +131,7 @@ html {
             }
 
             #apply_filter:hover {
-                color: $darkgreen;
+                color: white;
                 background-color: $lightgreen;
                 transition: all 0.3s ease 0s;
             }
@@ -140,8 +140,8 @@ html {
                 font-size: 1vh;
                 position: relative;
                 border: none;
-                background: #015e54;
-                color: white;
+                background: $lightgreen;
+                color: black;
                 padding-left: 2vh;
                 padding-right: 2vh;
                 padding-top: 1vh;
@@ -152,7 +152,7 @@ html {
             }
 
             #apply_sort:hover {
-                color: $darkgreen;
+                color: white;
                 background-color: $lightgreen;
                 transition: all 0.3s ease 0s;
             }
