@@ -13,7 +13,7 @@ html {
       display: none; }
     html body input[type=checkbox] + label:before {
       content: "\2714";
-      border: 0.1vh solid #015e54;
+      border: 0.1vh solid #005709;
       border-radius: 0.2em;
       color: transparent;
       transition: .2s;
@@ -53,8 +53,7 @@ html {
       margin: 0px;
       padding: 0px; }
     html body #forms {
-      background-color: rgba(0, 0, 0, 0.1);
-      color: #4ecd92;
+      color: #19ff30;
       padding-left: 3vh;
       width: 15%;
       height: calc(100vh);
@@ -72,9 +71,9 @@ html {
         width: 100%;
         line-height: 2vh;
         padding-bottom: 1vh;
-        border-bottom: 0.1vh solid #4ecd92; }
+        border-bottom: 0.1vh solid #19ff30; }
       html body #forms li {
-        border-top: 0.1vh solid #4ecd92; }
+        border-top: 0.1vh solid #19ff30; }
       html body #forms #apply_filter {
         font-size: 1vh;
         position: relative;
@@ -89,8 +88,8 @@ html {
         border-radius: 100vh;
         transition: all 0.3s ease 0s; }
       html body #forms #apply_filter:hover {
-        color: #015e54;
-        background-color: #b2e8d4;
+        color: #005709;
+        background-color: #80ff8d;
         transition: all 0.3s ease 0s; }
       html body #forms #apply_sort {
         font-size: 1vh;
@@ -106,16 +105,18 @@ html {
         border-radius: 100vh;
         transition: all 0.3s ease 0s; }
       html body #forms #apply_sort:hover {
-        color: #015e54;
-        background-color: #b2e8d4;
+        color: #005709;
+        background-color: #80ff8d;
         transition: all 0.3s ease 0s; }
       html body #forms .nested {
         margin-left: 3vh; }
       html body #forms input[type=range] {
         width: 100%;
         float: left;
-        color: #015e54;
-        background: #4ecd92; }
+        color: #005709;
+        background: #19ff30; }
+      html body #forms .sort-range-display {
+        color: #005709; }
     html body #listings {
       float: left;
       width: 75%; }
@@ -155,7 +156,7 @@ html {
           text-transform: uppercase;
           margin-left: 2%;
           width: 50%;
-          color: #4ecd92;
+          color: #80ff8d;
           font-size: 1.5vh; }
         html body #listings .Advertisement .description {
           float: left;
@@ -172,7 +173,7 @@ html {
             margin-right: 2%;
             margin-top: 2%;
             color: white;
-            background-color: rgba(78, 205, 146, 0.5);
+            background-color: rgba(25, 255, 48, 0.5);
             padding: 0.2vh 0.5vh 0.2vh;
             border-radius: 0.2vh;
             text-transform: uppercase; }
@@ -180,7 +181,7 @@ html {
           float: right;
           width: 27%;
           margin-right: 2%;
-          color: #4ecd92;
+          color: #80ff8d;
           line-height: 2vh;
           text-align: right;
           font-size: 1.5vh;
@@ -206,11 +207,11 @@ html {
           padding: 1%;
           border: none;
           font-size: 2vh;
-          color: #4ecd92; }
+          color: #19ff30; }
         html body .fullwidth .searchbar button {
           width: 10%;
           float: left;
-          color: #b2e8d4;
+          color: #80ff8d;
           font-size: 2vh;
           margin-right: 1%;
           line-height: 1vh;
@@ -221,7 +222,7 @@ html {
           cursor: pointer;
           transition: 0.5s; }
         html body .fullwidth .searchbar button:hover {
-          color: #015e54; }
+          color: #005709; }
         html body .fullwidth .searchbar label {
           display: none;
           transition: 1s; }
