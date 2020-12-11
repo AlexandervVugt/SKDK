@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Post Advertisement";
+}
+<link rel="stylesheet" href="~/css/postadvertisement.css" />
+
+<h2>ADVERTENTIE PLAATSEN</h2>
+<h3>Vul de volgende gegevens in om een advertentie te plaatsen.</h3>
+<h3><strong>Aangeboden planten mogen geen pesticiden bevatten!</strong></h3><br>
+<form action="PostAdvertisement" method="post" class="advertisementform" enctype="multipart/form-data">
+    <p>
+        <span id="messagepicture">Klik op "Bestand selecteren" om foto's toe te voegen</span>
+        <img id="imgoutput" />
+        <div class="imageslides">
+            <a class="previous" onclick="previousImg(1)">&#10094;</a>
+            <span id="imagecounter"></span>
+            <a class="next" onclick="nextImg(1)">&#10095;</a>
+        </div>
+    </p>
+    <p>
+        <input type="file" id="imginput" name="files" onchange="loadFile(event)" accept="image/*" multiple required>
+    </p>
+    <p>
+        <label for="title" class="labeltext">Titel</label>
+        <input class="labelinput" name="title" type="text" maxlength="80" required />
+    </p>
+    <p>
+        <label for="description" class="labeltext">Beschrijving</label>
+        <textarea class="descriptionInput" name="description" maxlength="500" required></textarea>
+    </p>
+    <p>
+        <label for="name_lt" class="labeltext">Latijnse naam</label>
+        <input class="labelinput" name="name_lt" type="text" maxlength="50" />
+    </p>
+    <p>
+        <label for="name_nl" class="labeltext">Nederlandse naam</label>
+        <input class="labelinput" name="name_nl" type="text" maxlength="50" required />
+    </p>
+    <p>
+        <label for="quantity" class="labeltext">Aantal</label>
+        <input class="labelinput" name="quantity" type="number" min="1" required />
+    </p>
+    <p>
+        <label for="plant_type">Wat voor soort plant is het?</label>
+        <select name="plant_type" id="plant_type" required>
+            <option value="plant_type_plant">Plant</option>
+            <option value="plant_type_zaad">Zaad</option>
+            <option value="plant_type_stek">Stek</option>
+        </select>
+    </p>
+    <p>
+        <label for="with_pot">De plant is voorzien van een pot</label>
+        <select name="with_pot" id="with_pot" required>
+            <option value="with_pot_ja">Ja</option>
+            <option value="with_pot_nee">Nee</option>
+        </select>
+    </p>
+    <p>
+        <label for="give_away">De plant is gratis weg te geven</label>
+        <select name="give_away" id="give_away" value="nee" required>
+            <option value="give_away_ja">Ja</option>
+            <option value="give_away_nee">Nee</option>
+        </select>
+    </p>
+    <div class="accordion"><p>Extra filters</p></div>
+    <div id="extrafilters">
+        <p>
+            <label for="light">Hoeveel licht heeft de plant nodig</label>
+            <select name="light" id="light">
+                <option value="light_volle_zon">Volle zon</option>
+                <option value="light_halfschaduw">Halfschaduw</option>
+                <option value="light_schaduw">Schaduw</option>
+            </select>
+        </p>
+        <p>
+            <label for="water">Hoeveel vocht heeft de plant nodig</label>
+            <select name="water" id="water">
+                <option value="water_wisselnat">Wisselnat</option>
+                <option value="water_nat">Nat</option>
+                <option value="water_normaal">Normaal</option>
+                <option value="water_droog">Droog</option>
+            </select>
+        </p>
+        <p>
+            <label for="nutrients">Hoeveel voeding heeft de plant nodig</label>
+            <select name="nutrients" id="nutrients">
+                <option value="nutrients_null">Geen idee</option>
+                <option value="nutrients_veel">Veel</option>
+                <option value="nutrients_gemiddeld">Gemiddeld</option>
+                <option value="nutrients_weinig">Weinig</option>
+                <option value="nutrients_nooit">Nooit</option>
+            </select>
+        </p>
+        <p>
+            <label for="ph">Wat is de pH-waarde van de plant</label>
+            <select name="ph" id="ph">
+                <option value="ph_null">Geen idee</option>
+                <option value="ph_zuur">Zuur</option>
+                <option value="ph_neutraal">Neutraal</option>
+                <option value="ph_kalkrijk">Kalkrijk</option>
+            </select>
+        </p>
+        <p>
+            <label for="indigenous">De plant is inheems</label>
+            <select name="indigenous" id="indigenous">
+                <option value="indigenous_null">Geen idee</option>
+                <option value="indigenous_inheems">Inheems</option>
+                <option value="indigenous_niet_inheems">Niet inheems</option>
+            </select>
+        </p>
+    </div>
+    <p>
+        <button type="submit" class="submit advertisement" id="advertisementsubmit">Advertentie plaatsen</button>
+    </p>
+    @if(TempData["errormessage"] is object)
+    {
+        <h1>@TempData["errormessage"]</h1>
+    }
+</form>
+
+<script type="text/javascript" src="~/js/postadvertisement.js" asp-append-version="true"></script>
+
+
+

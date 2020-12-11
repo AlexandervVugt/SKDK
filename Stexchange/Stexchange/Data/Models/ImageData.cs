@@ -12,7 +12,7 @@ namespace Stexchange.Data.Models
     {
         [Column("id", TypeName = "serial"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
+        
         [Column("listing_id", TypeName = "bigint(20) unsigned")]
         public int ListingId { get; set; }
 
