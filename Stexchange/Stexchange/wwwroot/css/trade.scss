@@ -87,7 +87,6 @@ html {
         }
 
         #forms {
-            color: $green;
             padding-left: 3vh;
             width: 15%;
             height: calc(100vh);
@@ -109,11 +108,11 @@ html {
                 width: 100%;
                 line-height: 2vh;
                 padding-bottom: 1vh;
-                border-bottom: 0.1vh solid $green;
+                border-bottom: 0.1vh solid;
             }
 
             li {
-                border-top: 0.1vh solid $green;
+                border-top: 0.1vh solid;
             }
 
             #apply_filter {
@@ -286,7 +285,6 @@ html {
                     padding: 1%;
                     border: none;
                     font-size: 2vh;
-                    color: $green;
                 }
 
                 button {

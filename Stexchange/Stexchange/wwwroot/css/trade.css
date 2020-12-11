@@ -53,7 +53,6 @@ html {
       margin: 0px;
       padding: 0px; }
     html body #forms {
-      color: #19ff30;
       padding-left: 3vh;
       width: 15%;
       height: calc(100vh);
@@ -71,9 +70,9 @@ html {
         width: 100%;
         line-height: 2vh;
         padding-bottom: 1vh;
-        border-bottom: 0.1vh solid #19ff30; }
+        border-bottom: 0.1vh solid; }
       html body #forms li {
-        border-top: 0.1vh solid #19ff30; }
+        border-top: 0.1vh solid; }
       html body #forms #apply_filter {
         font-size: 1vh;
         position: relative;
@@ -206,8 +205,7 @@ html {
           height: calc(3vh);
           padding: 1%;
           border: none;
-          font-size: 2vh;
-          color: #19ff30; }
+          font-size: 2vh; }
         html body .fullwidth .searchbar button {
           width: 10%;
           float: left;
