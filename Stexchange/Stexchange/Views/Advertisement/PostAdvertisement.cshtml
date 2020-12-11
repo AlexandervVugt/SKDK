@@ -111,6 +111,10 @@
     <p>
         <button type="submit" class="submit advertisement" id="advertisementsubmit">Advertentie plaatsen</button>
     </p>
+    @if(TempData["errormessage"] is object)
+    {
+        <h1>@TempData["errormessage"]</h1>
+    }
 </form>
 
 <script type="text/javascript" src="~/js/postadvertisement.js" asp-append-version="true"></script>

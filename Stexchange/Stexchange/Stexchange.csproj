@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\DetailAdvertisement\**" />
+    <Content Remove="Views\DetailAdvertisement\**" />
+    <EmbeddedResource Remove="Views\DetailAdvertisement\**" />
+    <None Remove="Views\DetailAdvertisement\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20201116165817_listing_table.cs" />
     <Compile Remove="Migrations\20201116165817_listing_table.Designer.cs" />
     <Compile Remove="Migrations\20201118123233_refactored_u_uv.cs" />
@@ -75,9 +82,5 @@
     <PackageReference Include="MySql.Data" Version="8.0.22" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\DetailAdvertisement\" />
   </ItemGroup>
 </Project>
