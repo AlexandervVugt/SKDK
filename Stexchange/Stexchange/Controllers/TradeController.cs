@@ -217,24 +217,19 @@ namespace Stexchange.Controllers
             using (StreamReader reader = new StreamReader(stream))
             {
                 string readSite = reader.ReadToEnd();
-                int indx = readSite.IndexOf("&nbsp;&nbsp;&nbsp");
-                string contains_lat_long_string = readSite.Substring(indx);
-                //<small> 52.341/4.955 </small>
-                int firstsmall_index = contains_lat_long_string.IndexOf("small>");
-                int secondsmall_index = contains_lat_long_string.IndexOf("</small");
-                string lat_long_unf = contains_lat_long_string.Substring(firstsmall_index + 6, secondsmall_index);
 
-                int slash_index = lat_long_unf.IndexOf("/");
-
-                string lat = lat_long_unf.Substring(0, slash_index);
-                //the lat values for the netherlands range from about 6000-7000, never 10.000
-                int bracket_index = lat_long_unf.IndexOf("<");
-                string lon = lat_long_unf.Substring(slash_index + 1, bracket_index - slash_index - 1);
-
-                Tuple<string, string> lat_long = new Tuple<string, string>(lat, lon);
-                Console.WriteLine($"lattetude: {lat_long.Item1}");
-                Console.WriteLine($"longtitude: {lat_long.Item2}");
-                return lat_long;
+                int tableStart = readSite.IndexOf("<table class=\"restable\">");
+                if (tableStart == -1)
+                {
+                    throw new Exception("Postal code not recognized");
+                }
+                int tableEnd = readSite.IndexOf("</table>", tableStart);
+                string[] dataContent = readSite.Substring(tableStart, tableEnd - tableStart)
+                    .Split("small")[3]
+                    .Replace("<", null)
+                    .Replace(">", null)
+                    .Split('/');
+                return new Tuple<string, string>(dataContent[0], dataContent[1]);
             }
         }
 
@@ -249,13 +244,11 @@ namespace Stexchange.Controllers
             {
                 Tuple<string, string> lat_long_current_user = GetLocationAsync(GetCurrentUserPostalCode());
                 Tuple<string, string> lat_long_listing_user = GetLocationAsync(postalCode_listing_user);
-                Console.WriteLine(double.TryParse(lat_long_current_user.Item1, out double lat_current_us));
-                Console.WriteLine(double.TryParse(lat_long_current_user.Item2, out double lon_current_us));
-                Console.WriteLine($"lat-lon current : {lat_current_us} {lon_current_us}");
+                double.TryParse(lat_long_current_user.Item1, out double lat_current_us);
+                double.TryParse(lat_long_current_user.Item2, out double lon_current_us);
 
-                Console.WriteLine(double.TryParse(lat_long_listing_user.Item1, out double lat_listing_us));
-                Console.WriteLine(double.TryParse(lat_long_listing_user.Item2, out double lon_listing_us));
-                Console.WriteLine($"lat-lon listing : {lat_listing_us} {lon_listing_us}");
+                double.TryParse(lat_long_listing_user.Item1, out double lat_listing_us);
+                double.TryParse(lat_long_listing_user.Item2, out double lon_listing_us);
 
 
                 var cCoord = new GeoCoordinate(lat_current_us/1000, lon_current_us/1000);
@@ -268,7 +261,13 @@ namespace Stexchange.Controllers
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
-                return -1;
+                if(e.Message == "Postal code not recognized")
+                {
+                    return -1;
+                } else
+                {
+                    throw e;
+                }
             }
         }
     }
