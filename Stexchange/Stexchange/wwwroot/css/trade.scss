@@ -87,7 +87,6 @@ html {
         }
 
         #forms {
-            color: $green;
             padding-left: 3vh;
             width: 15%;
             height: calc(100vh);
@@ -109,19 +108,19 @@ html {
                 width: 100%;
                 line-height: 2vh;
                 padding-bottom: 1vh;
-                border-bottom: 0.1vh solid $green;
+                border-bottom: 0.1vh solid;
             }
 
             li {
-                border-top: 0.1vh solid $green;
+                border-top: 0.1vh solid;
             }
 
             #apply_filter {
                 font-size: 1vh;
                 position: relative;
                 border: none;
-                background: #015e54;
-                color: white;
+                background: $lightgreen;
+                color: black;
                 padding-left: 2vh;
                 padding-right: 2vh;
                 padding-top: 1vh;
@@ -132,7 +131,7 @@ html {
             }
 
             #apply_filter:hover {
-                color: $darkgreen;
+                color: white;
                 background-color: $lightgreen;
                 transition: all 0.3s ease 0s;
             }
@@ -141,8 +140,8 @@ html {
                 font-size: 1vh;
                 position: relative;
                 border: none;
-                background: #015e54;
-                color: white;
+                background: $lightgreen;
+                color: black;
                 padding-left: 2vh;
                 padding-right: 2vh;
                 padding-top: 1vh;
@@ -153,7 +152,7 @@ html {
             }
 
             #apply_sort:hover {
-                color: $darkgreen;
+                color: white;
                 background-color: $lightgreen;
                 transition: all 0.3s ease 0s;
             }
@@ -286,7 +285,6 @@ html {
                     padding: 1%;
                     border: none;
                     font-size: 2vh;
-                    color: $green;
                 }
 
                 button {
