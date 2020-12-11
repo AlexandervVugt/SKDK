@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Stexchange.Data;
 using Stexchange.Data.Models;
@@ -37,8 +37,6 @@ namespace Stexchange.Controllers
 		}
 		public IActionResult Verify()
 		{
-			TempData.Keep("Message");
-			TempData.Keep("Email");
 			return View("Verify");
 		}
 		public IActionResult Verified()
@@ -76,18 +74,16 @@ namespace Stexchange.Controllers
 			{
 				return View("InvalidVerificationLink");
 			}
-			else
-			{
-				if (!(verification is null))
-				{
-					user.IsVerified = true;
-					await Database.SaveChangesAsync();
-					AddCookie(user.Id, user.Postal_Code);
-					return RedirectToAction("Verified");
-				}
-				return View("InvalidVerificationLink");
-			}
-		}
+
+            if (!(verification is null))
+            {
+                user.IsVerified = true;
+                await Database.SaveChangesAsync();
+                AddCookie(user.Id, user.Postal_Code);
+                return RedirectToAction("Verified");
+            }
+            return View("InvalidVerificationLink");
+        }
 
 		/// <summary>
 		/// Send new verificationlink to user if he isn't verified.
@@ -100,14 +96,14 @@ namespace Stexchange.Controllers
 						where !u.IsVerified
 							&& u.Email == vEmail
 						select u).FirstOrDefault();
-			
+
 			if (!(user is null))
 			{
 				// Let entity framework find the UserVerification object for this user
 				await Database.Entry(user).Reference(u => u.Verification).LoadAsync();
 
 				user.Verification.Guid = Guid.NewGuid();
-				
+
 				string body = $@"STEXCHANGE
 Verifieer je e-mailadres door op de onderstaande link te klikken
 https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{user.Verification.Guid}";
@@ -139,7 +135,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{user.Ve
 						TempData["Message"] = "IncorrectEmails";
 						return View("Login");
 					}
-					
+
 					// Checks if postal code is valid
 					if (!new Regex(@"\d{4}[A-Z]{2}", RegexOptions.IgnoreCase).IsMatch(postalcode))
 					{
@@ -182,10 +178,10 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{user.Ve
 						Created_At = DateTime.Now,
 						Verification = verification
 					};
-				 
+
 					await Database.AddAsync(new_User);
 					await Database.SaveChangesAsync();
-					
+
 					//sends an email to verify the new account and return view("verify") page
 					string body = $@"STEXCHANGE
 Verifieer je e-mailadres door op de onderstaande link te klikken
@@ -195,7 +191,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 					//Pass data from controller to view
 					TempData["Message"] = $"we hebben een verificatielink verstuurd naar: {new_User.Email}";
 					TempData["Email"] = new_User.Email;
-					return RedirectToAction("Verify") ;
+					return RedirectToAction("Verify");
 				}
 			}
 			catch (Exception ex)
@@ -219,8 +215,8 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 			if (string.IsNullOrEmpty(password))
 				throw new ArgumentException($"'{nameof(password)}' cannot be null or empty");
 			if (string.IsNullOrEmpty(salt))
-				throw new ArgumentException($"'{nameof(salt)}' cannot be null or empty");        
-			
+				throw new ArgumentException($"'{nameof(salt)}' cannot be null or empty");
+
 			using var sha512Hash = SHA512.Create();
 			return sha512Hash.ComputeHash(Encoding.UTF8.GetBytes($"{salt}#:#{password}"));
 		}

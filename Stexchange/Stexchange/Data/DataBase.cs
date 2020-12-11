@@ -28,6 +28,7 @@ namespace Stexchange.Data
 				UserID = Config["Username"],
 				Password = Config["Password"]
 			}.ConnectionString);
+			options.EnableSensitiveDataLogging();
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
