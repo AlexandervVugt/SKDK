@@ -17,7 +17,7 @@ html {
             display: grid;
             grid-template-rows: 10% 80% 10%;
             grid-template-columns: 25% 75%;
-            grid-template-areas: 'conversationslist chattitle''conversationslist messagelist''conversationslist chatform';
+            grid-template-areas: "conversationslist chattitle" "conversationslist messagelist" "conversationslist chatform";
             margin: 5%;
             margin-top: 1%;
             width: 90%;
@@ -26,9 +26,7 @@ html {
             border-radius: 1vh;
 
 
-
             #conversationslist {
-                display: grid;
                 grid-area: conversationslist;
                 background: $darkgreen;
                 border-radius: 1vh 0 0 1vh;
@@ -36,11 +34,38 @@ html {
                 #chatinboxtitle {
                     color: white;
                     font-weight: bold;
+                    background: $darkgreen;
+                    height: 6vh;
                     font-size: 4vh;
-                    margin: 5%;
+                    margin: 1%;
+                }
+
+                p {
+                    margin-top: 0.4%;
+                    text-align: left;
+                    padding: 1.5%;
+                    padding-left: 4%;
+                }
+
+                .conversation_entry {
+                    margin: 0%;
+                    border-top: 0.1vh solid #b2e8d4;
+                    background: $darkgreen;
+                    color: white;
+                }
+
+                .conversation_entry:hover {
+                    border-top: 0.1vh solid white;
+                    background: $lightgreen;
+                    color: $darkgreen;
+                }
+
+                .conversation_entry.active {
+                    border-top: 0.1vh solid white;
+                    background: $lightgreen;
+                    color: $darkgreen;
                 }
             }
-
 
             #chattitle {
                 grid-area: chattitle;
@@ -48,14 +73,92 @@ html {
                 background: $darkshadowwhite;
                 border-radius: 0 1vh 0 0;
                 font-weight: bold;
-                border-bottom: .1vh solid $darkgreen;
-                padding-left: 5%;
+                color: $darkgreen;
+                border-bottom: 0.1vh solid $darkgreen;
+                padding-left: 3%;
+                padding-top: 1.5%;
             }
 
             #messagelist {
                 background: $darkshadowwhite;
-                display: grid;
                 grid-area: messagelist;
+                overflow-y: scroll;
+
+                .message_container {
+                    .message_info {
+                        font-size: 19px;
+                        color: $darkgreen;
+                        display: block;
+                    }
+                }
+
+                .message_right_align {
+                    display: block;
+                    float: right;
+                    clear: both;
+                    margin-right: 3%;
+                    margin-left: 3%;
+                    width: 94%;
+
+
+                    span {
+                        float: right;
+                        display: block;
+                        clear: both;
+                    }
+
+                    .message_content {
+                        background-color: $darkgreen;
+                        font-size: 27px;
+                        color: white;
+                        border-radius: 0.5vh;
+                        padding-left: 1%;
+                        text-align: right;
+                        padding-right: 1%;
+                        min-width: 10%;
+                        max-width: 84%;
+                        float: right;
+                        display: block;
+                        clear: both;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+
+                .message_left_align {
+                    display: block;
+                    float: left;
+                    clear: both;
+                    margin-left: 3%;
+                    width: 94%;
+                    margin-right: 3%;
+
+                    span {
+                        float: left;
+                        display: block;
+                        clear: both;
+                    }
+
+                    .message_content {
+                        border: 0.1vh solid $darkgreen;
+                        background-color: white;
+                        font-size: 27px;
+                        color: $darkgreen;
+                        border-radius: 0.5vh;
+                        padding-left: 1%;
+                        padding-right: 1%;
+                        min-width: 10%;
+                        max-width: 84%;
+                        float: left;
+                        display: block;
+                        clear: both;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+                // .message_content {
+                //    word-wrap = break-word;
+                // }
             }
 
             #chatform {

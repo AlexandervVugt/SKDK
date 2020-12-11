@@ -11,27 +11,104 @@
   background: #b2e8d4;
   border-radius: 1vh; }
   html body #chatcontainer #conversationslist {
-    display: grid;
     grid-area: conversationslist;
     background: #015e54;
     border-radius: 1vh 0 0 1vh; }
     html body #chatcontainer #conversationslist #chatinboxtitle {
       color: white;
       font-weight: bold;
+      background: #015e54;
+      height: 6vh;
       font-size: 4vh;
-      margin: 5%; }
+      margin: 1%; }
+    html body #chatcontainer #conversationslist p {
+      margin-top: 0.4%;
+      text-align: left;
+      padding: 1.5%;
+      padding-left: 4%; }
+    html body #chatcontainer #conversationslist .conversation_entry {
+      margin: 0%;
+      border-top: 0.1vh solid #b2e8d4;
+      background: #015e54;
+      color: white; }
+    html body #chatcontainer #conversationslist .conversation_entry:hover {
+      border-top: 0.1vh solid white;
+      background: #b2e8d4;
+      color: #015e54; }
+    html body #chatcontainer #conversationslist .conversation_entry.active {
+      border-top: 0.1vh solid white;
+      background: #b2e8d4;
+      color: #015e54; }
   html body #chatcontainer #chattitle {
     grid-area: chattitle;
     font-size: 4vh;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 0 1vh 0 0;
     font-weight: bold;
+    color: #015e54;
     border-bottom: 0.1vh solid #015e54;
-    padding-left: 5%; }
+    padding-left: 3%;
+    padding-top: 1.5%; }
   html body #chatcontainer #messagelist {
     background: rgba(255, 255, 255, 0.8);
-    display: grid;
-    grid-area: messagelist; }
+    grid-area: messagelist;
+    overflow-y: scroll; }
+    html body #chatcontainer #messagelist .message_container .message_info {
+      font-size: 19px;
+      color: #015e54;
+      display: block; }
+    html body #chatcontainer #messagelist .message_right_align {
+      display: block;
+      float: right;
+      clear: both;
+      margin-right: 3%;
+      margin-left: 3%;
+      width: 94%; }
+      html body #chatcontainer #messagelist .message_right_align span {
+        float: right;
+        display: block;
+        clear: both; }
+      html body #chatcontainer #messagelist .message_right_align .message_content {
+        background-color: #015e54;
+        font-size: 27px;
+        color: white;
+        border-radius: 0.5vh;
+        padding-left: 1%;
+        text-align: right;
+        padding-right: 1%;
+        min-width: 10%;
+        max-width: 84%;
+        float: right;
+        display: block;
+        clear: both;
+        overflow: hidden;
+        text-overflow: ellipsis; }
+    html body #chatcontainer #messagelist .message_left_align {
+      display: block;
+      float: left;
+      clear: both;
+      margin-left: 3%;
+      width: 94%;
+      margin-right: 3%; }
+      html body #chatcontainer #messagelist .message_left_align span {
+        float: left;
+        display: block;
+        clear: both; }
+      html body #chatcontainer #messagelist .message_left_align .message_content {
+        border: 0.1vh solid #015e54;
+        background-color: white;
+        font-size: 27px;
+        color: #015e54;
+        border-radius: 0.5vh;
+        padding-left: 1%;
+        padding-right: 1%;
+        min-width: 10%;
+        max-width: 84%;
+        float: left;
+        display: block;
+        clear: both;
+        overflow: hidden;
+        text-overflow: ellipsis; }
   html body #chatcontainer #chatform {
     display: grid;
     grid-area: chatform;
