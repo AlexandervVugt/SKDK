@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
 using Stexchange.Data.Models;
@@ -26,6 +28,7 @@ namespace Stexchange.Controllers
         /// the client will be redirected to the Login view.
         /// </summary>
         /// <returns>The Chat view for the user.</returns>
+        /// 
         public IActionResult Chat()
         {
             int userId;
@@ -83,10 +86,12 @@ namespace Stexchange.Controllers
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public IActionResult PostMessage(Message message)
+        [HttpPost]
+        public  IActionResult PostMessage(string message, int activeId)
         {
             int userId;
-         
+            TempData["Active"] = activeId;
+            TempData.Keep("Active");
             try
             {
                 userId = GetUserId();
@@ -96,24 +101,53 @@ namespace Stexchange.Controllers
             } catch (InvalidSessionException) {
                 return RedirectToAction("Login", "Login");
             }
-            if(message.ChatId == -1)
-            {
-                //TODO: create a new chat
-            }
-            //var newMessage = new Message()
+            //if(message.ChatId == -1)
             //{
-            //    ChatId = ,
-            //    Content = message,
-            //    Sender = userId
+                //TODO: create a new chat
+            //}
+            var newMessage = new Message
+            {
+                ChatId = activeId,
+                Content = message,
+                SenderId = userId
 
-            //};
+            };
 
             //TODO: implement user blocking
             //TODO: implement chat content filter
-            _db.Messages.Add(message);
+             _db.Messages.Add(newMessage);
+             _db.SaveChanges();
+            return RedirectToAction("Chat");
+        }
+        [HttpPost]
+        public IActionResult NewChat(int listId, string message)
+        {
+            int userId = GetUserId();
+            var newChat = new Chat
+            {
+                ResponderId = userId,
+                AdId = listId
+
+            };
+            try
+            {
+                _db.Chats.Add(newChat);
+                _db.SaveChanges();
+                PostMessage(message, newChat.Id);
+
+            }
+            catch (Exception e) when (e is DbUpdateException || e is MySqlException) 
+            {
+                _db.Remove(newChat);
+                int ChatId = (from c in _db.Chats
+                                where (c.AdId == listId && c.ResponderId == userId)
+                                select c.Id).FirstOrDefault();
+                 PostMessage(message, ChatId ); ;
+            }
             return RedirectToAction("Chat");
         }
 
-        
+
+
     }
 }

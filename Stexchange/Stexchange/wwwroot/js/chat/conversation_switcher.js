@@ -1,9 +1,6 @@
-﻿function displayConvo(chatId) {
-    let old = document.querySelector(".conversation_entry.active");
-    if (old !== null) {
-        old.classList.remove("active");
-    }
-    document.querySelector(".conversation_entry#c" + chatId).classList.add("active");
+﻿
+function displayConvo(chatId) {
+    document.getElementById("active_chat").value = chatId;
     document.getElementById("chattitle").innerHTML = ChatInbox[chatId].Listing.Title;
     let chatDiv = document.getElementById("messagelist");
     chatDiv.innerHTML = "";

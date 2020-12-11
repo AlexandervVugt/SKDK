@@ -227,37 +227,37 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
-        [HttpPost]
-        public IActionResult Inloggen(string emailOrUname, string password)
-        {
-            if (ModelState.IsValid)
-            {
-                string username = (from u in Database.Users
-                                   where u.Email == emailOrUname
-                                   select u.Username).FirstOrDefault();
+		[HttpPost]
+		public IActionResult Inloggen(string emailOrUname, string password)
+		{
+			if (ModelState.IsValid)
+			{
+				string username = (from u in Database.Users
+								   where u.Email == emailOrUname
+								   select u.Username).FirstOrDefault();
 
-                var user = (from u in Database.Users
-                            where u.Username == (username ?? emailOrUname) &&
-                            u.Password == CreatePasswordHash(password, username ?? emailOrUname)
-                            select u).FirstOrDefault();
-                // Checks if the combination exists
-                if (user is null)
-                {
-                    TempData["message"] = (username is object) ? "wachtwoord error" : "username of email error";
-                    return View("Login");
-                }
-                // Checks if the user is verified
-                if (user.IsVerified == false)
-                {
-                    TempData["Message"] = $"we hebben een verificatielink verstuurd naar: {user.Email}";
-                    TempData["Email"] = user.Email;
-                    return RedirectToAction("Verify");
-                }
-                AddCookie(user.Id, user.Postal_Code);
-            }
-            return RedirectToAction("Trade", "Trade");
-        }
-        private void AddCookie(int Id, string Postal_Code)
+				var user = (from u in Database.Users
+							where u.Username == (username ?? emailOrUname) &&
+							u.Password == CreatePasswordHash(password, username ?? emailOrUname)
+							select u).FirstOrDefault();
+				// Checks if the combination exists
+				if (user is null)
+				{
+					TempData["message"] = (username is object) ? "wachtwoord error" : "username of email error";
+					return View("Login");
+				}
+				// Checks if the user is verified
+				if (user.IsVerified == false)
+				{
+					TempData["Message"] = $"we hebben een verificatielink verstuurd naar: {user.Email}";
+					TempData["Email"] = user.Email;
+					return RedirectToAction("Verify");
+				}
+				AddCookie(user.Id, user.Postal_Code);
+			}
+			return RedirectToAction("Trade", "Trade");
+		}
+		private void AddCookie(int Id, string Postal_Code)
 		{
 			ClearSessions(Id);
 			long sessionToken = CreateSession(new Tuple<int, string>(Id, Postal_Code));

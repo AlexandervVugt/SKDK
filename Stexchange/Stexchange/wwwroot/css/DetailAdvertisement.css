@@ -2,7 +2,7 @@
   width: 100%; }
   body main {
     width: 100%; }
-    body main input[type=button] {
+    body main input[type=submit] {
       background-color: #015e54;
       border: solid;
       border-radius: 30px;
@@ -13,11 +13,11 @@
       cursor: pointer;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       color: white;
-      float: right;
       margin-right: 1%;
       margin-top: 3%;
-      width: 30%;
-      height: 4vh; }
+      width: 50%;
+      height: 4vh;
+      margin-left: 25%; }
     body main input[type=button]:hover {
       background-color: #3eaf91; }
     body main .section-img {
@@ -89,3 +89,11 @@
       width: 30%;
       font-size: 2vh;
       height: calc(55vh); }
+      body main .user_information #sendmsg {
+        margin-top: 10%; }
+        body main .user_information #sendmsg #typemessage {
+          display: block;
+          height: 2vh;
+          width: 95%;
+          padding: 2%;
+          font-size: 2vh; }
