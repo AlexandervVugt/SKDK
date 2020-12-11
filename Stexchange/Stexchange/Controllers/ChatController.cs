@@ -92,9 +92,9 @@ namespace Stexchange.Controllers
             int userId;
             TempData["Active"] = activeId;
             TempData.Keep("Active");
-            if (message is null)
+            if (message is null || activeId == -1)
             {
-                message = "";
+                return RedirectToAction("Chat");
             }
             try
             {
