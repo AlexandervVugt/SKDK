@@ -29,14 +29,14 @@ next[0].style.display = "none";
 let image = document.getElementById("imgoutput");
 
 /* image files*/
-let files = document.getElementById("imginput").files;
+//let files = document.getElementById("imginput").files;
 
 /* span text*/
 let imagecounter = document.getElementById("imagecounter")
 
 let currentImage = 0;
-function decCurrentImage() {
-    currentImage = currentImage > 0 ? --currentImage : currentImage + 2;
+function decCurrentImage(length) {
+    currentImage = currentImage > 0 ? --currentImage : currentImage + length - 1;
 }
 
 /* inserts first image in list into img field*/
@@ -64,15 +64,15 @@ let loadFile = function (event) {
 function nextImg() {
     let files = document.getElementById("imginput").files;
     currentImage++;
-    filereader(currentImage % files.length);
+    filereader(files[currentImage % files.length]);
     imagecount();
 }
 
 /* inserts previous file into img field*/
 function previousImg() {
     let files = document.getElementById("imginput").files;
-    decCurrentImage();
-    filereader(currentImage % files.length);
+    decCurrentImage(files.length);
+    filereader(files[currentImage % files.length]);
     imagecount();
 }
 
