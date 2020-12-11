@@ -7,7 +7,9 @@ using Stexchange.Services;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +31,9 @@ namespace Stexchange.Controllers
 		private EmailService EmailService { get; }
 		private IConfiguration Config { get; }
 		public IActionResult Login()
-		{
-			return View();
+        {
+            GetLocationAsync();
+            return View();
 		}
 		public IActionResult Verify()
 		{
@@ -284,5 +287,6 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 			Response.Cookies.Delete(Cookies.SessionToken);
 			return RedirectToAction("Login");
 		}
+
 	}
 }

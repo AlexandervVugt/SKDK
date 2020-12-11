@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using GeoCoordinatePortable;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stexchange.Controllers.Exceptions;
@@ -190,6 +193,82 @@ namespace Stexchange.Controllers
         private double CalculateDistance(string ownerPostalCode)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// returns the postal code of a user, based on the session
+        /// </summary>
+        /// <returns></returns>
+        private string GetCurrentUserPostalCode()
+        {
+            long token = Convert.ToInt64(Request.Cookies["SessionToken"]);
+
+            if (GetSessionData((long)token, out Tuple<int, string> data))
+            {
+                string user_postal = data.Item2;
+                return user_postal;
+            }
+
+            return "1111AA";
+        }
+
+
+        /// <summary>
+        /// returns the distance between two users 
+        /// </summary>
+        /// <returns></returns>
+        private async Task<Tuple<string, string>> GetLocationAsync(string postalCode)
+        {
+            string uri = $"https://www.geonames.org/postalcode-search.html?q={postalCode}&country=NL";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string readSite = await reader.ReadToEndAsync();
+                int indx = readSite.IndexOf("&nbsp;&nbsp;&nbsp");
+                string contains_lat_long_string = readSite.Substring(indx);
+                //<small> 52.341/4.955 </small>
+                int firstsmall_index = contains_lat_long_string.IndexOf("small>");
+                int secondsmall_index = contains_lat_long_string.IndexOf("</small");
+                string lat_long_unf = contains_lat_long_string.Substring(firstsmall_index + 6, secondsmall_index);
+
+                int slash_index = lat_long_unf.IndexOf("/");
+
+                string lat = lat_long_unf.Substring(0, slash_index);
+                //the lat values for the netherlands range from about 6000-7000, never 10.000
+                string lon = lat_long_unf.Substring(slash_index + 1, lat.Length - 1);
+
+                Tuple<string, string> lat_long = new Tuple<string, string>(lat, lon);
+                //Console.WriteLine($"lattetude: {lat_long.Item1}");
+                //Console.WriteLine($"longtitude: {lat_long.Item2}");
+                return lat_long;
+            }
+        }
+
+        /// <summary>
+        /// returns the distance between two users 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<double> GetDistance(string postalCode_current_user, string postalCode_listing_user)
+        {
+            Tuple<string, string> lat_long_current_user = await GetLocationAsync(postalCode_current_user);
+            Tuple<string, string> lat_long_listing_user = await GetLocationAsync(postalCode_listing_user);
+            int lat_current_us;
+            int lon_current_us;
+            int.TryParse(lat_long_current_user.Item1, out lat_current_us);
+            int.TryParse(lat_long_current_user.Item2, out lon_current_us);
+            int lat_listing_us;
+            int lon_listing_us;
+            int.TryParse(lat_long_listing_user.Item1, out lat_listing_us);
+            int.TryParse(lat_long_listing_user.Item2, out lon_listing_us);
+
+            var cCoord = new GeoCoordinate(lat_current_us, lon_current_us);
+            var lCoord = new GeoCoordinate(lat_listing_us, lon_listing_us);
+
+            return cCoord.GetDistanceTo(lCoord) / 1000; //to km
         }
     }
 }
