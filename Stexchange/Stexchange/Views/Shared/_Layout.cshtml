@@ -47,6 +47,12 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">UITLOGGEN</a>
                     </li>
                 }
+                @if (Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Chat">CHAT</a>
+                    </li>
+                }
             </ul>
 		</nav>
 	</header>

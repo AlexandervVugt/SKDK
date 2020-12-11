@@ -16,6 +16,7 @@ namespace Stexchange.Controllers
 
         /// <summary>
         /// Dictionary that contains all currently active session tokens.
+        /// Value Tuple contains user id and username.
         /// </summary>
         private static readonly Dictionary<long, Tuple<int, string>> sessions = new Dictionary<long, Tuple<int, string>>();
 
@@ -51,6 +52,7 @@ namespace Stexchange.Controllers
             long token = Convert.ToInt64(cookieVal ?? throw new InvalidSessionException("Cookie does not exist", false, null));
             if (!GetSessionData(token, out Tuple<int, string> session))
             {
+                Response.Cookies.Delete(Cookies.SessionToken);
                 throw new InvalidSessionException("Session does not exist", true, false);
             }
             return session.Item1;
@@ -59,7 +61,7 @@ namespace Stexchange.Controllers
         /// <summary>
         /// Creates a key, value pair for the session in the session dictionary.
         /// </summary>
-        /// <param name="user">The value of the session (user data)</param>
+        /// <param name="user">The value of the session (user id and name)</param>
         public static long CreateSession(Tuple<int, string> user)
         {
             long token = generateToken(user);
@@ -75,6 +77,17 @@ namespace Stexchange.Controllers
         public static bool TerminateSession(long token)
         {
             return sessions.Remove(token);
+        }
+
+        public static void ClearSessions(int id)
+        {
+            var tokens = (from value in sessions
+                         where value.Value.Item1 == id
+                         select value.Key).ToList();
+            foreach(long token in tokens)
+            {
+                sessions.Remove(token);
+            }
         }
 
         /// <summary>

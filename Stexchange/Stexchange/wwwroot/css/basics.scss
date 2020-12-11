@@ -81,6 +81,12 @@ html {
 					background-color: $green;
 					color: white;
 				}
+
+				img {
+					height: 100%;
+					width: 3.5%;
+					margin-left: 85%;
+				}
 			}
 
 			.navbar-default.scrolled {

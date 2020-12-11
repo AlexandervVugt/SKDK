@@ -48,22 +48,36 @@
     <None Include="compilerconfig.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="android-chrome-192x192.png" />
-    <None Remove="apple-touch-icon.png" />
-    <None Remove="Data\NewFile.txt" />
-    <None Remove="favicon-16x16.png" />
-    <None Remove="favicon.ico" />
-    <None Remove="favicon.png" />
-    <None Remove="Services\NewFile.txt" />
+  <ItemGroup>
+
+    <None Remove="android-chrome-192x192.png" />
+
+    <None Remove="apple-touch-icon.png" />
+
+    <None Remove="Data\NewFile.txt" />
+
+    <None Remove="favicon-16x16.png" />
+
+    <None Remove="favicon.ico" />
+
+    <None Remove="favicon.png" />
+
+    <None Remove="Services\NewFile.txt" />
+
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="android-chrome-192x192.png" />
-    <Content Include="apple-touch-icon.png" />
-    <Content Include="favicon-16x16.png" />
-    <Content Include="favicon.png" />
-    <Content Include="favicon.ico" />
+  <ItemGroup>
+
+    <Content Include="android-chrome-192x192.png" />
+
+    <Content Include="apple-touch-icon.png" />
+
+    <Content Include="favicon-16x16.png" />
+
+    <Content Include="favicon.png" />
+
+    <Content Include="favicon.ico" />
+
   </ItemGroup>
 
   <ItemGroup>
