@@ -248,23 +248,21 @@ namespace Stexchange.Controllers
             {
                 Tuple<string, string> lat_long_current_user = GetLocationAsync(GetCurrentUserPostalCode());
                 Tuple<string, string> lat_long_listing_user = GetLocationAsync(postalCode_listing_user);
-                int lat_current_us;
-                int lon_current_us;
-                int.TryParse(lat_long_current_user.Item1, out lat_current_us);
-                int.TryParse(lat_long_current_user.Item2, out lon_current_us);
+                Console.WriteLine(double.TryParse(lat_long_current_user.Item1, out double lat_current_us));
+                Console.WriteLine(double.TryParse(lat_long_current_user.Item2, out double lon_current_us));
                 Console.WriteLine($"lat-lon current : {lat_current_us} {lon_current_us}");
 
-                int lat_listing_us;
-                int lon_listing_us;
-                int.TryParse(lat_long_listing_user.Item1, out lat_listing_us);
-                int.TryParse(lat_long_listing_user.Item2, out lon_listing_us);
+                Console.WriteLine(double.TryParse(lat_long_listing_user.Item1, out double lat_listing_us));
+                Console.WriteLine(double.TryParse(lat_long_listing_user.Item2, out double lon_listing_us));
                 Console.WriteLine($"lat-lon listing : {lat_listing_us} {lon_listing_us}");
 
 
-                var cCoord = new GeoCoordinate(lat_current_us, lon_current_us);
-                var lCoord = new GeoCoordinate(lat_listing_us, lon_listing_us);
+                var cCoord = new GeoCoordinate(lat_current_us/1000, lon_current_us/1000);
+                var lCoord = new GeoCoordinate(lat_listing_us/1000, lon_listing_us/1000);
 
-                return cCoord.GetDistanceTo(lCoord) / 1000; //to km
+                var distance = cCoord.GetDistanceTo(lCoord);
+                Console.WriteLine($"resulting distance : {distance}");
+                return Math.Round(distance/1000, 2); //to km
             } catch(Exception)
             {
                 return -1;
