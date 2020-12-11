@@ -32,6 +32,9 @@ namespace Stexchange.Migrations
                         .HasColumnName("responder_id")
                         .HasColumnType("bigint(20) unsigned");
 
+                    b.Property<long>("TempId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasAlternateKey("AdId", "ResponderId");
@@ -133,6 +136,15 @@ namespace Stexchange.Migrations
                         .HasColumnType("bit(1)")
                         .HasDefaultValue(false);
 
+                    b.Property<long>("TempId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TempId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TempId2")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnName("title")
@@ -222,6 +234,15 @@ namespace Stexchange.Migrations
                         .HasColumnName("postal_code")
                         .HasColumnType("char(6)");
 
+                    b.Property<long>("TempId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TempId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TempId2")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnName("username")
@@ -265,12 +286,14 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.Listing", "Listing")
                         .WithMany()
                         .HasForeignKey("AdId")
+                        .HasPrincipalKey("TempId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Stexchange.Data.Models.User", "Responder")
                         .WithMany("ChatInbox")
                         .HasForeignKey("ResponderId")
+                        .HasPrincipalKey("TempId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -280,6 +303,7 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.Listing", "Listing")
                         .WithMany()
                         .HasForeignKey("ListingId")
+                        .HasPrincipalKey("TempId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -295,6 +319,7 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.Listing", "Listing")
                         .WithMany("Pictures")
                         .HasForeignKey("ListingId")
+                        .HasPrincipalKey("TempId2")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -304,6 +329,7 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.User", "Owner")
                         .WithMany("Listings")
                         .HasForeignKey("UserId")
+                        .HasPrincipalKey("TempId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -313,12 +339,14 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.Chat", null)
                         .WithMany("Messages")
                         .HasForeignKey("ChatId")
+                        .HasPrincipalKey("TempId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Stexchange.Data.Models.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
+                        .HasPrincipalKey("TempId2")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

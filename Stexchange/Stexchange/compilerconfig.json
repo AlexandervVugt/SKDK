@@ -10,5 +10,13 @@
   {
     "outputFile": "wwwroot/css/DetailAdvertisement.css",
     "inputFile": "wwwroot/css/DetailAdvertisement.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/chat.css",
+    "inputFile": "wwwroot/css/chat.scss"
+  },
+  {
+      "inputFile": "wwwroot/css/postadvertisement.scss",
+      "outputFile": "wwwroot/css/postadvertisement.css"
   }
 ]

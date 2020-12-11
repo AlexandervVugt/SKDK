@@ -25,7 +25,7 @@ namespace Stexchange.Data.Models
 
         [NotMapped]
         public Listing Listing { get; set; }
-
+        
         [NotMapped]
         public List<Message> Messages { get; set; }
     }

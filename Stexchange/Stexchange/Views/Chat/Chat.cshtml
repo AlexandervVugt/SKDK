@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Chat";
+}
+@model ChatViewModel
+@using Stexchange.Data.Models
+
+<link rel="stylesheet" href="~/css/chat.css" />
+
+<div id="chatcontainer">
+    <div id="conversationslist">
+        <p id="chatinboxtitle">
+            Chat Inbox
+        </p>
+        @foreach (Chat chat in Model.ChatInbox)
+        {
+            <p class="conversation_entry" id="@("c" + chat.Id)" onclick="displayConvo(@chat.Id)">
+                @(chat.ResponderId == Model.UserId ? chat.Poster.Username : chat.Responder.Username)
+            </p>
+        }
+    </div>
+    <div id="chattitle">
+        <!--Name of reciever-->
+    </div>
+    <div id="messagelist">
+    </div>
+    <form id="chatform" method="post" action="PostMessage">
+        <input id="typemessage" type="text" name="message" placeholder="Stuur een message" />
+        <input id="active_chat" type="number" name="activeId" value="-1" hidden />
+        <input type="submit" id="sendmessage" value="versturen" />
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    var temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ChatInbox));
+    var userId = @Model.UserId;
+    var ChatInbox = {};
+    temp.forEach(function (chat) {
+        ChatInbox[chat.Id] = chat;
+    });
+    window.onload = () => {
+        let activeChat = @(TempData["Active"] ?? -1);
+        if (activeChat != -1) {
+            displayConvo(activeChat);
+        }
+    };
+</script>
+<script type="text/javascript" src="~/js/chat/conversation_switcher.js" asp-append-version="true"></script>
