@@ -18,7 +18,7 @@
             </p>
             <p>
                 <label for="password" class="labeltext"></label>
-                <input class="nonsubmit" placeholder="Password" name="password" type="password" minlength="8" required>
+                <input class="nonsubmit" placeholder="Password" name="password" type="password" required>
             </p>
             @switch (TempData["message"])
             {
@@ -46,7 +46,7 @@
             {
                 case "InvalidEmail":
                     <div>
-                        <span>Ongeldige Email</span>
+                        <span>Ongeldige Emailadres</span>
                     </div>
                     break;
                 case "EmailExists":
@@ -72,6 +72,11 @@
                 case "IncorrectEmails":
                     <div>
                         <span>E-mails komen niet met overeen</span>
+                    </div>
+                    break;
+                case "InvalidPassword":
+                    <div>
+                        <span>Ongeldige wachtwoord. Wachtwoord moet uit minimaal 8 karakters bestaan</span>
                     </div>
                     break;
             }

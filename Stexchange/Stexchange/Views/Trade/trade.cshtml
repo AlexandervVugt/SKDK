@@ -8,16 +8,19 @@
     public static string TimeSpanDisplay(DateTime since)
     {
         var timespan = DateTime.Now - since;
-        if(timespan >= TimeSpan.FromDays(7))
+        if (timespan >= TimeSpan.FromDays(7))
         {
             return TimeSpanDisplayHelper(timespan.TotalDays, 7, " week", " weken");
-        } else if(timespan >= TimeSpan.FromHours(24))
+        }
+        else if (timespan >= TimeSpan.FromHours(24))
         {
             return TimeSpanDisplayHelper(timespan.TotalHours, 24, " dag", " dagen");
-        } else if(timespan >= TimeSpan.FromMinutes(60))
+        }
+        else if (timespan >= TimeSpan.FromMinutes(60))
         {
             return TimeSpanDisplayHelper(timespan.TotalMinutes, 60, " uur", " uur");
-        } else
+        }
+        else
         {
             return "Zojuist";
         }
@@ -34,12 +37,27 @@
 <link rel="stylesheet" href="~/css/trade.css" />
 <div class="fullwidth">
     <div class="searchbar" id="search">
-        <input type="text" placeholder="Zoek op trefwoord..." name="searchbar" id="searchbar" />
-        <button id="searchquery"><i class="fa fa-search"></i></button>
-        <input type="checkbox" name="search_description" id="search_description" value="search_description" />
-        <label for="search_description">Doorzoek ook de beschrijving</label>
+        <form action="Search" method="post">
+            <input type="text" placeholder="Zoek op trefwoord..." name="searchbar" id="searchbar" />
+            <button id="searchquery"><i class="fa fa-search"></i></button>
+            <input type="checkbox" name="search_description" id="search_description" value="true"/>
+            <label for="search_description">Doorzoek ook de beschrijving</label>
+        </form>
     </div>
 </div>
+@{
+    if (TempData["SearchResults"] != null)
+    {
+        if (int.Parse(TempData["SearchResults"].ToString()) == 1)
+        {
+            <p id="searchResults">@TempData["SearchResults"] resultaat</p>
+        }
+        else
+        {
+            <p id="searchResults">@TempData["SearchResults"] resultaten</p>
+        }
+    }
+}
 <div class="" id="forms">
     <form id="filer_form">
         <strong>Filters</strong>
@@ -187,7 +205,8 @@
                 <code class="title">@listing.Title</code>
                 <code class="owner">@listing.OwningUserName</code>
                 <span class="distance">Distance: <code>@listing.Distance</code> km</span>
-                <span class="since">Uploaded: 
+                <span class="since">
+                    Uploaded:
                     <code>@(TimeSpanDisplay(listing.CreatedAt))</code>
                 </span>
 
