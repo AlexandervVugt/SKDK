@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Invalid varification link";
+}
+
+@{
+    object verificationId;
+    ViewContext.RouteData.Values.TryGetValue("id", out verificationId);
+}
+
+<form action="Verification/@(verificationId)" method="get">
+    <h2>Je e-mailadress verifiëren</h2>
+    <div>
+        <p>Ongeldige verificatielink</p>
+    </div>
+</form>

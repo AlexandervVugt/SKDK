@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stexchange", "Stexchange\Stexchange.csproj", "{7386951B-364E-4D27-A004-ECCEFE010904}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{F70833F4-E68D-4ADC-AE99-BCD358069BC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7386951B-364E-4D27-A004-ECCEFE010904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7386951B-364E-4D27-A004-ECCEFE010904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7386951B-364E-4D27-A004-ECCEFE010904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7386951B-364E-4D27-A004-ECCEFE010904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70833F4-E68D-4ADC-AE99-BCD358069BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70833F4-E68D-4ADC-AE99-BCD358069BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70833F4-E68D-4ADC-AE99-BCD358069BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70833F4-E68D-4ADC-AE99-BCD358069BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89C235EB-5C1B-4DFD-AD25-D6E2F7654C28}
+	EndGlobalSection
+EndGlobal

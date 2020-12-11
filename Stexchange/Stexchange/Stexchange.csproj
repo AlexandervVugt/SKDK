@@ -1,0 +1,100 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\DetailAdvertisement\**" />
+    <Content Remove="Views\DetailAdvertisement\**" />
+    <EmbeddedResource Remove="Views\DetailAdvertisement\**" />
+    <None Remove="Views\DetailAdvertisement\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20201116165817_listing_table.cs" />
+    <Compile Remove="Migrations\20201116165817_listing_table.Designer.cs" />
+    <Compile Remove="Migrations\20201118123233_refactored_u_uv.cs" />
+    <Compile Remove="Migrations\20201118123233_refactored_u_uv.Designer.cs" />
+    <Compile Remove="Migrations\20201118124202_initialize.cs" />
+    <Compile Remove="Migrations\20201118124202_initialize.Designer.cs" />
+    <Compile Remove="Migrations\20201118125354_initialize.cs" />
+    <Compile Remove="Migrations\20201118125354_initialize.Designer.cs" />
+    <Compile Remove="Migrations\20201118125526_initialize.cs" />
+    <Compile Remove="Migrations\20201118125526_initialize.Designer.cs" />
+    <Compile Remove="Migrations\20201118125734_initialize.cs" />
+    <Compile Remove="Migrations\20201118125734_initialize.Designer.cs" />
+    <Compile Remove="Migrations\20201118134110_image_test.cs" />
+    <Compile Remove="Migrations\20201118134110_image_test.Designer.cs" />
+    <Compile Remove="Migrations\20201118135318_image_test.cs" />
+    <Compile Remove="Migrations\20201118135318_image_test.Designer.cs" />
+    <Compile Remove="Migrations\20201118135753_image_test.cs" />
+    <Compile Remove="Migrations\20201118135753_image_test.Designer.cs" />
+    <Compile Remove="Migrations\20201118140714_initialize.cs" />
+    <Compile Remove="Migrations\20201118140714_initialize.Designer.cs" />
+    <Compile Remove="Migrations\20201118150147_filters.cs" />
+    <Compile Remove="Migrations\20201118150147_filters.Designer.cs" />
+    <Compile Remove="Migrations\20201119114021_mutable_guid.cs" />
+    <Compile Remove="Migrations\20201119114021_mutable_guid.Designer.cs" />
+    <Compile Remove="Migrations\20201206114741_fix_foreign_keys.cs" />
+    <Compile Remove="Migrations\20201206114741_fix_foreign_keys.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <None Remove="android-chrome-192x192.png" />
+
+    <None Remove="apple-touch-icon.png" />
+
+    <None Remove="Data\NewFile.txt" />
+
+    <None Remove="favicon-16x16.png" />
+
+    <None Remove="favicon.ico" />
+
+    <None Remove="favicon.png" />
+
+    <None Remove="Services\NewFile.txt" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <Content Include="android-chrome-192x192.png" />
+
+    <Content Include="apple-touch-icon.png" />
+
+    <Content Include="favicon-16x16.png" />
+
+    <Content Include="favicon.png" />
+
+    <Content Include="favicon.ico" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="9.3.0" />
+    <PackageReference Include="MailKit" Version="2.9.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="MimeKit" Version="2.9.2" />
+    <PackageReference Include="MySql.Data" Version="8.0.22" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+  </ItemGroup>
+</Project>

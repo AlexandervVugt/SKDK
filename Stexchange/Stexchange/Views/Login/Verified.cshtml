@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Verified";
+}
+
+@{
+    object verificationId;
+    ViewContext.RouteData.Values.TryGetValue("id", out verificationId);
+}
+
+<form action="Verification/@(verificationId)" method="get">
+    <h2>E-mail verificatie voltooid</h2>
+    <div>
+        <p>Bedankt voor het bevestigen van je email</p>
+    </div>
+</form>

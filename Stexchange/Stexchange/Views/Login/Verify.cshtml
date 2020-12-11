@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Verify";
+}
+
+@{
+    object verificationId;
+    ViewContext.RouteData.Values.TryGetValue("id", out verificationId);
+}
+
+<form action="Verification/@(verificationId)" method="get">
+    <h2>Je e-mailadress verifiëren</h2>
+    <div>
+        <p>@TempData["Message"]</p>
+    </div>
+    <a href="@($"/Login/SendNewCode/{TempData["Email"]}")">Stuur een nieuwe verificatielink</a>
+</form>
+

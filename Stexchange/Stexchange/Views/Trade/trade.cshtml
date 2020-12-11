@@ -1,0 +1,208 @@
+﻿@model TradeViewModel
+@using Stexchange.Data.Models
+@using System.Globalization;
+@{
+    ViewData["Title"] = "Ruiloverzicht";
+}
+@functions{
+    public static string TimeSpanDisplay(DateTime since)
+    {
+        var timespan = DateTime.Now - since;
+        if(timespan >= TimeSpan.FromDays(7))
+        {
+            return TimeSpanDisplayHelper(timespan.TotalDays, 7, " week", " weken");
+        } else if(timespan >= TimeSpan.FromHours(24))
+        {
+            return TimeSpanDisplayHelper(timespan.TotalHours, 24, " dag", " dagen");
+        } else if(timespan >= TimeSpan.FromMinutes(60))
+        {
+            return TimeSpanDisplayHelper(timespan.TotalMinutes, 60, " uur", " uur");
+        } else
+        {
+            return "Zojuist";
+        }
+    }
+
+    private static string TimeSpanDisplayHelper(double property, int divider, string suffix_singular, string suffix_plural)
+    {
+        int amount = (int)Math.Floor(property / divider);
+        amount += (property % divider > divider / 2.0) ? 1 : 0;
+        return amount + (amount > 1 ? suffix_plural : suffix_singular) + " geleden";
+    }
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/css/trade.css" />
+<div class="fullwidth">
+    <div class="searchbar" id="search">
+        <input type="text" placeholder="Zoek op trefwoord..." name="searchbar" id="searchbar" />
+        <button id="searchquery"><i class="fa fa-search"></i></button>
+        <input type="checkbox" name="search_description" id="search_description" value="search_description" />
+        <label for="search_description">Doorzoek ook de beschrijving</label>
+    </div>
+</div>
+<div class="" id="forms">
+    <form id="filer_form">
+        <strong>Filters</strong>
+        <ul id="filter_list">
+            <li>
+                <img class="caret rotated" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Zonlicht</span>
+                <ul class="nested expanded">
+                    <li>
+                        <input type="checkbox" id="zonlicht1" name="zonlicht" value="zon" />
+                        <label for="zonlicht1">Zon</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="zonlicht2" name="zonlicht" value="halfschaduw" />
+                        <label for="zonlicht2">Halfschaduw</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="zonlicht3" name="zonlicht" value="schaduw" />
+                        <label for="zonlicht3">Schaduw</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Herkomst</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="herkomst1" name="herkomst" value="inheems" />
+                        <label for="herkomst1">Inheems</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="herkomst2" name="herkomst" value="niet_inheems" />
+                        <label for="herkomst2">Niet inheems</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Zuurgraad</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="zuurgraad1" name="zuurgraad" value="zuur" />
+                        <label for="zuurgraad1">Zuur</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="zuurgraad2" name="zuurgraad" value="neutraal" />
+                        <label for="zuurgraad2">Neutraal</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="zuurgraad3" name="zuurgraad" value="kalkrijk" />
+                        <label for="zuurgraad3">Kalkrijk</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Voedselrijkdom</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="voedselrijkdom1" name="voedselrijkdom" value="arm" />
+                        <label for="voedselrijkdom1">Arm</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="voedselrijkdom2" name="voedselrijkdom" value="matig" />
+                        <label for="voedselrijkdom2">Matig</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="voedselrijkdom3" name="voedselrijkdom" value="rijk" />
+                        <label for="voedselrijkdom3">Rijk</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Vocht</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="vocht1" name="vocht" value="droog" />
+                        <label for="vocht1">Droog</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="vocht2" name="vocht" value="matig" />
+                        <label for="vocht2">Matig vochtig</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="vocht3" name="vocht" value="vochtig" />
+                        <label for="vocht3">Vochtig</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="vocht4" name="vocht" value="wisselnat" />
+                        <label for="vocht4">Wisselnat</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Faunawaarde</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="faunawaarde1" name="faunawaarde" value="vlinders" />
+                        <label for="faunawaarde1">Vlinders</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="faunawaarde2" name="faunawaarde" value="wilde_bijen" />
+                        <label for="faunawaarde2">Wilde bijen</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="faunawaarde3" name="faunawaarde" value="honing_bijen" />
+                        <label for="faunawaarde3">Honing bijen</label>
+                    <li>
+                        <input type="checkbox" id="faunawaarde4" name="faunawaarde" value="hommels" />
+                        <label for="faunawaarde4">Hommels</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="faunawaarde5" name="faunawaarde" value="vogels" />
+                        <label for="faunawaarde5">Vogels</label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <button type="submit" id="apply_filter">Filters toepassen</button>
+    </form>
+    <form id="sort_form">
+        <strong class="sort">Sorteren</strong>
+        <label class="chose" for="sort">Kies een criterium om op te sorteren</label>
+
+        <input type="checkbox" class="sort-range-toggle" name="distance_toggle" id="distance_toggle" />
+        <label for="distance_toggle">Afstand begrenzen</label>
+        <input type="range" class="sort-range" name="distance" id="distance" min="5" max="30" value="5" step="5" disabled />
+        <span class="sort-range-display" name="distance_amount" id="distance_amount" hidden><span>5</span> km</span><p></p>
+
+        <input type="checkbox" class="sort-range-toggle" name="recent_toggle" id="recent_toggle" />
+        <label for="recent_toggle">Maximum tijd sinds plaatsing</label>
+        <input type="range" class="sort-range" name="recent" id="recent" min="1" max="57" value="1" disabled />
+        <span class="sort-range-display" name="recent_amount" id="recent_amount" hidden><span>1</span> dagen</span><p></p>
+
+        <input type="checkbox" class="sort-range-toggle" name="rating_toggle" id="rating_toggle" />
+        <label for="rating_toggle">Minimum beoordeling</label>
+        <input type="range" class="sort-range" name="rating" id="rating" min="1" max="5" value="3" disabled />
+        <span class="sort-range-display" name="rating_amount" id="rating_amount" hidden><span>3</span> sterren</span><p></p>
+
+        <button type="submit" id="apply_sort">Criteria toepassen</button>
+    </form>
+</div>
+<div class="" id="listings">
+    @foreach (Listing listing in Model.Listings)
+    {
+        <a href="@Url.Action("Detail", "Trade", new { listingId = listing.Id })">
+            <div class="Advertisement">
+                <img class="picture" src="@listing.Pictures.First().GetImage()" alt="Foto van de plant">
+                <code class="title">@listing.Title</code>
+                <code class="owner">@listing.OwningUserName</code>
+                <span class="distance">Distance: <code>@listing.Distance</code> km</span>
+                <span class="since">Uploaded: 
+                    <code>@(TimeSpanDisplay(listing.CreatedAt))</code>
+                </span>
+
+                <div class="filters">
+                    @if (listing.Filters is object)
+                    {
+                        @foreach (string filter in listing.Filters)
+                        {
+                            <code class="filter_tag">@filter</code>
+                        }
+                    }
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+<script type="text/javascript" src="~/js/trade.js" asp-append-version="true"></script>

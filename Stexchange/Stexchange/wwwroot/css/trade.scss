@@ -1,0 +1,329 @@
+﻿$lightgreen: #80ff8d;
+$green: #19ff30;
+$darkgreen: #005709;
+$lightshadow: rgba(0,0,0,0.1);
+$shadow: #b2e8d4;
+$darkshadow: rgba(0,0,0,0.8);
+$lightshadowwhite: rgba(255,255,255,0.1);
+$shadowwhite: rgba(255,255,255,0.3);
+$darkshadowwhite: rgba(255,255,255,0.8);
+$greenshadow: rgba(25, 255, 48, 0.5);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    height: 100%;
+    width: 100%;
+
+    body {
+
+        input[type=checkbox] + label {
+            cursor: pointer;
+        }
+
+        input[type=checkbox] {
+            display: none;
+        }
+
+        input[type=checkbox] + label:before {
+            content: "\2714";
+            border: 0.1vh solid $darkgreen;
+            border-radius: 0.2em;
+            color: transparent;
+            transition: .2s;
+            padding-top: 0.1vh;
+            padding-right: 0.2vh;
+            padding-left: 0.2vh;
+            margin-right: 1vh;
+        }
+
+        input[type=checkbox] + label:active:before {
+            transform: scale(0);
+        }
+
+        input[type=checkbox]:checked + label:before {
+            background-color: MediumSeaGreen;
+            border-color: MediumSeaGreen;
+            color: #fff;
+        }
+        /* Remove bulletpoints */
+        ul, #filter_list {
+            list-style-type: none !important;
+            /* Add pointer cursor to the caret and prevent text selection*/
+            .caret {
+                margin-right: 1vh;
+                cursor: pointer;
+                user-select: none;
+                color: black;
+                display: inline;
+                transition: all 0.5s ease;
+            }
+            /* Rotate element by 90 deg*/
+            .rotated {
+                transition: all 0.5s ease;
+                transform: rotate(90deg);
+            }
+            /* Hide nested elements default*/
+            .nested {
+                display: none;
+            }
+            /* Show nested elements when expanded*/
+            .expanded {
+                display: block;
+            }
+
+            .span {
+                vertical-align: middle;
+            }
+        }
+
+        #filter_list {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #forms {
+            padding-left: 3vh;
+            width: 15%;
+            height: calc(100vh);
+            float: left;
+            margin-right: 8px;
+            padding-right: 16px;
+            font-size: 1.5vh;
+
+
+            .sort {
+                float: left;
+                width: 100%;
+                line-height: 2vh;
+                margin-top: 20%;
+            }
+
+            .chose {
+                float: left;
+                width: 100%;
+                line-height: 2vh;
+                padding-bottom: 1vh;
+                border-bottom: 0.1vh solid;
+            }
+
+            li {
+                border-top: 0.1vh solid;
+            }
+
+            #apply_filter {
+                font-size: 1vh;
+                position: relative;
+                border: none;
+                background: $lightgreen;
+                color: black;
+                padding-left: 2vh;
+                padding-right: 2vh;
+                padding-top: 1vh;
+                padding-bottom: 1vh;
+                text-transform: uppercase;
+                border-radius: 100vh;
+                transition: all 0.3s ease 0s;
+            }
+
+            #apply_filter:hover {
+                color: white;
+                background-color: $lightgreen;
+                transition: all 0.3s ease 0s;
+            }
+
+            #apply_sort {
+                font-size: 1vh;
+                position: relative;
+                border: none;
+                background: $lightgreen;
+                color: black;
+                padding-left: 2vh;
+                padding-right: 2vh;
+                padding-top: 1vh;
+                padding-bottom: 1vh;
+                text-transform: uppercase;
+                border-radius: 100vh;
+                transition: all 0.3s ease 0s;
+            }
+
+            #apply_sort:hover {
+                color: white;
+                background-color: $lightgreen;
+                transition: all 0.3s ease 0s;
+            }
+
+            .nested {
+                margin-left: 3vh;
+            }
+
+            input[type=range] {
+                width: 100%;
+                float: left;
+                color: $darkgreen;
+                background: $green;
+            }
+
+            .sort-range-display {
+                color: $darkgreen;
+            }
+        }
+
+        #listings {
+            float: left;
+            width: 75%;
+
+            .Advertisement {
+                float: left;
+                width: 30%;
+                margin-right: 3%;
+                margin-bottom: 3%;
+                background-color: $darkshadow;
+
+                .distance {
+                    float: left;
+                    line-height: 2vh;
+                    text-transform: uppercase;
+                    width: 80%;
+                    color: white;
+                    font-size: 1vh;
+                    margin-left: 2%;
+                    font-weight: 200;
+                }
+
+                .since {
+                    float: left;
+                    line-height: 2vh;
+                    text-transform: uppercase;
+                    width: 80%;
+                    color: white;
+                    font-size: 1vh;
+                    margin-left: 2%;
+                    font-weight: 200;
+                }
+
+                .picture {
+                    width: 96%;
+                    height: calc(30vh);
+                    object-fit: cover;
+                    margin-left: 2%;
+                    margin-top: 2%;
+                }
+
+                .title {
+                    float: left;
+                    line-height: 2vh;
+                    text-transform: uppercase;
+                    margin-left: 2%;
+                    width: 50%;
+                    color: $lightgreen;
+                    font-size: 1.5vh;
+                }
+
+                .description {
+                    float: left;
+                    margin-left: 2%;
+                    width: 80%;
+                    color: white;
+                }
+
+                .filters {
+                    display: inline-block;
+
+                    .filter_tag {
+                        font-size: 1.2vh;
+                        line-height: 1.5vh;
+                        float: left;
+                        margin-left: 2%;
+                        margin-right: 2%;
+                        margin-top: 2%;
+                        color: white;
+                        background-color: $greenshadow;
+                        padding: 0.2vh 0.5vh 0.2vh;
+                        border-radius: 0.2vh;
+                        text-transform: uppercase;
+                    }
+                }
+
+                .owner {
+                    float: right;
+                    width: 27%;
+                    margin-right: 2%;
+                    color: $lightgreen;
+                    line-height: 2vh;
+                    text-align: right;
+                    font-size: 1.5vh;
+                    text-transform: uppercase;
+                }
+            }
+        }
+
+        .fullwidth {
+            width: 100%;
+            float: left;
+            margin-bottom: 2vh;
+
+            .searchbar {
+                float: right;
+                width: 25%;
+                text-align: right;
+                margin-right: 2%;
+                background-color: $darkshadow;
+
+                input[type=text] {
+                    float: left;
+                    background-color: white;
+                    margin-left: 1%;
+                    margin-top: 1%;
+                    margin-bottom: 1%;
+                    width: 86%;
+                    height: calc(3vh);
+                    padding: 1%;
+                    border: none;
+                    font-size: 2vh;
+                }
+
+                button {
+                    width: 10%;
+                    float: left;
+                    color: $lightgreen;
+                    font-size: 2vh;
+                    margin-right: 1%;
+                    line-height: 1vh;
+                    background-color: none;
+                    border: none;
+                    background: none;
+                    margin-top: 3%;
+                    cursor: pointer;
+                    transition: 0.5s;
+                }
+
+                button:hover {
+                    color: $darkgreen;
+                }
+
+                label {
+                    display: none;
+                    transition: 1s;
+                }
+            }
+
+            .searchbar:hover {
+
+                label {
+                    display: block;
+                    display: block;
+                    color: white;
+                    font-size: 1.2vh;
+                    margin-right: 11%;
+                    margin-bottom: 1%;
+                    line-height: 3vh;
+                }
+            }
+        }
+    }
+}

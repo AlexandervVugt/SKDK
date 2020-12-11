@@ -1,0 +1,99 @@
+﻿body {
+  width: 100%; }
+  body main {
+    width: 100%; }
+    body main input[type=submit] {
+      background-color: #015e54;
+      border: solid;
+      border-radius: 30px;
+      border-color: #3eaf91;
+      text-align: center;
+      display: block;
+      font-size: 2vh;
+      cursor: pointer;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      color: white;
+      margin-right: 1%;
+      margin-top: 3%;
+      width: 50%;
+      height: 4vh;
+      margin-left: 25%; }
+    body main input[type=button]:hover {
+      background-color: #3eaf91; }
+    body main .section-img {
+      width: 65%; }
+      body main .section-img #imgoutput {
+        border: 0.5px solid #3eaf91;
+        display: block;
+        float: left;
+        width: 100%;
+        height: calc(65vh);
+        object-fit: cover; }
+    body main h4 {
+      font-size: 30px;
+      margin-left: 10%; }
+    body main .section {
+      width: 80%;
+      margin-left: 10%;
+      margin-right: 10%; }
+    body main .tabsection {
+      margin-top: 1%;
+      display: block;
+      margin-left: 10%;
+      margin-right: 10%;
+      border-bottom: 3px solid #015e54;
+      float: left;
+      width: 80%;
+      font-size: 20px; }
+    body main .basic_tab {
+      padding: 8px 16px;
+      border: solid;
+      cursor: pointer;
+      background-color: #015e54;
+      color: white;
+      border: 2px solid #015e54;
+      float: left;
+      width: 200px;
+      height: 3%;
+      text-align: center; }
+    body main .filters_tab {
+      padding: 8px 16px;
+      border: solid;
+      cursor: pointer;
+      background-color: white;
+      border: 2px solid #015e54;
+      float: left;
+      width: 200px;
+      height: 3%;
+      text-align: center; }
+    body main .plant_information {
+      padding: 8px 16px;
+      margin-left: 10%;
+      border: 0.5px solid #015e54;
+      margin-right: 10%;
+      background-color: white;
+      float: left;
+      display: block;
+      width: 80%;
+      margin-bottom: 3%; }
+    body main p {
+      font-size: 2vh;
+      font-weight: bold; }
+    body main .user_information {
+      position: relative;
+      background-color: #015e54;
+      color: white;
+      padding: 8px 16px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      float: right;
+      width: 30%;
+      font-size: 2vh;
+      height: calc(55vh); }
+      body main .user_information #sendmsg {
+        margin-top: 10%; }
+        body main .user_information #sendmsg #typemessage {
+          display: block;
+          height: 2vh;
+          width: 95%;
+          padding: 2%;
+          font-size: 2vh; }

@@ -1,0 +1,72 @@
+﻿@using Stexchange.Controllers
+@{
+    ViewData["Title"] = "Advertisement";
+    string nietVanToepassing = "N.V.T.";
+}
+@model DetailAdvertisementModel
+<link rel="stylesheet" href="~/css/DetailAdvertisement.css" />
+
+<h4>@Model.Listing.Title</h4>
+
+<div class="section">
+    <div class="section-img">
+        <a onclick="imageslider()">
+            <img id="imgoutput" src="@Model.Listing.Pictures.First().GetImage()" />
+        </a>
+    </div>
+    <div class="user_information">
+        <p>gebruikersnaam: @Model.Listing.OwningUserName</p>
+        <p>afstand: </p>
+        <p>gemiddelde beoordeling op communicatie</p>
+        <span style='font-size:30px;'>&#9734;</span>
+        <span style='font-size:30px;'>&#9734;</span>
+        <span style='font-size:30px;'>&#9734;</span>
+        <span style='font-size:30px;'>&#9734;</span>
+        <span style='font-size:30px;'>&#9734;</span>
+        <p>gemiddelde beoordeling op kwaliteit</p>
+        <span style='font-size:30px;'>&#9734;</span>
+        <span style='font-size:30px;'>&#9734;</span>
+        <span style='font-size:30px;'>&#9734;</span>
+        <span style='font-size:30px;'>&#9734;</span>
+        <span style='font-size:30px;'>&#9734;</span>
+        <p>gebaseerd op ... beoordelingen</p>
+        @if (Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
+        {
+            <form id="sendmsg" method="post" action="@Url.Action("NewChat","Chat", new {listId = Model.Listing.Id})">
+                <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
+                <input type="submit" id="sendmessage" value="Stuur een bericht" />
+            </form>
+        }
+    </div>
+</div>
+
+<div class="tabsection">
+    <div class="basic_tab tabs" onclick="switchtab('basic_information', 'basic_tab')">Algemene Informatie</div>
+    <div class="filters_tab tabs" onclick="switchtab('filters_information', 'filters_tab')">Verzorging</div>
+</div>
+
+<div class="plant_information">
+    <div class="basic_information infoblock">
+        <p>nederlandse naam: @Model.Listing.NameNl</p>
+        <p>latijnse naam: @Model.Listing.NameLatin</p>
+        <p>hoeveelheid: @Model.Listing.Quantity</p>
+        <p>beschrijving: @Model.Listing.Description</p>
+        <p>geplaatst op @Model.Listing.CreatedAt</p>
+    </div>
+    <div class="filters_information infoblock">
+        <p>Standplaats: @(Model.Filterlist.TryGetValue("light", out string display) && display != "null" ? display : @nietVanToepassing)</p>
+        <p>Vocht: @(Model.Filterlist.TryGetValue("water", out display) && display != "null" ? display : @nietVanToepassing)</p>
+        <p>Plantsoort: @(Model.Filterlist.TryGetValue("planttype", out display) && display != "null" ? display : @nietVanToepassing)</p>
+        <p>Voeding: @(Model.Filterlist.TryGetValue("nutrients", out display) && display != "null" ? display : @nietVanToepassing)</p>
+        <p>pH-waarde: @(Model.Filterlist.TryGetValue("ph", out display) && display != "null" ? display : @nietVanToepassing)</p>
+        <p>Inheems: @(Model.Filterlist.TryGetValue("indigenous", out display) && display != "null" ? display : @nietVanToepassing)</p>
+        <p>Voorzien van pot: @(Model.Filterlist.TryGetValue("withpot", out display) && display != "null" ? display : @nietVanToepassing)</p>
+        <p>Gratis: @(Model.Filterlist.TryGetValue("giveaway", out display) && display != "null" ? display : @nietVanToepassing)</p>
+    </div>
+</div>
+
+<script type="text/javascript" asp-append-version="true">
+    var imgList = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GetImages()));
+</script>
+
+<script type="text/javascript" src="~/js/DetailAdvertisement.js" asp-append-version="true"></script>

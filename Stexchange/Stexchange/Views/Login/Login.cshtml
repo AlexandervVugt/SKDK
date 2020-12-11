@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Login/Register";
+}
+<div class="logincontainer">
+    <div class="item1">
+        <article class="loginarticle">
+            <h1 class="titleleft">STEX</h1><h1 class="titleright">CHANGE</h1>
+            <p class="textlogin">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </article>
+    </div>
+
+    <div class="item2">
+        <form action="Inloggen" method="post" class="accountform">
+            <h2 class="logintitle">Hey!<br>Welcome back.</h2>
+            <p>
+                <label for="Email" class="labeltext"></label>
+                <input class="nonsubmit" placeholder="E-mail" name="emailOrUname" type="text" required>
+            </p>
+            <p>
+                <label for="password" class="labeltext"></label>
+                <input class="nonsubmit" placeholder="Password" name="password" type="password" minlength="8" required>
+            </p>
+            @switch (TempData["message"])
+            {
+                case "username of email error":
+                    <div>
+                        <span>Het e-mailadres of de gebruikersnaam is niet juist</span>
+                    </div>
+                    break;
+                case "wachtwoord error":
+                    <div>
+                        <span>Het wachtwoord is niet juist.</span>
+                    </div>
+                    break;
+
+            }
+            <a href="www.link.here"><span class="forgetpasslink">Forgot your password?</span></a>
+            <input type="submit" value="Login" class="submit">
+        </form>
+    </div>
+
+    <div class="item3">
+        <form action="Register" method="post" class="accountform">
+            <h2 class="logintitle">Not a member?<br>Join us!</h2>
+            @switch (TempData["Message"])
+            {
+                case "InvalidEmail":
+                    <div>
+                        <span>Ongeldige Email</span>
+                    </div>
+                    break;
+                case "EmailExists":
+                    <div>
+                        <span>Email is al gebruikt</span>
+                    </div>
+                    break;
+                case "InvalidPostalCode":
+                    <div>
+                        <span>Ongeldige Postcode</span>
+                    </div>
+                    break;
+                case "UsernameTaken":
+                    <div>
+                        <span>Gebruikersnaam is al bezet</span>
+                    </div>
+                    break;
+                case "IncorrectPasswords":
+                    <div>
+                        <span>Wachtwoorden komen niet overeen</span>
+                    </div>
+                    break;
+                case "IncorrectEmails":
+                    <div>
+                        <span>E-mails komen niet met overeen</span>
+                    </div>
+                    break;
+            }
+            <p>
+                <label for="Email" class="labeltext"></label>
+                <input class="nonsubmit" name="Email" type="text" placeholder="E-mail" required>
+            </p>
+            <p>
+                <label for="vEmail" class="labeltext"></label>
+                <input class="nonsubmit" name="vEmail" type="text" placeholder="Repeat e-mail" required>
+            </p>
+            <p>
+                <label for="username" class="labeltext"></label>
+                <input class="nonsubmit" name="username" type="text" placeholder="Username" maxlength="15" required>
+            </p>
+            <p>
+                <label for="postalcode" class="labeltext"></label>
+                <input class="nonsubmit" name="postalcode" type="text" placeholder="Zip-Code" required>
+            </p>
+            <p>
+                <label for="password" class="labeltext"></label>
+                <input class="nonsubmit" name="password" type="password" placeholder="Password" required>
+            </p>
+            <p>
+                <label for="confirm_password" class="labeltext"></label>
+                <input class="nonsubmit" name="confirm_password" type="password" placeholder="Repeat password" required>
+            </p>
+            <p class="terms">By creating an account, you agree to the <a class="termlink" href="www.link.here">Terms of Use<br></a> and <a class="termlink" href="www.link.here">Privacy Policy</a></p>
+
+            <button type="submit" class="submit" id="registersubmit">Create My Account</button>
+        </form>
+    </div>
+</div>
+
+
