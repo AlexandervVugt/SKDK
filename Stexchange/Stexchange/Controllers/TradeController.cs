@@ -165,12 +165,12 @@ namespace Stexchange.Controllers
         /// </summary>
         /// <param name="token">The user whose data to use, if logged in.</param>
         /// <param name="listing">The given listing</param>
-        private void PrepareListing(ref Listing listing)
+        private async Task PrepareListing(ref Listing listing)
         {
             listing.Owner = _userCache[listing.UserId];
             try
             {
-                listing.Distance = CalculateDistance(listing.Owner.Postal_Code);
+                listing.Distance = await GetDistance(listing.Owner.Postal_Code);
             } catch (InvalidSessionException)
             {
                 listing.Distance = -1;
@@ -183,17 +183,6 @@ namespace Stexchange.Controllers
             listing.Owner = null;
         }
 
-        /// <summary>
-        /// Calculates the distance between the logged in user
-        /// and the owner of the listing.
-        /// </summary>
-        /// <param name="ownerPostalCode"></param>
-        /// <exception cref="InvalidSessionException">If the user is not logged in.</exception>
-        /// <returns>distance in km as double</returns>
-        private double CalculateDistance(string ownerPostalCode)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// returns the postal code of a user, based on the session
@@ -249,12 +238,13 @@ namespace Stexchange.Controllers
         }
 
         /// <summary>
-        /// returns the distance between two users 
+        /// Calculates the distance between the logged in user
+        /// and the owner of the listing.
         /// </summary>
         /// <returns></returns>
-        public async Task<double> GetDistance(string postalCode_current_user, string postalCode_listing_user)
+        public async Task<double> GetDistance( string postalCode_listing_user)
         {
-            Tuple<string, string> lat_long_current_user = await GetLocationAsync(postalCode_current_user);
+            Tuple<string, string> lat_long_current_user = await GetLocationAsync(GetCurrentUserPostalCode());
             Tuple<string, string> lat_long_listing_user = await GetLocationAsync(postalCode_listing_user);
             int lat_current_us;
             int lon_current_us;
@@ -271,4 +261,6 @@ namespace Stexchange.Controllers
             return cCoord.GetDistanceTo(lCoord) / 1000; //to km
         }
     }
+
+
 }
