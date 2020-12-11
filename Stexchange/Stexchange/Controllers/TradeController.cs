@@ -231,8 +231,8 @@ namespace Stexchange.Controllers
                 string lon = lat_long_unf.Substring(slash_index + 1, lat.Length - 1);
 
                 Tuple<string, string> lat_long = new Tuple<string, string>(lat, lon);
-                //Console.WriteLine($"lattetude: {lat_long.Item1}");
-                //Console.WriteLine($"longtitude: {lat_long.Item2}");
+                Console.WriteLine($"lattetude: {lat_long.Item1}");
+                Console.WriteLine($"longtitude: {lat_long.Item2}");
                 return lat_long;
             }
         }
@@ -252,10 +252,14 @@ namespace Stexchange.Controllers
                 int lon_current_us;
                 int.TryParse(lat_long_current_user.Item1, out lat_current_us);
                 int.TryParse(lat_long_current_user.Item2, out lon_current_us);
+                Console.WriteLine($"lat-lon current : {lat_current_us} {lon_current_us}");
+
                 int lat_listing_us;
                 int lon_listing_us;
                 int.TryParse(lat_long_listing_user.Item1, out lat_listing_us);
                 int.TryParse(lat_long_listing_user.Item2, out lon_listing_us);
+                Console.WriteLine($"lat-lon listing : {lat_listing_us} {lon_listing_us}");
+
 
                 var cCoord = new GeoCoordinate(lat_current_us, lon_current_us);
                 var lCoord = new GeoCoordinate(lat_listing_us, lon_listing_us);
