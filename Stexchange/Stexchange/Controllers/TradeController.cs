@@ -228,7 +228,8 @@ namespace Stexchange.Controllers
 
                 string lat = lat_long_unf.Substring(0, slash_index);
                 //the lat values for the netherlands range from about 6000-7000, never 10.000
-                string lon = lat_long_unf.Substring(slash_index + 1, lat.Length - 1);
+                int bracket_index = lat_long_unf.IndexOf("<");
+                string lon = lat_long_unf.Substring(slash_index + 1, bracket_index - slash_index - 1);
 
                 Tuple<string, string> lat_long = new Tuple<string, string>(lat, lon);
                 Console.WriteLine($"lattetude: {lat_long.Item1}");
@@ -263,8 +264,10 @@ namespace Stexchange.Controllers
                 var distance = cCoord.GetDistanceTo(lCoord);
                 Console.WriteLine($"resulting distance : {distance}");
                 return Math.Round(distance/1000, 2); //to km
-            } catch(Exception)
+            } catch(Exception e)
             {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
                 return -1;
             }
         }
