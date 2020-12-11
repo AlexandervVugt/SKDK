@@ -199,7 +199,7 @@ namespace Stexchange.Controllers
                 return user_postal;
             }
 
-            return "3011AM";
+            return "-1";
         }
 
 
