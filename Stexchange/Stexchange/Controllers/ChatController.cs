@@ -122,7 +122,15 @@ namespace Stexchange.Controllers
         [HttpPost]
         public IActionResult NewChat(int listId, string message)
         {
-            int userId = GetUserId();
+            int userId;
+            try
+            {
+                userId = GetUserId();
+            }
+            catch (InvalidSessionException)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             var newChat = new Chat
             {
                 ResponderId = userId,
