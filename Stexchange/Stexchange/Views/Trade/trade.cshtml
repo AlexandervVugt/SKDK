@@ -186,7 +186,9 @@
                 <img class="picture" src="@listing.Pictures.First().GetImage()" alt="Foto van de plant">
                 <code class="title">@listing.Title</code>
                 <code class="owner">@listing.OwningUserName</code>
-                <span class="distance">Distance: <code>@listing.Distance</code> km</span>
+                @if (!(listing.Distance == -1))
+                {
+                <span class="distance">Distance: <code>@listing.Distance</code> km</span>}
                 <span class="since">Uploaded: 
                     <code>@(TimeSpanDisplay(listing.CreatedAt))</code>
                 </span>
