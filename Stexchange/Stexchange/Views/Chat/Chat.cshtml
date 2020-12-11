@@ -14,7 +14,7 @@
         </p>
         @foreach (Chat chat in Model.ChatInbox)
         {
-            <p class="conversation_entry" id="@chat.Id" onclick="displayConvo(@chat.Id)">
+            <p class="conversation_entry" id="@("c" + chat.Id)" onclick="displayConvo(@chat.Id)">
                 @(chat.ResponderId == Model.UserId ? chat.Poster.Username : chat.Responder.Username)
             </p>
         }
@@ -33,6 +33,7 @@
 
 <script type="text/javascript">
     var temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ChatInbox));
+    var userId = @Model.UserId;
     var ChatInbox = {};
     temp.forEach(function (chat) {
         ChatInbox[chat.Id] = chat;
