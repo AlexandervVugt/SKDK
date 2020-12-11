@@ -1,5 +1,6 @@
 ﻿
 function displayConvo(chatId) {
+    document.getElementById("active_chat").value = chatId;
     let old = document.querySelector(".conversation_entry.active");
     if (old !== null) {
         old.classList.remove("active");
