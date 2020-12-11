@@ -43,13 +43,13 @@ namespace Stexchange.Controllers
                 _blocked = false;
             }
         }
-        public async Task<IActionResult> Trade()
+        public IActionResult Trade()
         {
             BlockedPoller(); //Wait for our turn to read the resource
 
             //Shallow copy, this was accounted for in the design of this method.
             var listings = _listingCache.Values.ToList();
-            listings.ForEach(async listing => listing = await PrepareListing(listing));
+            listings.ForEach(listing => PrepareListing(ref listing));
             listings = (from listing in listings orderby listing.CreatedAt descending select listing).ToList();
             var tradeModel = new TradeViewModel(listings);
 
@@ -58,12 +58,12 @@ namespace Stexchange.Controllers
             return View(model: tradeModel);
         }
 
-        public async Task<IActionResult> Detail(int listingId)
+        public IActionResult Detail(int listingId)
         {
             BlockedPoller(); //Wait for our turn to read the resource
 
             var listing = _listingCache[listingId];
-            listing = await PrepareListing(listing);
+            PrepareListing(ref listing);
 
             //TODO: move releasing the resource to this class' Dispose method
             _blocked = false; //Release the resource
@@ -165,12 +165,12 @@ namespace Stexchange.Controllers
         /// </summary>
         /// <param name="token">The user whose data to use, if logged in.</param>
         /// <param name="listing">The given listing</param>
-        private async Task<Listing> PrepareListing(Listing listing)
+        private void PrepareListing(ref Listing listing)
         {
             listing.Owner = _userCache[listing.UserId];
             try
             {
-                listing.Distance = await GetDistance(listing.Owner.Postal_Code);
+                listing.Distance = GetDistance(listing.Owner.Postal_Code);
             } catch (InvalidSessionException)
             {
                 listing.Distance = -1;
@@ -181,7 +181,6 @@ namespace Stexchange.Controllers
             }
             listing.OwningUserName = listing.Owner.Username;
             listing.Owner = null;
-            return listing;
         }
 
 
@@ -207,17 +206,17 @@ namespace Stexchange.Controllers
         /// returns the distance between two users 
         /// </summary>
         /// <returns></returns>
-        private async Task<Tuple<string, string>> GetLocationAsync(string postalCode)
+        private Tuple<string, string> GetLocationAsync(string postalCode)
         {
             string uri = $"https://www.geonames.org/postalcode-search.html?q={postalCode}&country=NL";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-            using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))
             {
-                string readSite = await reader.ReadToEndAsync();
+                string readSite = reader.ReadToEnd();
                 int indx = readSite.IndexOf("&nbsp;&nbsp;&nbsp");
                 string contains_lat_long_string = readSite.Substring(indx);
                 //<small> 52.341/4.955 </small>
@@ -243,23 +242,29 @@ namespace Stexchange.Controllers
         /// and the owner of the listing.
         /// </summary>
         /// <returns></returns>
-        public async Task<double> GetDistance( string postalCode_listing_user)
+        public double GetDistance( string postalCode_listing_user)
         {
-            Tuple<string, string> lat_long_current_user = await GetLocationAsync(GetCurrentUserPostalCode());
-            Tuple<string, string> lat_long_listing_user = await GetLocationAsync(postalCode_listing_user);
-            int lat_current_us;
-            int lon_current_us;
-            int.TryParse(lat_long_current_user.Item1, out lat_current_us);
-            int.TryParse(lat_long_current_user.Item2, out lon_current_us);
-            int lat_listing_us;
-            int lon_listing_us;
-            int.TryParse(lat_long_listing_user.Item1, out lat_listing_us);
-            int.TryParse(lat_long_listing_user.Item2, out lon_listing_us);
+            try
+            {
+                Tuple<string, string> lat_long_current_user = GetLocationAsync(GetCurrentUserPostalCode());
+                Tuple<string, string> lat_long_listing_user = GetLocationAsync(postalCode_listing_user);
+                int lat_current_us;
+                int lon_current_us;
+                int.TryParse(lat_long_current_user.Item1, out lat_current_us);
+                int.TryParse(lat_long_current_user.Item2, out lon_current_us);
+                int lat_listing_us;
+                int lon_listing_us;
+                int.TryParse(lat_long_listing_user.Item1, out lat_listing_us);
+                int.TryParse(lat_long_listing_user.Item2, out lon_listing_us);
 
-            var cCoord = new GeoCoordinate(lat_current_us, lon_current_us);
-            var lCoord = new GeoCoordinate(lat_listing_us, lon_listing_us);
+                var cCoord = new GeoCoordinate(lat_current_us, lon_current_us);
+                var lCoord = new GeoCoordinate(lat_listing_us, lon_listing_us);
 
-            return cCoord.GetDistanceTo(lCoord) / 1000; //to km
+                return cCoord.GetDistanceTo(lCoord) / 1000; //to km
+            } catch(Exception)
+            {
+                return -1;
+            }
         }
     }
 
