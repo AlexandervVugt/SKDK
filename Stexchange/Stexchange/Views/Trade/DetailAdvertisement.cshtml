@@ -15,7 +15,9 @@
     </div>
     <div class="user_information">
         <p>gebruikersnaam: @Model.Listing.OwningUserName</p>
-        <p>afstand: </p>
+        @if (!(Model.Listing.Distance == -1))
+        {
+            <p class="distance">afstand: <code>@Model.Listing.Distance</code> km</p>}
         <p>gemiddelde beoordeling op communicatie</p>
         <span style='font-size:30px;'>&#9734;</span>
         <span style='font-size:30px;'>&#9734;</span>
