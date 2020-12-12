@@ -50,5 +50,40 @@ namespace Stexchange.Data.Helpers
 
             return $"Oops, something went wrong with the {input}";
         }
+
+        /// <summary>
+        /// can be implemented in the future together with containsprofanity
+        /// </summary>
+        /// <param name="badword"></param>
+        /// <returns></returns>
+        private static string IsNotAccepted(string badword)
+        {
+            return $"\'{StandardMessages.CapitalizeFirst(badword)}\' wordt niet geaccepteerd.";
+        }
+
+        public static string RewriteTextPlease()
+        {
+            return $"Sommige woorden worden niet geaccepteerd. Herschrijf uw tekst";
+        }
+
+        /// <summary>
+        /// returns true if text contains profanity.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static bool ContainsProfanity(string text)
+        {
+            string readProfanity = System.IO.File.ReadAllText(@"/TextFiles/Profanity.txt");
+            List<string> profanity = readProfanity.ToLower().Trim().Split(',').ToList();
+
+            foreach (string word in profanity)
+            {
+                if (text.Contains(word))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
 using Stexchange.Data.Models;
+using Stexchange.Data.Validation;
 using Stexchange.Models;
 
 namespace Stexchange.Controllers
@@ -69,7 +70,26 @@ namespace Stexchange.Controllers
                      where chat.Messages.Any()
                      orderby chat.Messages[0].Timestamp descending
                      select chat).ToList();
+            
             return View(model: new ChatViewModel(chats, userId));
+        }
+
+        /// <summary>
+        /// check to prevent chat with self
+        /// </summary>
+        /// <param name="sender_id"></param>
+        /// <param name="listing_id"></param>
+        /// <returns></returns>
+        private bool NotTalkingToMyself(int sender_id, int listing_id)
+        {
+            foreach (Listing listing in _db.Listings)
+            {
+                if (listing.Id == listing_id && sender_id == listing.UserId)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -94,9 +114,8 @@ namespace Stexchange.Controllers
             TempData.Keep("Active");
             try
             {
+
                 userId = GetUserId();
-                
-                
 
             } catch (InvalidSessionException) {
                 return RedirectToAction("Login", "Login");
@@ -113,12 +132,27 @@ namespace Stexchange.Controllers
 
             };
 
+
+            foreach (Chat chat in _db.Chats)
+            {
+                if (chat.Id.Equals(newMessage.ChatId))
+                {
+                    NotTalkingToMyself(newMessage.SenderId, chat.Listing.Id);
+                } 
+            }
+
             //TODO: implement user blocking
             //TODO: implement chat content filter
-             _db.Messages.Add(newMessage);
-             _db.SaveChanges();
+            MessageValidator messVal = new MessageValidator();
+            if (messVal.Validate(newMessage).IsValid)
+            {
+                _db.Messages.Add(newMessage);
+                _db.SaveChanges();
+            }
+             
             return RedirectToAction("Chat");
         }
+
         [HttpPost]
         public IActionResult NewChat(int listId, string message)
         {
