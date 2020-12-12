@@ -73,12 +73,12 @@ namespace Stexchange.Data.Helpers
         /// <returns></returns>
         public static bool ContainsProfanity(string text)
         {
-            string readProfanity = System.IO.File.ReadAllText(@"/TextFiles/Profanity.txt");
-            List<string> profanity = readProfanity.ToLower().Trim().Split(',').ToList();
+            string readProfanity = System.IO.File.ReadAllText(@"Data\Helpers\TextFiles\Profanity.txt");
+            List<string> profanity = readProfanity.ToLower().Split(',').ToList();
 
             foreach (string word in profanity)
             {
-                if (text.Contains(word))
+                if (word.Contains(text))
                 {
                     return true;
                 }

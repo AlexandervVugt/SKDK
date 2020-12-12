@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
+using Stexchange.Data.Helpers;
 using Stexchange.Data.Models;
 using Stexchange.Data.Validation;
 using Stexchange.Models;
@@ -82,7 +83,8 @@ namespace Stexchange.Controllers
         /// <returns></returns>
         private bool NotTalkingToMyself(int sender_id, int listing_id)
         {
-            foreach (Listing listing in _db.Listings)
+            List<Listing> advertisements = _db.Listings.ToList();
+            foreach (Listing listing in advertisements)
             {
                 if (listing.Id == listing_id && sender_id == listing.UserId)
                 {
@@ -133,23 +135,25 @@ namespace Stexchange.Controllers
             };
 
 
-            foreach (Chat chat in _db.Chats)
-            {
-                if (chat.Id.Equals(newMessage.ChatId))
-                {
-                    NotTalkingToMyself(newMessage.SenderId, chat.Listing.Id);
-                } 
-            }
+            //foreach (Chat chat in _db.Chats)
+            //{
+            //    if (chat.Id.Equals(newMessage.ChatId))
+            //    {
+            //        if(NotTalkingToMyself(newMessage.SenderId, chat.AdId))
+            //        {
+            //            return RedirectToAction("Chat");
+            //        }
+            //    } 
+            //}
 
             //TODO: implement user blocking
-            //TODO: implement chat content filter
-            MessageValidator messVal = new MessageValidator();
-            if (messVal.Validate(newMessage).IsValid)
+            //TODO: implement chat content filter (done)
+            if(!string.IsNullOrEmpty(newMessage.Content) && !string.IsNullOrWhiteSpace(newMessage.Content) && StandardMessages.ContainsProfanity(newMessage.Content.ToLower()) == false)
             {
                 _db.Messages.Add(newMessage);
                 _db.SaveChanges();
             }
-             
+
             return RedirectToAction("Chat");
         }
 
