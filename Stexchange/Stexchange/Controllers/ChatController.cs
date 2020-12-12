@@ -92,6 +92,10 @@ namespace Stexchange.Controllers
             int userId;
             TempData["Active"] = activeId;
             TempData.Keep("Active");
+            if (message is null || activeId == -1)
+            {
+                return RedirectToAction("Chat");
+            }
             try
             {
                 userId = GetUserId();
@@ -115,9 +119,13 @@ namespace Stexchange.Controllers
 
             //TODO: implement user blocking
             //TODO: implement chat content filter
-             _db.Messages.Add(newMessage);
-             _db.SaveChanges();
-            return RedirectToAction("Chat");
+            
+            
+            _db.Messages.Add(newMessage);
+            _db.SaveChanges();
+             return RedirectToAction("Chat");
+            
+
         }
         [HttpPost]
         public IActionResult NewChat(int listId, string message)
