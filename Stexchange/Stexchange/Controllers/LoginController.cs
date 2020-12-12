@@ -69,7 +69,7 @@ namespace Stexchange.Controllers
 						select u).FirstOrDefault();
 
 			// Checks if verificationlink has already been activated
-			if (user.IsVerified == true)
+			if (user == null || user.IsVerified == true)
 			{
 				return View("InvalidVerificationLink");
 			}
@@ -77,6 +77,7 @@ namespace Stexchange.Controllers
             if (!(verification is null))
             {
                 user.IsVerified = true;
+				Database.UserVerifications.Remove(verification);
                 await Database.SaveChangesAsync();
                 AddCookie(user.Id, user.Postal_Code);
                 return RedirectToAction("Verified");
