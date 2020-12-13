@@ -286,8 +286,7 @@ namespace Stexchange.Controllers
 
             if (string.IsNullOrEmpty(searchbar) || string.IsNullOrWhiteSpace(searchbar))
             {
-                TempData["SearchResults"] = searchList.Count;
-                return View("trade", new TradeViewModel(searchList));
+                return RedirectToAction("Trade");
             }
 
             // adds each advertisement to new searchList is the title contains the search value
