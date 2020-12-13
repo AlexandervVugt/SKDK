@@ -149,6 +149,12 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{user.Ve
 						return View("Login");
 					}
 
+					if (password.Length < 8)
+                    {
+						TempData["Message"] = "InvalidPassword";
+						return View("Login");
+					}
+
 					// Checks if email already exists in database
 					if (Database.Users.Any(u => u.Email == email))
 					{

@@ -18,7 +18,7 @@
             </p>
             <p>
                 <label for="password" class="labeltext"></label>
-                <input class="nonsubmit" placeholder="Password" name="password" type="password" minlength="8" required>
+                <input class="nonsubmit" placeholder="Password" name="password" type="password" required>
             </p>
             @switch (TempData["message"])
             {
@@ -46,7 +46,7 @@
             {
                 case "InvalidEmail":
                     <div>
-                        <span>Ongeldige Email</span>
+                        <span>Ongeldig Emailadres</span>
                     </div>
                     break;
                 case "EmailExists":
@@ -74,6 +74,11 @@
                         <span>E-mails komen niet met overeen</span>
                     </div>
                     break;
+                case "InvalidPassword":
+                    <div>
+                        <span>Ongeldig wachtwoord. Wachtwoord moet uit minimaal 8 karakters bestaan</span>
+                    </div>
+                    break;
             }
             <p>
                 <label for="Email" class="labeltext"></label>
@@ -93,11 +98,11 @@
             </p>
             <p>
                 <label for="password" class="labeltext"></label>
-                <input class="nonsubmit" name="password" type="password" placeholder="Password" required>
+                <input class="nonsubmit" name="password" type="password" placeholder="Password" minlength="8" required>
             </p>
             <p>
                 <label for="confirm_password" class="labeltext"></label>
-                <input class="nonsubmit" name="confirm_password" type="password" placeholder="Repeat password" required>
+                <input class="nonsubmit" name="confirm_password" type="password" placeholder="Repeat password" minlength="8" required>
             </p>
             <p class="terms">By creating an account, you agree to the <a class="termlink" href="www.link.here">Terms of Use<br></a> and <a class="termlink" href="www.link.here">Privacy Policy</a></p>
 

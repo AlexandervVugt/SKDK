@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stexchange.Controllers.Exceptions;
@@ -269,6 +270,57 @@ namespace Stexchange.Controllers
                     throw e;
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if there are any advertisements that contains the searched value.
+        /// If yes, the advertisement will be added to a new list.
+        /// Returns to trade view with a new TradeViewModel with a new listing List to display the requested listings
+        /// </summary>
+        /// <param name="searchbar"> search value </param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult Search(string searchbar, bool search_description) 
+        {
+            List<Listing> searchList = new List<Listing>();
+            
+            if (string.IsNullOrEmpty(searchbar) || string.IsNullOrWhiteSpace(searchbar))
+            {
+                return RedirectToAction("Trade");
+            }
+            searchbar = searchbar.ToLower();
+            // adds each advertisement to new searchList is the title contains the search value
+            foreach (Listing advertisement in _listingCache.Values)
+            {
+                if (search_description == true)
+                {
+                    if (advertisement.Title.ToLower().Contains(searchbar) || advertisement.Description.ToLower().Contains(searchbar) || advertisement.NameNl.ToLower().Contains(searchbar))
+                    {
+                        searchList.Add(advertisement);
+                    }
+                    else if (advertisement.NameLatin != null)
+                    {
+                        if (advertisement.NameLatin.ToLower().Contains(searchbar)) searchList.Add(advertisement);
+                    }
+                }
+                else
+                {
+                    if (advertisement.Title.ToLower().Contains(searchbar) || advertisement.NameNl.ToLower().Contains(searchbar))
+                    {
+                        searchList.Add(advertisement);
+                    }
+                    else if (advertisement.NameLatin != null)
+                    {
+                        if (advertisement.NameLatin.ToLower().Contains(searchbar)) searchList.Add(advertisement);
+                    }
+                }
+            }
+
+            if(searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing)); 
+            searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
+            TempData["SearchResults"] = searchList.Count;
+
+            return View("trade", new TradeViewModel(searchList));
         }
     }
 
