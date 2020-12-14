@@ -2,7 +2,21 @@
 $color-lightgreen: #3eaf91;
 
 body {
-    width: 100%;
+
+    .errormsg {
+        width: 100%;
+        position: fixed;
+        float: left;
+        width: 40%;
+        margin-left: 30%;
+        top: 10vh;
+        text-align: center;
+        font-size: 2vh;
+        background-color: $color-darkgreen;
+        border-radius: 0.5vh;
+        color: white;
+        box-shadow: 5px 10px 18px $color-lightgreen;
+    }
 
     .accordion {
         background-color: $color-darkgreen;

@@ -1,7 +1,19 @@
 ﻿body {
-  width: 100%;
   /* Add a background color to the button if it is clicked on and when you move the mouse over it (hover) */
   /* Style the accordion panel. Hidden by default */ }
+  body .errormsg {
+    width: 100%;
+    position: fixed;
+    float: left;
+    width: 40%;
+    margin-left: 30%;
+    top: 10vh;
+    text-align: center;
+    font-size: 2vh;
+    background-color: #015e54;
+    border-radius: 0.5vh;
+    color: white;
+    box-shadow: 5px 10px 18px #3eaf91; }
   body .accordion {
     background-color: #015e54;
     color: white;
