@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Login/Register";
+    ViewData["Title"] = "Inloggen/Registreren";
 }
 <div class="logincontainer">
     <div class="item1">
@@ -11,14 +11,14 @@
 
     <div class="item2">
         <form action="Inloggen" method="post" class="accountform">
-            <h2 class="logintitle">Hey!<br>Welcome back.</h2>
+            <h2 class="logintitle">Hallo!<br>Welkom terug.</h2>
             <p>
                 <label for="Email" class="labeltext"></label>
                 <input class="nonsubmit" placeholder="E-mail" name="emailOrUname" type="text" required>
             </p>
             <p>
                 <label for="password" class="labeltext"></label>
-                <input class="nonsubmit" placeholder="Password" name="password" type="password" required>
+                <input class="nonsubmit" placeholder="Wachtwoord" name="password" type="password" required>
             </p>
             @switch (TempData["message"])
             {
@@ -34,14 +34,14 @@
                     break;
 
             }
-            <a href="www.link.here"><span class="forgetpasslink">Forgot your password?</span></a>
-            <input type="submit" value="Login" class="submit">
+            <a href="www.link.here"><span class="forgetpasslink">Wachtwoord vergeten?</span></a>
+            <input type="submit" value="Inloggen" class="submit">
         </form>
     </div>
 
     <div class="item3">
         <form action="Register" method="post" class="accountform">
-            <h2 class="logintitle">Not a member?<br>Join us!</h2>
+            <h2 class="logintitle">Nog geen lid?<br>Word lid!</h2>
             @switch (TempData["Message"])
             {
                 case "InvalidEmail":
@@ -86,27 +86,27 @@
             </p>
             <p>
                 <label for="vEmail" class="labeltext"></label>
-                <input class="nonsubmit" name="vEmail" type="text" placeholder="Repeat e-mail" required>
+                <input class="nonsubmit" name="vEmail" type="text" placeholder="Bevestig e-mail" required>
             </p>
             <p>
                 <label for="username" class="labeltext"></label>
-                <input class="nonsubmit" name="username" type="text" placeholder="Username" maxlength="15" required>
+                <input class="nonsubmit" name="username" type="text" placeholder="Gebruikersnaam" maxlength="15" required>
             </p>
             <p>
                 <label for="postalcode" class="labeltext"></label>
-                <input class="nonsubmit" name="postalcode" type="text" placeholder="Zip-Code" required>
+                <input class="nonsubmit" name="postalcode" type="text" placeholder="Postcode" required>
             </p>
             <p>
                 <label for="password" class="labeltext"></label>
-                <input class="nonsubmit" name="password" type="password" placeholder="Password" minlength="8" required>
+                <input class="nonsubmit" name="password" type="password" placeholder="Wachtwoord" minlength="8" required>
             </p>
             <p>
                 <label for="confirm_password" class="labeltext"></label>
-                <input class="nonsubmit" name="confirm_password" type="password" placeholder="Repeat password" minlength="8" required>
+                <input class="nonsubmit" name="confirm_password" type="password" placeholder="Bevestig wachtwoord" minlength="8" required>
             </p>
-            <p class="terms">By creating an account, you agree to the <a class="termlink" href="www.link.here">Terms of Use<br></a> and <a class="termlink" href="www.link.here">Privacy Policy</a></p>
+            <p class="terms">Door op Registreren te klikken, ga je akkoord met de <a class="termlink" href="www.link.here">Gebruiksvoorwaarden<br></a> en het <a class="termlink" href="www.link.here">Privacybeleid</a></p>
 
-            <button type="submit" class="submit" id="registersubmit">Create My Account</button>
+            <button type="submit" class="submit" id="registersubmit">Registreren</button>
         </form>
     </div>
 </div>
