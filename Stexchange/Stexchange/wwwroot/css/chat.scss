@@ -19,11 +19,11 @@ html {
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 display: grid;
                 grid-template-rows: 5% 90% 5%;
-                grid-template-columns: 25% 75%;
+                grid-template-columns: 40% 60%;
                 grid-template-areas: "conversationslist chattitle" "conversationslist messagelist" "conversationslist chatform";
-                margin: 5%;
+                margin-left: 20%;
                 margin-top: 1%;
-                width: 90%;
+                width: 50%;
                 height: 85vh;
                 border-radius: 1vh;
 
@@ -36,7 +36,7 @@ html {
                     #chatinboxtitle {
                         color: $lightgreen;
                         font-size: 2vh;
-                        margin: 1%;
+                        margin: 1.4%;
                         text-transform: uppercase;
                         margin-left: 0%;
                     }
@@ -78,7 +78,7 @@ html {
                     text-transform: uppercase;
                     border-bottom: 0.1vh solid white;
                     padding-right: 1%;
-                    padding-top: 1%;
+                    padding-top: 2%;
                     padding-left: 3vh;
                 }
 
@@ -179,7 +179,7 @@ html {
                     display: grid;
                     grid-area: chatform;
                     grid-template-rows: 10% 80% 10%;
-                    grid-template-columns: 1% 87% 1% 10% 1%;
+                    grid-template-columns: 1% 80% 1% 17% 1%;
                     grid-template-areas: '. . . . .''. typemessage . sendmessage .''. . . . .';
                     border-radius: 0 0vh 0.2vh 0;
                     background: $darkshadowwhite;
