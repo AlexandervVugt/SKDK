@@ -78,7 +78,7 @@ namespace Stexchange.Data.Helpers
 
             foreach (string word in profanity)
             {
-                if (word.Contains(text))
+                if (text.Contains(word))
                 {
                     return true;
                 }
