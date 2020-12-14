@@ -36,6 +36,8 @@ namespace Stexchange.Controllers
 		}
 		public IActionResult Verify()
 		{
+			TempData.Keep("Message");
+			TempData.Keep("Email");
 			return View("Verify");
 		}
 		public IActionResult Verified()
@@ -69,7 +71,7 @@ namespace Stexchange.Controllers
 						select u).FirstOrDefault();
 
 			// Checks if verificationlink has already been activated
-			if (user.IsVerified == true)
+			if (user == null || user.IsVerified == true)
 			{
 				return View("InvalidVerificationLink");
 			}
@@ -77,6 +79,7 @@ namespace Stexchange.Controllers
             if (!(verification is null))
             {
                 user.IsVerified = true;
+				Database.UserVerifications.Remove(verification);
                 await Database.SaveChangesAsync();
                 AddCookie(user.Id, user.Postal_Code);
                 return RedirectToAction("Verified");
@@ -145,6 +148,12 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{user.Ve
 					if (password != confirm_password)
 					{
 						TempData["Message"] = "IncorrectPasswords";
+						return View("Login");
+					}
+
+					if (password.Length < 8)
+                    {
+						TempData["Message"] = "InvalidPassword";
 						return View("Login");
 					}
 

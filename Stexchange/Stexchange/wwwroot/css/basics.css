@@ -333,7 +333,7 @@ html {
               border-radius: 0.5vh;
               transition: 0.3s;
               margin-top: 8%;
-              margin-bottom: 25%; }
+              margin-bottom: 20%; }
             html body main .logincontainer .item2 form .submit:hover {
               background-color: #80ff8d;
               color: #005709; }
@@ -382,7 +382,7 @@ html {
               border-radius: 0.5vh;
               transition: 0.3s;
               margin-top: 8%;
-              margin-bottom: 25%; }
+              margin-bottom: 15%; }
             html body main .logincontainer .item3 form .submit:hover {
               background-color: #80ff8d;
               color: #005709; }

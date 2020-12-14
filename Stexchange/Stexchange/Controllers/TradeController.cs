@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stexchange.Controllers.Exceptions;
@@ -103,6 +104,12 @@ namespace Stexchange.Controllers
         /// <param name="cache">Reference to the private field.</param>
         private void RenewListingCache(ref ConcurrentDictionary<int, Listing> cache)
         {
+            var deleted = from id in cache.Keys
+                          where !(from listing in _db.Listings select listing.Id).Contains(id)
+                          select id;
+            foreach (int id in deleted) {
+                cache.Remove(id, out Listing dispose);
+            }
             var newOrModified = (from listing in _db.Listings
                                  where (!_readable || listing.LastModified >= _cacheBirth) && listing.Visible
                                  select new EntityBuilder<Listing>(listing)
@@ -198,7 +205,7 @@ namespace Stexchange.Controllers
                 return user_postal;
             }
 
-            return "3011AM";
+            return "-1";
         }
 
 
@@ -217,23 +224,19 @@ namespace Stexchange.Controllers
             using (StreamReader reader = new StreamReader(stream))
             {
                 string readSite = reader.ReadToEnd();
-                int indx = readSite.IndexOf("&nbsp;&nbsp;&nbsp");
-                string contains_lat_long_string = readSite.Substring(indx);
-                //<small> 52.341/4.955 </small>
-                int firstsmall_index = contains_lat_long_string.IndexOf("small>");
-                int secondsmall_index = contains_lat_long_string.IndexOf("</small");
-                string lat_long_unf = contains_lat_long_string.Substring(firstsmall_index + 6, secondsmall_index);
 
-                int slash_index = lat_long_unf.IndexOf("/");
-
-                string lat = lat_long_unf.Substring(0, slash_index);
-                //the lat values for the netherlands range from about 6000-7000, never 10.000
-                string lon = lat_long_unf.Substring(slash_index + 1, lat.Length - 1);
-
-                Tuple<string, string> lat_long = new Tuple<string, string>(lat, lon);
-                Console.WriteLine($"lattetude: {lat_long.Item1}");
-                Console.WriteLine($"longtitude: {lat_long.Item2}");
-                return lat_long;
+                int tableStart = readSite.IndexOf("<table class=\"restable\">");
+                if (tableStart == -1)
+                {
+                    throw new Exception("Postal code not recognized");
+                }
+                int tableEnd = readSite.IndexOf("</table>", tableStart);
+                string[] dataContent = readSite.Substring(tableStart, tableEnd - tableStart)
+                    .Split("small")[3]
+                    .Replace("<", null)
+                    .Replace(">", null)
+                    .Split('/');
+                return new Tuple<string, string>(dataContent[0], dataContent[1]);
             }
         }
 
@@ -248,13 +251,11 @@ namespace Stexchange.Controllers
             {
                 Tuple<string, string> lat_long_current_user = GetLocationAsync(GetCurrentUserPostalCode());
                 Tuple<string, string> lat_long_listing_user = GetLocationAsync(postalCode_listing_user);
-                Console.WriteLine(double.TryParse(lat_long_current_user.Item1, out double lat_current_us));
-                Console.WriteLine(double.TryParse(lat_long_current_user.Item2, out double lon_current_us));
-                Console.WriteLine($"lat-lon current : {lat_current_us} {lon_current_us}");
+                double.TryParse(lat_long_current_user.Item1, out double lat_current_us);
+                double.TryParse(lat_long_current_user.Item2, out double lon_current_us);
 
-                Console.WriteLine(double.TryParse(lat_long_listing_user.Item1, out double lat_listing_us));
-                Console.WriteLine(double.TryParse(lat_long_listing_user.Item2, out double lon_listing_us));
-                Console.WriteLine($"lat-lon listing : {lat_listing_us} {lon_listing_us}");
+                double.TryParse(lat_long_listing_user.Item1, out double lat_listing_us);
+                double.TryParse(lat_long_listing_user.Item2, out double lon_listing_us);
 
 
                 var cCoord = new GeoCoordinate(lat_current_us/1000, lon_current_us/1000);
@@ -263,10 +264,69 @@ namespace Stexchange.Controllers
                 var distance = cCoord.GetDistanceTo(lCoord);
                 Console.WriteLine($"resulting distance : {distance}");
                 return Math.Round(distance/1000, 2); //to km
-            } catch(Exception)
+            } catch(Exception e)
             {
-                return -1;
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                if(e.Message == "Postal code not recognized")
+                {
+                    return -1;
+                } else
+                {
+                    throw e;
+                }
             }
+        }
+
+        /// <summary>
+        /// Checks if there are any advertisements that contains the searched value.
+        /// If yes, the advertisement will be added to a new list.
+        /// Returns to trade view with a new TradeViewModel with a new listing List to display the requested listings
+        /// </summary>
+        /// <param name="searchbar"> search value </param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Search(string searchbar, bool search_description) 
+        {
+            List<Listing> searchList = new List<Listing>();
+            
+            if (string.IsNullOrEmpty(searchbar) || string.IsNullOrWhiteSpace(searchbar))
+            {
+                return RedirectToAction("Trade");
+            }
+            searchbar = searchbar.ToLower();
+            // adds each advertisement to new searchList is the title contains the search value
+            foreach (Listing advertisement in _listingCache.Values)
+            {
+                if (search_description == true)
+                {
+                    if (advertisement.Title.ToLower().Contains(searchbar) || advertisement.Description.ToLower().Contains(searchbar) || advertisement.NameNl.ToLower().Contains(searchbar))
+                    {
+                        searchList.Add(advertisement);
+                    }
+                    else if (advertisement.NameLatin != null)
+                    {
+                        if (advertisement.NameLatin.ToLower().Contains(searchbar)) searchList.Add(advertisement);
+                    }
+                }
+                else
+                {
+                    if (advertisement.Title.ToLower().Contains(searchbar) || advertisement.NameNl.ToLower().Contains(searchbar))
+                    {
+                        searchList.Add(advertisement);
+                    }
+                    else if (advertisement.NameLatin != null)
+                    {
+                        if (advertisement.NameLatin.ToLower().Contains(searchbar)) searchList.Add(advertisement);
+                    }
+                }
+            }
+
+            if(searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing)); 
+            searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
+            TempData["SearchResults"] = searchList.Count;
+
+            return View("trade", new TradeViewModel(searchList));
         }
     }
 

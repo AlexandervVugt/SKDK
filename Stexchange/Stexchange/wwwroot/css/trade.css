@@ -7,6 +7,10 @@ html {
   width: 100%; }
   html body {
     /* Remove bulletpoints */ }
+    html body #searchResults {
+      font-weight: bold;
+      font-size: 1.5vh;
+      margin-left: 18%; }
     html body input[type=checkbox] + label {
       cursor: pointer; }
     html body input[type=checkbox] {
@@ -124,7 +128,8 @@ html {
         width: 30%;
         margin-right: 3%;
         margin-bottom: 3%;
-        background-color: rgba(0, 0, 0, 0.8); }
+        background-color: rgba(0, 0, 0, 0.8);
+        min-height: 53vh; }
         html body #listings .Advertisement .distance {
           float: left;
           line-height: 2vh;
@@ -156,7 +161,12 @@ html {
           margin-left: 2%;
           width: 50%;
           color: #80ff8d;
-          font-size: 1.5vh; }
+          font-size: 1.5vh;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical; }
         html body #listings .Advertisement .description {
           float: left;
           margin-left: 2%;
