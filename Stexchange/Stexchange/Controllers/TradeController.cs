@@ -324,37 +324,44 @@ namespace Stexchange.Controllers
         }
 
         [HttpGet]
-        public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water)
+        public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot)
         {
             // no filter for planttype, with pot, give away?
             // TO DO: fauna value
 
             List<Listing> searchList = new List<Listing>();
             // All selected filters
-            List<string[]> filters = new List<string[]> { light, indigenous, ph, nutrients, water };
+            List<string[]> filters = new List<string[]> { light, indigenous, ph, nutrients, water, plant_type, give_away, with_pot };
 
-            List<string> selectedFilters = new List<string>();
-
-            // Adds all selected filters to one list of strings
+            List<string[]> selectedFilters = new List<string[]>();
             foreach (var filter in filters)
             {
-                foreach(var item in filter)
+                if(filter.Length > 0)
                 {
-                    selectedFilters.Add(item);
+                    selectedFilters.Add(filter);
                 }
             }
 
             // Adds all advertisement which contains one or more selected filters to lit
             foreach (Listing advertisement in _listingCache.Values)
             {
-                foreach (var filter in selectedFilters)
+                int check = 0;
+                foreach (var filter in filters)
                 {
-                    if (advertisement.Filters.Contains(filter) && !searchList.Contains(advertisement))
+                    for(int i = 0; i < filter.Length; i++)
                     {
-                        searchList.Add(advertisement);
+                        if (advertisement.Filters.Contains(filter[i]))
+                        {
+                            check++;
+                        }
                     }
                 }
+                if(check == selectedFilters.Count)
+                {
+                    searchList.Add(advertisement);
+                }
             }
+
             if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
             searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
             TempData["SearchResults"] = searchList.Count;
