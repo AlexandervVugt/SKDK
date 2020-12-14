@@ -7,6 +7,10 @@ html {
   width: 100%; }
   html body {
     /* Remove bulletpoints */ }
+    html body #searchResults {
+      font-weight: bold;
+      font-size: 1.5vh;
+      margin-left: 18%; }
     html body input[type=checkbox] + label {
       cursor: pointer; }
     html body input[type=checkbox] {

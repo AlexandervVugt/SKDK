@@ -20,6 +20,11 @@ html {
     width: 100%;
 
     body {
+        #searchResults {
+            font-weight: bold;
+            font-size: 1.5vh;
+            margin-left: 18%;
+        }
 
         input[type=checkbox] + label {
             cursor: pointer;
