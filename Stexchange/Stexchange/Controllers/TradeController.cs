@@ -104,6 +104,12 @@ namespace Stexchange.Controllers
         /// <param name="cache">Reference to the private field.</param>
         private void RenewListingCache(ref ConcurrentDictionary<int, Listing> cache)
         {
+            var deleted = from id in cache.Keys
+                          where !(from listing in _db.Listings select listing.Id).Contains(id)
+                          select id;
+            foreach (int id in deleted) {
+                cache.Remove(id, out Listing dispose);
+            }
             var newOrModified = (from listing in _db.Listings
                                  where (!_readable || listing.LastModified >= _cacheBirth) && listing.Visible
                                  select new EntityBuilder<Listing>(listing)
