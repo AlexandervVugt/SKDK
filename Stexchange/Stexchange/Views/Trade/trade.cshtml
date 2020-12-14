@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="~/css/trade.css" />
 <div class="fullwidth">
     <div class="searchbar" id="search">
-        <form action="Search" method="post">
+        <form action="Search" method="get">
             <input type="text" placeholder="Zoek op trefwoord..." name="searchbar" id="searchbar" />
             <button id="searchquery"><i class="fa fa-search"></i></button>
             <input type="checkbox" name="search_description" id="search_description" value="true"/>
@@ -59,22 +59,22 @@
     }
 }
 <div class="" id="forms">
-    <form id="filer_form">
+    <form id="filer_form" action="FilterSearch" method="post">
         <strong>Filters</strong>
         <ul id="filter_list">
             <li>
                 <img class="caret rotated" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Zonlicht</span>
                 <ul class="nested expanded">
                     <li>
-                        <input type="checkbox" id="zonlicht1" name="zonlicht" value="zon" />
-                        <label for="zonlicht1">Zon</label>
+                        <input type="checkbox" id="zonlicht1" name="light" value="light_volle_zon" />
+                        <label for="zonlicht1">Volle zon</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="zonlicht2" name="zonlicht" value="halfschaduw" />
+                        <input type="checkbox" id="zonlicht2" name="light" value="light_halfschaduw" />
                         <label for="zonlicht2">Halfschaduw</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="zonlicht3" name="zonlicht" value="schaduw" />
+                        <input type="checkbox" id="zonlicht3" name="light" value="light_schaduw" />
                         <label for="zonlicht3">Schaduw</label>
                     </li>
                 </ul>
@@ -83,11 +83,11 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Herkomst</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="herkomst1" name="herkomst" value="inheems" />
+                        <input type="checkbox" id="herkomst1" name="indigenous" value="indigenous_inheems" />
                         <label for="herkomst1">Inheems</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="herkomst2" name="herkomst" value="niet_inheems" />
+                        <input type="checkbox" id="herkomst2" name="indigenous" value="indigenous_niet_inheems" />
                         <label for="herkomst2">Niet inheems</label>
                     </li>
                 </ul>
@@ -96,15 +96,15 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Zuurgraad</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="zuurgraad1" name="zuurgraad" value="zuur" />
+                        <input type="checkbox" id="zuurgraad1" name="ph" value="ph_zuur" />
                         <label for="zuurgraad1">Zuur</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="zuurgraad2" name="zuurgraad" value="neutraal" />
+                        <input type="checkbox" id="zuurgraad2" name="ph" value="ph_neutraal" />
                         <label for="zuurgraad2">Neutraal</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="zuurgraad3" name="zuurgraad" value="kalkrijk" />
+                        <input type="checkbox" id="zuurgraad3" name="ph" value="ph_kalkrijk" />
                         <label for="zuurgraad3">Kalkrijk</label>
                     </li>
                 </ul>
@@ -113,16 +113,16 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Voedselrijkdom</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="voedselrijkdom1" name="voedselrijkdom" value="arm" />
-                        <label for="voedselrijkdom1">Arm</label>
+                        <input type="checkbox" id="voedselrijkdom1" name="nutrients" value="nutrients_weinig" />
+                        <label for="voedselrijkdom1">Weinig</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="voedselrijkdom2" name="voedselrijkdom" value="matig" />
-                        <label for="voedselrijkdom2">Matig</label>
+                        <input type="checkbox" id="voedselrijkdom2" name="nutrients" value="nutrients_gemiddeld" />
+                        <label for="voedselrijkdom2">Gemiddeld</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="voedselrijkdom3" name="voedselrijkdom" value="rijk" />
-                        <label for="voedselrijkdom3">Rijk</label>
+                        <input type="checkbox" id="voedselrijkdom3" name="nutrients" value="nutrients_veel" />
+                        <label for="voedselrijkdom3">Veel</label>
                     </li>
                 </ul>
             </li>
@@ -130,19 +130,19 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Vocht</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="vocht1" name="vocht" value="droog" />
+                        <input type="checkbox" id="vocht1" name="water" value="water_droog" />
                         <label for="vocht1">Droog</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="vocht2" name="vocht" value="matig" />
-                        <label for="vocht2">Matig vochtig</label>
+                        <input type="checkbox" id="vocht2" name="water" value="water_normaal" />
+                        <label for="vocht2">Normaal</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="vocht3" name="vocht" value="vochtig" />
-                        <label for="vocht3">Vochtig</label>
+                        <input type="checkbox" id="vocht3" name="water" value="water_nat" />
+                        <label for="vocht3">Nat</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="vocht4" name="vocht" value="wisselnat" />
+                        <input type="checkbox" id="vocht4" name="water" value="water_wisselnat" />
                         <label for="vocht4">Wisselnat</label>
                     </li>
                 </ul>
@@ -151,22 +151,22 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Faunawaarde</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="faunawaarde1" name="faunawaarde" value="vlinders" />
+                        <input type="checkbox" id="faunawaarde1" name="fauna" value="vlinders" />
                         <label for="faunawaarde1">Vlinders</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="faunawaarde2" name="faunawaarde" value="wilde_bijen" />
+                        <input type="checkbox" id="faunawaarde2" name="fauna" value="wilde_bijen" />
                         <label for="faunawaarde2">Wilde bijen</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="faunawaarde3" name="faunawaarde" value="honing_bijen" />
+                        <input type="checkbox" id="faunawaarde3" name="fauna" value="honing_bijen" />
                         <label for="faunawaarde3">Honing bijen</label>
                     <li>
-                        <input type="checkbox" id="faunawaarde4" name="faunawaarde" value="hommels" />
+                        <input type="checkbox" id="faunawaarde4" name="fauna" value="hommels" />
                         <label for="faunawaarde4">Hommels</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="faunawaarde5" name="faunawaarde" value="vogels" />
+                        <input type="checkbox" id="faunawaarde5" name="fauna" value="vogels" />
                         <label for="faunawaarde5">Vogels</label>
                     </li>
                 </ul>
@@ -174,7 +174,7 @@
         </ul>
         <button type="submit" id="apply_filter">Filters toepassen</button>
     </form>
-    <form id="sort_form">
+    <form id="sort_form" method="post">
         <strong class="sort">Sorteren</strong>
         <label class="chose" for="sort">Kies een criterium om op te sorteren</label>
 

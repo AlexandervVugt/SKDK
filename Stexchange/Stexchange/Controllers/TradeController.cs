@@ -10,6 +10,7 @@ using GeoCoordinatePortable;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
 using Stexchange.Data.Models;
@@ -279,7 +280,7 @@ namespace Stexchange.Controllers
         /// </summary>
         /// <param name="searchbar"> search value </param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public IActionResult Search(string searchbar, bool search_description) 
         {
             List<Listing> searchList = new List<Listing>();
@@ -319,10 +320,45 @@ namespace Stexchange.Controllers
             if(searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing)); 
             searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
             TempData["SearchResults"] = searchList.Count;
+            return View("trade", new TradeViewModel(searchList));
+        }
 
+        [HttpGet]
+        public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water)
+        {
+            // no filter for planttype, with pot, give away?
+            // TO DO: fauna value
+
+            List<Listing> searchList = new List<Listing>();
+            // All selected filters
+            List<string[]> filters = new List<string[]> { light, indigenous, ph, nutrients, water };
+
+            List<string> selectedFilters = new List<string>();
+
+            // Adds all selected filters to one list of strings
+            foreach (var filter in filters)
+            {
+                foreach(var item in filter)
+                {
+                    selectedFilters.Add(item);
+                }
+            }
+
+            // Adds all advertisement which contains one or more selected filters to lit
+            foreach (Listing advertisement in _listingCache.Values)
+            {
+                foreach (var filter in selectedFilters)
+                {
+                    if (advertisement.Filters.Contains(filter) && !searchList.Contains(advertisement))
+                    {
+                        searchList.Add(advertisement);
+                    }
+                }
+            }
+            if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
+            searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
+            TempData["SearchResults"] = searchList.Count;
             return View("trade", new TradeViewModel(searchList));
         }
     }
-
-
 }
