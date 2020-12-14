@@ -279,7 +279,7 @@ namespace Stexchange.Controllers
         /// </summary>
         /// <param name="searchbar"> search value </param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public IActionResult Search(string searchbar, bool search_description) 
         {
             List<Listing> searchList = new List<Listing>();
