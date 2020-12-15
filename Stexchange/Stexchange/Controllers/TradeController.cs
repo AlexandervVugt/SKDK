@@ -371,7 +371,7 @@ namespace Stexchange.Controllers
                     }
                 }
 
-                if (recent_toggle == true && advertisement.CreatedAt <= DateTime.Now.AddDays(-recent))
+                if (recent_toggle == true && advertisement.CreatedAt >= DateTime.Now.AddDays(-recent))
                 {
                     check++;
                 }
