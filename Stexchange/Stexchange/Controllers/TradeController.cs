@@ -5,12 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 using GeoCoordinatePortable;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
 using Stexchange.Data.Models;
@@ -324,7 +320,7 @@ namespace Stexchange.Controllers
         }
 
         [HttpGet]
-        public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent)
+        public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance)
         {
             // no filter for planttype, with pot, give away?
             // TO DO: Fauna value
@@ -345,7 +341,7 @@ namespace Stexchange.Controllers
                 }
             }
 
-            List<bool> extraFilters = new List<bool>() { recent_toggle };
+            List<bool> extraFilters = new List<bool>() { recent_toggle, distance_toggle };
             List<bool> selectedExtraFilters = new List<bool>();
             foreach (var filter in extraFilters)
             {
@@ -372,6 +368,12 @@ namespace Stexchange.Controllers
                 }
 
                 if (recent_toggle == true && advertisement.CreatedAt >= DateTime.Now.AddDays(-recent))
+                {
+                    check++;
+                }
+
+                advertisement.Distance = GetDistance(_userCache[advertisement.UserId].Postal_Code);
+                if (distance_toggle == true && (advertisement.Distance <= distance))
                 {
                     check++;
                 }
