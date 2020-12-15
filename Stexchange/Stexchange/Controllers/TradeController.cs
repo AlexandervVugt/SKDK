@@ -324,15 +324,18 @@ namespace Stexchange.Controllers
         }
 
         [HttpGet]
-        public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot)
+        public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent)
         {
             // no filter for planttype, with pot, give away?
-            // TO DO: fauna value
+            // TO DO: Fauna value
+            //        Rating filter
+            //        Distance filter
 
             List<Listing> searchList = new List<Listing>();
-            // All selected filters
+            // All selected filters of user
             List<string[]> filters = new List<string[]> { light, indigenous, ph, nutrients, water, plant_type, give_away, with_pot };
 
+            // Insert selected filters with a length > 0 into a new list
             List<string[]> selectedFilters = new List<string[]>();
             foreach (var filter in filters)
             {
@@ -342,10 +345,21 @@ namespace Stexchange.Controllers
                 }
             }
 
-            // Adds all advertisement which contains one or more selected filters to lit
+            List<bool> extraFilters = new List<bool>() { recent_toggle };
+            List<bool> selectedExtraFilters = new List<bool>();
+            foreach (var filter in extraFilters)
+            {
+                if (filter == true)
+                {
+                    selectedExtraFilters.Add(filter);
+                }
+            }
+
+            // Adds all advertisement which contains selected filters
             foreach (Listing advertisement in _listingCache.Values)
             {
                 int check = 0;
+                // Loops through all filters
                 foreach (var filter in filters)
                 {
                     for(int i = 0; i < filter.Length; i++)
@@ -356,7 +370,13 @@ namespace Stexchange.Controllers
                         }
                     }
                 }
-                if(check == selectedFilters.Count)
+
+                if (recent_toggle == true && advertisement.CreatedAt <= DateTime.Now.AddDays(-recent))
+                {
+                    check++;
+                }
+
+                if ((check == selectedFilters.Count + selectedExtraFilters.Count) && !searchList.Contains(advertisement))
                 {
                     searchList.Add(advertisement);
                 }
@@ -364,6 +384,23 @@ namespace Stexchange.Controllers
 
             if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
             searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
+            TempData["SearchResults"] = searchList.Count;
+            return View("trade", new TradeViewModel(searchList));
+        }
+
+        [HttpGet]
+        public IActionResult SortSearch(bool sort_distance, bool sort_time)
+        {
+            List<Listing> searchList = new List<Listing>();
+
+            foreach (Listing advertisement in _listingCache.Values)
+            {
+                searchList.Add(advertisement);
+            }
+            if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
+            if (sort_distance == true && sort_time == true) { searchList = (from advertisement in searchList orderby advertisement.Distance, advertisement.CreatedAt ascending select advertisement).ToList(); }
+            else if (sort_time == true) { searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList(); }
+            else if (sort_distance == true) { searchList = (from advertisement in searchList orderby advertisement.Distance ascending select advertisement).ToList(); }
             TempData["SearchResults"] = searchList.Count;
             return View("trade", new TradeViewModel(searchList));
         }
