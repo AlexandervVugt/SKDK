@@ -44,3 +44,26 @@ function togglerDecorator(j) {
         displays[j].hidden = !displays[j].hidden;
     };
 }
+
+// Loops through keys
+Object.keys(localStorage).forEach((key) => {
+    let checked = JSON.parse(localStorage.getItem(key));
+    if (checked == true) {
+        document.getElementById(key).checked = true;
+        document.getElementById(key).parentElement.parentElement.className = "nested expanded";
+    };
+    localStorage.removeItem(key);
+});
+
+// Stores checkbox values in localstorage
+function onClick() {
+    var checkboxinputs = document.getElementsByTagName("input");
+    for (var i = 0; i < checkboxinputs.length; i++) {
+        if (checkboxinputs[i].type.toLowerCase() == "checkbox") {
+            localStorage.setItem(checkboxinputs[i].id, checkboxinputs[i].checked);
+        }
+    }
+}
+
+
+
