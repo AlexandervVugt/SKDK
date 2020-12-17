@@ -47,11 +47,15 @@ function togglerDecorator(j) {
 
 // Loops through keys
 Object.keys(localStorage).forEach((key) => {
-    let checked = JSON.parse(localStorage.getItem(key));
-    if (checked == true) {
-        document.getElementById(key).checked = true;
-        document.getElementById(key).parentElement.parentElement.className = "nested expanded";
-    };
+    if (key == "searchbar") {
+        document.getElementById(key).value = localStorage.getItem(key);
+    } else {
+        let checked = JSON.parse(localStorage.getItem(key));
+        if (checked == true) {
+            document.getElementById(key).checked = true;
+            document.getElementById(key).parentElement.parentElement.className = "nested expanded";
+        }
+    }
     localStorage.removeItem(key);
 });
 
@@ -63,7 +67,11 @@ function onClick() {
             localStorage.setItem(checkboxinputs[i].id, checkboxinputs[i].checked);
         }
     }
+    var searchinput = document.getElementById("searchbar");
+    localStorage.setItem(searchinput.id, searchinput.value);
+    submitForms();
 }
+
 
 
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using GeoCoordinatePortable;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
@@ -272,22 +274,26 @@ namespace Stexchange.Controllers
         /// <summary>
         /// Checks if there are any advertisements that contains the searched value.
         /// If yes, the advertisement will be added to a new list.
-        /// Returns to trade view with a new TradeViewModel with a new listing List to display the requested listings
         /// </summary>
-        /// <param name="searchbar"> search value </param>
+        /// <param name="advertisements"></param>
+        /// <param name="searchbar"></param>
+        /// <param name="search_description"></param>
         /// <returns></returns>
-        [HttpGet]
-        public IActionResult Search(string searchbar, bool search_description) 
+        public List<Listing> Searchbar(ICollection<Listing> advertisements, string searchbar, bool search_description) 
         {
             List<Listing> searchList = new List<Listing>();
-            
+
             if (string.IsNullOrEmpty(searchbar) || string.IsNullOrWhiteSpace(searchbar))
             {
-                return RedirectToAction("Trade");
+                foreach (Listing advertisement in advertisements)
+                {
+                    searchList.Add(advertisement);
+                }
+                return searchList;
             }
             searchbar = searchbar.ToLower();
             // adds each advertisement to new searchList is the title contains the search value
-            foreach (Listing advertisement in _listingCache.Values)
+            foreach (Listing advertisement in advertisements)
             {
                 if (search_description == true)
                 {
@@ -312,11 +318,7 @@ namespace Stexchange.Controllers
                     }
                 }
             }
-
-            if(searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing)); 
-            searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
-            TempData["SearchResults"] = searchList.Count;
-            return View("trade", new TradeViewModel(searchList));
+            return searchList;
         }
 
         /// <summary>
@@ -335,8 +337,8 @@ namespace Stexchange.Controllers
         /// <param name="distance_toggle"></param>
         /// <param name="distance"></param>
         /// <returns> A new trademodel with filtered advertisements to view </returns>
-        [HttpGet]
-        public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance)
+        //[HttpGet]
+        public List<Listing> FilterSearch(List<Listing> advertisements, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance)
         {
             // TO DO: Fauna value
             //        Rating filter
@@ -367,7 +369,7 @@ namespace Stexchange.Controllers
             }
 
             // Adds all advertisement which contains selected filters
-            foreach (Listing advertisement in _listingCache.Values)
+            foreach (Listing advertisement in advertisements)
             {
                 int check = 0;
                 // Loops through all filters
@@ -398,32 +400,88 @@ namespace Stexchange.Controllers
                     searchList.Add(advertisement);
                 }
             }
-
-            if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
-            searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
-            TempData["SearchResults"] = searchList.Count;
-            return View("trade", new TradeViewModel(searchList));
+            return searchList;
         }
 
         /// <summary>
-        /// Sorts advertisement in correct order of selected filter value
+        ///Sorts advertisements in list with selected filter value.
+        /// If list is empty, it will create a new list of advertisements
         /// </summary>
+        /// <param name="advertisements"></param>
+        /// <param name="searchList"></param>
         /// <param name="sort_distance"></param>
         /// <param name="sort_time"></param>
-        /// <returns> A new trademodel with a list of sorted advertisements to view </returns>
-        [HttpGet]
-        public IActionResult SortSearch(bool sort_distance, bool sort_time)
+        /// <returns></returns>
+        public List<Listing> SortSearch(ICollection<Listing> advertisements, List<Listing> searchList, bool sort_distance, bool sort_time)
         {
-            List<Listing> searchList = new List<Listing>();
-
-            foreach (Listing advertisement in _listingCache.Values)
+            if(searchList.Count == 0)
             {
-                searchList.Add(advertisement);
+                foreach (Listing advertisement in advertisements)
+                {
+                    searchList.Add(advertisement);
+                }
             }
             if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
             if (sort_time == true) { searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList(); }
             else if (sort_distance == true) { searchList = (from advertisement in searchList orderby advertisement.Distance ascending select advertisement).ToList(); }
+
+            return searchList;
+        }
+
+
+        /// <summary>
+        /// Filters advertisements with searched value, selected filters or selected sort options.
+        /// </summary>
+        /// <param name="searchbar"></param>
+        /// <param name="search_description"></param>
+        /// <param name="light"></param>
+        /// <param name="indigenous"></param>
+        /// <param name="ph"></param>
+        /// <param name="nutrients"></param>
+        /// <param name="water"></param>
+        /// <param name="plant_type"></param>
+        /// <param name="give_away"></param>
+        /// <param name="with_pot"></param>
+        /// <param name="recent_toggle"></param>
+        /// <param name="recent"></param>
+        /// <param name="distance_toggle"></param>
+        /// <param name="distance"></param>
+        /// <param name="sort_distance"></param>
+        /// <param name="sort_time"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Search(string searchbar, bool search_description, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance, bool sort_distance, bool sort_time)
+        {
+            ICollection<Listing> advertisements = _listingCache.Values;
+            List<Listing> searchList = new List<Listing>();
+            List<List<Listing>> filterlists = new List<List<Listing>>();
+            List<Listing> search = Searchbar(advertisements, searchbar, search_description);
+            List<Listing> filter = FilterSearch(search, light, indigenous, ph, nutrients, water, plant_type, give_away, with_pot, recent_toggle, recent, distance_toggle, distance);
+
+            filterlists.Add(filter);
+
+            foreach (var lists in filterlists)
+            {
+                foreach (var list in filter)
+                {
+                    if (!searchList.Contains(list))
+                    {
+                        searchList.Add(list);
+                    }
+                }
+            }
+
+            if (sort_distance == true || sort_time == true)
+            {
+                searchList = SortSearch(advertisements, searchList, sort_distance, sort_time);
+            }
+            else
+            {
+                searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
+            }
+
             TempData["SearchResults"] = searchList.Count;
+
             return View("trade", new TradeViewModel(searchList));
         }
     }
