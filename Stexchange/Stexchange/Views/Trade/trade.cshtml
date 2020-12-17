@@ -283,7 +283,10 @@
                     {
                         @foreach (string filter in listing.Filters)
                         {
-                            <code class="filter_tag">@filter</code>
+                            if (!filter.Contains("null") && !filter.Contains("nee"))
+                            {
+                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "")</code>
+                            }
                         }
                     }
                 </div>
