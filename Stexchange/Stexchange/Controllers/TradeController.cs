@@ -319,13 +319,27 @@ namespace Stexchange.Controllers
             return View("trade", new TradeViewModel(searchList));
         }
 
+        /// <summary>
+        /// Checks if advertisement in list of advertisements contains at least one of the selected filters in every filtercatagory.
+        /// </summary>
+        /// <param name="light"></param>
+        /// <param name="indigenous"></param>
+        /// <param name="ph"></param>
+        /// <param name="nutrients"></param>
+        /// <param name="water"></param>
+        /// <param name="plant_type"></param>
+        /// <param name="give_away"></param>
+        /// <param name="with_pot"></param>
+        /// <param name="recent_toggle"></param>
+        /// <param name="recent"></param>
+        /// <param name="distance_toggle"></param>
+        /// <param name="distance"></param>
+        /// <returns> A new trademodel with filtered advertisements to view </returns>
         [HttpGet]
         public IActionResult FilterSearch(string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance)
         {
-            // no filter for planttype, with pot, give away?
             // TO DO: Fauna value
             //        Rating filter
-            //        Distance filter
 
             List<Listing> searchList = new List<Listing>();
             // All selected filters of user
@@ -341,6 +355,7 @@ namespace Stexchange.Controllers
                 }
             }
 
+            // adds selected filter which is true to selected list
             List<bool> extraFilters = new List<bool>() { recent_toggle, distance_toggle };
             List<bool> selectedExtraFilters = new List<bool>();
             foreach (var filter in extraFilters)
@@ -390,6 +405,12 @@ namespace Stexchange.Controllers
             return View("trade", new TradeViewModel(searchList));
         }
 
+        /// <summary>
+        /// Sorts advertisement in correct order of selected filter value
+        /// </summary>
+        /// <param name="sort_distance"></param>
+        /// <param name="sort_time"></param>
+        /// <returns> A new trademodel with a list of sorted advertisements to view </returns>
         [HttpGet]
         public IActionResult SortSearch(bool sort_distance, bool sort_time)
         {
@@ -400,8 +421,7 @@ namespace Stexchange.Controllers
                 searchList.Add(advertisement);
             }
             if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
-            if (sort_distance == true && sort_time == true) { searchList = (from advertisement in searchList orderby advertisement.Distance, advertisement.CreatedAt ascending select advertisement).ToList(); }
-            else if (sort_time == true) { searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList(); }
+            if (sort_time == true) { searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList(); }
             else if (sort_distance == true) { searchList = (from advertisement in searchList orderby advertisement.Distance ascending select advertisement).ToList(); }
             TempData["SearchResults"] = searchList.Count;
             return View("trade", new TradeViewModel(searchList));
