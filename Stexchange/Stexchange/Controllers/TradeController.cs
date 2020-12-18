@@ -279,7 +279,7 @@ namespace Stexchange.Controllers
         /// <param name="searchbar"></param>
         /// <param name="search_description"></param>
         /// <returns></returns>
-        public List<Listing> Searchbar(ICollection<Listing> advertisements, string searchbar, bool search_description) 
+        public List<Listing> Searchbar(ICollection<Listing> advertisements, string searchbar, bool search_description)
         {
             List<Listing> searchList = new List<Listing>();
 
@@ -343,21 +343,24 @@ namespace Stexchange.Controllers
             // TO DO: Fauna value
             //        Rating filter
 
+            // List of advertisements that contains selected filter values and search input
             List<Listing> searchList = new List<Listing>();
-            // All selected filters of user
+
+            // All plant filters
             List<string[]> filters = new List<string[]> { light, indigenous, ph, nutrients, water, plant_type, give_away, with_pot };
 
-            // Insert selected filters with a length > 0 into a new list
+            // Adds selected plant filters with a length greater than 0 to a new list
             List<string[]> selectedFilters = new List<string[]>();
             foreach (var filter in filters)
             {
-                if(filter.Length > 0)
+                if (filter.Length > 0)
                 {
                     selectedFilters.Add(filter);
                 }
             }
 
-            // adds selected filter which is true to selected list
+            // All toggle filters
+            // Adds selected toggle filters which are true to a new list
             List<bool> extraFilters = new List<bool>() { recent_toggle, distance_toggle };
             List<bool> selectedExtraFilters = new List<bool>();
             foreach (var filter in extraFilters)
@@ -375,7 +378,7 @@ namespace Stexchange.Controllers
                 // Loops through all filters
                 foreach (var filter in filters)
                 {
-                    for(int i = 0; i < filter.Length; i++)
+                    for (int i = 0; i < filter.Length; i++)
                     {
                         if (advertisement.Filters.Contains(filter[i]))
                         {
@@ -395,7 +398,8 @@ namespace Stexchange.Controllers
                     check++;
                 }
 
-                if ((check == selectedFilters.Count + selectedExtraFilters.Count) && !searchList.Contains(advertisement))
+                // Checks if check count equals selected filters count
+                if ((check == selectedFilters.Count + selectedExtraFilters.Count))
                 {
                     searchList.Add(advertisement);
                 }
@@ -412,18 +416,12 @@ namespace Stexchange.Controllers
         /// <param name="sort_distance"></param>
         /// <param name="sort_time"></param>
         /// <returns></returns>
-        public List<Listing> SortSearch(ICollection<Listing> advertisements, List<Listing> searchList, bool sort_distance, bool sort_time)
+        public List<Listing> SortSearch(List<Listing> searchList, bool sort_distance, bool sort_time)
         {
-            if(searchList.Count == 0)
-            {
-                foreach (Listing advertisement in advertisements)
-                {
-                    searchList.Add(advertisement);
-                }
-            }
             if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
+
             if (sort_time == true) { searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList(); }
-            else if (sort_distance == true) { searchList = (from advertisement in searchList orderby advertisement.Distance ascending select advertisement).ToList(); }
+            else if (sort_distance == true) { searchList = (from advertisement in searchList orderby advertisement.Distance, advertisement.CreatedAt ascending select advertisement).ToList(); }
 
             return searchList;
         }
@@ -453,30 +451,15 @@ namespace Stexchange.Controllers
         public IActionResult Search(string searchbar, bool search_description, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance, bool sort_distance, bool sort_time)
         {
             ICollection<Listing> advertisements = _listingCache.Values;
-            List<Listing> searchList = new List<Listing>();
-            List<List<Listing>> filterlists = new List<List<Listing>>();
-            List<Listing> search = Searchbar(advertisements, searchbar, search_description);
-            List<Listing> filter = FilterSearch(search, light, indigenous, ph, nutrients, water, plant_type, give_away, with_pot, recent_toggle, recent, distance_toggle, distance);
-
-            filterlists.Add(filter);
-
-            foreach (var lists in filterlists)
-            {
-                foreach (var list in filter)
-                {
-                    if (!searchList.Contains(list))
-                    {
-                        searchList.Add(list);
-                    }
-                }
-            }
+            List<Listing> searchList = FilterSearch(Searchbar(advertisements, searchbar, search_description), light, indigenous, ph, nutrients, water, plant_type, give_away, with_pot, recent_toggle, recent, distance_toggle, distance);
 
             if (sort_distance == true || sort_time == true)
             {
-                searchList = SortSearch(advertisements, searchList, sort_distance, sort_time);
+                searchList = SortSearch(searchList, sort_distance, sort_time);
             }
             else
             {
+                if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
                 searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
             }
 
