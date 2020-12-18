@@ -64,6 +64,8 @@ html {
       margin-right: 8px;
       padding-right: 16px;
       font-size: 1.5vh; }
+      html body #forms .fullwidth2 {
+        width: 100%; }
       html body #forms .sort {
         float: left;
         width: 100%;
@@ -77,6 +79,8 @@ html {
         border-bottom: 0.1vh solid; }
       html body #forms li {
         border-top: 0.1vh solid; }
+      html body #forms .liwithtoggle {
+        margin-bottom: 8%; }
       html body #forms #apply_filter {
         font-size: 1vh;
         position: relative;

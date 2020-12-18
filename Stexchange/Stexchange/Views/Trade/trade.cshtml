@@ -216,51 +216,57 @@
             <li>
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Afstand</span>
                 <ul class="nested">
-                    <li>
+                    <li class="liwithtoggle">
                         <input type="checkbox" class="sort-range-toggle" name="distance_toggle" id="distance_toggle" value="true" />
                         <label for="distance_toggle">Afstand begrenzen</label>
                         <input type="range" class="sort-range" name="distance" id="distance" min="5" max="30" value="5" step="5" disabled />
-                        <span class="sort-range-display" name="distance_amount" id="distance_amount" hidden><span>5</span> km</span><p></p>
+                        <span class="sort-range-display" name="distance_amount" id="distance_amount" hidden><span>5</span> km</span>
                     </li>
                 </ul>
             </li>
             <li>
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Tijd</span>
                 <ul class="nested">
-                    <li>
+                    <li class="liwithtoggle">
                         <input type="checkbox" class="sort-range-toggle" name="recent_toggle" id="recent_toggle" value="true" />
-                        <label for="recent_toggle">Maximum tijd sinds plaatsing</label>
+                        <label for="recent_toggle">Geplaatst sinds</label>
                         <input type="range" class="sort-range" name="recent" id="recent" min="1" max="57" value="1" disabled />
-                        <span class="sort-range-display" name="recent_amount" id="recent_amount" hidden><span>1</span> dagen</span><p></p>
+                        <span class="sort-range-display" name="recent_amount" id="recent_amount" hidden><span>1</span> dagen</span>
                     </li>
                 </ul>
             </li>
             <li>
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Beoordeling</span>
                 <ul class="nested">
-                    <li>
+                    <li class="liwithtoggle">
                         <input type="checkbox" class="sort-range-toggle" name="rating_toggle" id="rating_toggle" value="true" />
                         <label for="rating_toggle">Minimum beoordeling</label>
                         <input type="range" class="sort-range" name="rating" id="rating" min="1" max="5" value="3" disabled />
-                        <span class="sort-range-display" name="rating_amount" id="rating_amount" hidden><span>3</span> sterren</span><p></p>
+                        <span class="sort-range-display" name="rating_amount" id="rating_amount" hidden><span>3</span> sterren</span>
                     </li>
                 </ul>
             </li>
         </ul>
-        <button type="submit" id="apply_filter" onclick="onClick()">Filters toepassen</button>
+        <div class="fullwidth2">
+            <button type="submit" id="apply_filter" onclick="onClick()">Filters toepassen</button>
+        </div>
+        
 
         <strong class="sort">Sorteren</strong>
         <label class="chose" for="sort">Kies een criterium om op te sorteren</label>
 
-        <input type="checkbox" class="sort-range-toggle" name="sort_distance" id="sort_distance" value="true" />
-        <label for="sort_distance">Afstand</label>
+        <div class="fullwidth2">
+            <input type="checkbox" class="sort-range-toggle" name="sort_distance" id="sort_distance" value="true" />
+            <label for="sort_distance">Afstand</label>
+        </div>
+        <div class="fullwidth2">
+            <input type="checkbox" class="sort-range-toggle" name="sort_time" id="sort_time" value="true" />
+            <label for="sort_time">Datum (nieuw - oud)</label>
+        </div>
 
-        <input type="checkbox" class="sort-range-toggle" name="sort_time" id="sort_time" value="true" />
-        <label for="sort_time">Datum (nieuw - oud)</label>
+                <button type="submit" id="apply_sort" onclick="onClick()">Criteria toepassen</button>
 
-        <button type="submit" id="apply_sort" onclick="onClick()">Criteria toepassen</button>
-
-    </div>
+            </div>
 </form>
 <div class="" id="listings">
     @foreach (Listing listing in Model.Listings)
