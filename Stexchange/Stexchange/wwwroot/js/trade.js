@@ -21,7 +21,7 @@ for (var i = 0; i < sortRange.length; i++) {
                 console.log("bigger " + event.target.value);
                 event.target.step = 7;
                 innerspan.innerText = Math.floor(event.target.value / 7);
-                outerspan.innerHTML = " weken";
+                outerspan.innerText = " weken";
                 outerspan.prepend(innerspan);
             } else {
                 console.log("smaller" + event.target.value);
@@ -46,30 +46,52 @@ function togglerDecorator(j) {
 }
 
 // Loops through keys
-Object.keys(localStorage).forEach((key) => {
+// sessionStorage automatically clears the data in storage after closing window or tab
+Object.keys(sessionStorage).forEach((key) => {
     if (key == "searchbar") {
-        document.getElementById(key).value = localStorage.getItem(key);
+        // Get saved data from sessionStorage
+        document.getElementById(key).value = sessionStorage.getItem(key);
+    } else if (key == "distance" || key == "recent" || key == "rating") {
+        // Adds value to toggle and enables toggle if checkbox is checked
+        if (sessionStorage.getItem(key + "_toggle") == "true") {
+            document.getElementById(key).parentElement.parentElement.className = "nested expanded";
+            document.getElementById(key).parentElement.parentElement.previousElementSibling.previousElementSibling.className = "caret rotated";
+            document.getElementById(key).value = sessionStorage.getItem(key);
+            document.getElementById(key).disabled = false;
+        }
+    } else if (key == "distance_amount" || key == "recent_amount" || key == "rating_amount") {
+        // Adds and shows text between tags if checkbox is checked
+        if (document.getElementById(key.replace("_amount", "_toggle")).checked == true) {
+            document.getElementById(key).innerHTML = sessionStorage.getItem(key);
+            document.getElementById(key).hidden = false;
+        }
     } else {
-        let checked = JSON.parse(localStorage.getItem(key));
+        // Checks checkboxes if they are checked
+        let checked = JSON.parse(sessionStorage.getItem(key));
         if (checked == true) {
             document.getElementById(key).checked = true;
             document.getElementById(key).parentElement.parentElement.className = "nested expanded";
+            document.getElementById(key).parentElement.parentElement.previousElementSibling.previousElementSibling.className = "caret rotated";
         }
     }
-    localStorage.removeItem(key);
 });
 
 // Stores checkbox values in localstorage
 function onClick() {
     var checkboxinputs = document.getElementsByTagName("input");
+    // Loops through all input elements
     for (var i = 0; i < checkboxinputs.length; i++) {
+        // Save data to sessionStorage
         if (checkboxinputs[i].type.toLowerCase() == "checkbox") {
-            localStorage.setItem(checkboxinputs[i].id, checkboxinputs[i].checked);
+            sessionStorage.setItem(checkboxinputs[i].id, checkboxinputs[i].checked);
+        }
+        if (checkboxinputs[i].type.toLowerCase() == "range") {
+            sessionStorage.setItem(checkboxinputs[i].id, checkboxinputs[i].value);
+            sessionStorage.setItem(checkboxinputs[i].nextElementSibling.id, checkboxinputs[i].nextElementSibling.innerHTML);
         }
     }
     var searchinput = document.getElementById("searchbar");
-    localStorage.setItem(searchinput.id, searchinput.value);
-    submitForms();
+    sessionStorage.setItem(searchinput.id, searchinput.value);
 }
 
 
