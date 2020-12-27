@@ -17,19 +17,15 @@ for (var i = 0; i < sortRange.length; i++) {
         let outerspan = document.getElementById(event.target.getAttribute("id") + "_amount");
         let innerspan = outerspan.childNodes[0];
         if (event.target.getAttribute("id") == "recent") {
-            if (event.target.value > 7) {
-                console.log("bigger " + event.target.value);
+            if (event.target.value > 6) {
                 event.target.step = 7;
                 innerspan.innerText = Math.floor(event.target.value / 7);
-                outerspan.innerText = " weken";
+                innerspan.innerText == 1 ? outerspan.innerText = " week" : outerspan.innerText = " weken";
                 outerspan.prepend(innerspan);
             } else {
-                console.log("smaller" + event.target.value);
-                console.log(event.target);
-                console.log(innerspan);
                 event.target.step = 1;
                 innerspan.innerText = event.target.value;
-                outerspan.innerText = " dagen";
+                innerspan.innerText == 1 ? outerspan.innerText = " dag" : outerspan.innerText = " dagen";
                 outerspan.prepend(innerspan);
             }
         } else {
