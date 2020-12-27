@@ -100,6 +100,10 @@ html {
             padding-right: 16px;
             font-size: 1.5vh;
 
+            .fullwidth2 {
+                width:100%;
+            }
+
 
             .sort {
                 float: left;
@@ -118,6 +122,10 @@ html {
 
             li {
                 border-top: 0.1vh solid;
+            }
+
+            .liwithtoggle {
+                margin-bottom: 8%;
             }
 
             #apply_filter {
