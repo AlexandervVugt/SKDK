@@ -67,34 +67,85 @@ namespace Tests
             Assert.IsFalse(StexChangeController.TerminateSession(98));
         }
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "user tuple was null and inappropriately allowed")]
         public void CreateSession_TupleNull()
         {
-            throw new NotImplementedException();
+            StexChangeController.CreateSession(null);
         }
         [TestMethod]
         public void CreateSession_DuplicateId()
         {
-            throw new NotImplementedException();
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(89, "5736TG");
+            long existingSession = StexChangeController.CreateSession(user);
+            //Act
+            long createdSession = StexChangeController.CreateSession(user);
+            //Assert
+            Assert.IsFalse(StexChangeController.SessionExists(existingSession));
+            Assert.IsTrue(StexChangeController.GetSessionData(createdSession, out Tuple<int, string> sessionData));
+            Assert.AreEqual(user, sessionData);
         }
         [TestMethod]
         public void CreateSession_Normal()
         {
-            throw new NotImplementedException();
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(145, "9973RB");
+            //Act
+            long createdSession = StexChangeController.CreateSession(user);
+            //Assert
+            Assert.IsTrue(StexChangeController.GetSessionData(createdSession, out Tuple<int, string> sessionData));
+            Assert.AreEqual(user, sessionData);
         }
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "Tuple that contains a null value was inappropriately allowed")]
         public void CreateSession_PostalCodeNull()
         {
-            throw new NotImplementedException();
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(586, null);
+            //Act
+            StexChangeController.CreateSession(user);
         }
         [TestMethod]
-        public void CreateSession_PostalCodeInvalid()
+        [ExpectedException(typeof(ArgumentException),
+            "Postal code that was too short was inapporpriately allowed")]
+        public void CreateSession_PostalCodeInvalid_TooShort()
         {
-            throw new NotImplementedException();
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(934, "NT");
+            //Act
+            StexChangeController.CreateSession(user);
         }
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Postal code that was too short was inapporpriately allowed")]
+        public void CreateSession_PostalCodeInvalid_TooLong()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(934, "12345AB");
+            //Act
+            StexChangeController.CreateSession(user);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Postal code that was too short was inapporpriately allowed")]
+        public void CreateSession_PostalCodeInvalid_Format()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(934, "123ABC");
+            //Act
+            StexChangeController.CreateSession(user);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "UserId that was invalid was inapporpriately allowed")]
         public void CreateSession_UserIdInvalid()
         {
-            throw new NotImplementedException();
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(-1, "7384UY");
+            //Act
+            StexChangeController.CreateSession(user);
         }
     }
 }
