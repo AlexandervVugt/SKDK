@@ -92,7 +92,7 @@
                 </ul>
             </li>
             <li>
-                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Zuurgraad</span>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Bodem</span>
                 <ul class="nested">
                     <li>
                         <input type="checkbox" id="zuurgraad1" name="ph" value="ph_zuur" />
@@ -291,7 +291,7 @@
                         {
                             if (!filter.Contains("null") && !filter.Contains("nee"))
                             {
-                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "")</code>
+                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "").Replace("ph", "bodem")</code>
                             }
                         }
                     }
