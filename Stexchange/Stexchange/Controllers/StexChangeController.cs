@@ -80,6 +80,10 @@ namespace Stexchange.Controllers
             return sessions.Remove(token);
         }
 
+        /// <summary>
+        /// Removes the sessions that exist for the given user id.
+        /// </summary>
+        /// <param name="id">the user id</param>
         private static void ClearSessions(int id)
         {
             var tokens = (from value in sessions
