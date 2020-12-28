@@ -64,6 +64,7 @@ namespace Stexchange.Controllers
         /// <param name="user">The value of the session (user id and name)</param>
         public static long CreateSession(Tuple<int, string> user)
         {
+            ClearSessions(user.Item1);
             long token = generateToken(user);
             sessions.Add(token, user);
             return token;
@@ -79,7 +80,7 @@ namespace Stexchange.Controllers
             return sessions.Remove(token);
         }
 
-        public static void ClearSessions(int id)
+        private static void ClearSessions(int id)
         {
             var tokens = (from value in sessions
                          where value.Value.Item1 == id
