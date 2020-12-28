@@ -66,5 +66,35 @@ namespace Tests
         {
             Assert.IsFalse(StexChangeController.TerminateSession(98));
         }
+        [TestMethod]
+        public void CreateSession_TupleNull()
+        {
+            throw new NotImplementedException();
+        }
+        [TestMethod]
+        public void CreateSession_DuplicateId()
+        {
+            throw new NotImplementedException();
+        }
+        [TestMethod]
+        public void CreateSession_Normal()
+        {
+            throw new NotImplementedException();
+        }
+        [TestMethod]
+        public void CreateSession_PostalCodeNull()
+        {
+            throw new NotImplementedException();
+        }
+        [TestMethod]
+        public void CreateSession_PostalCodeInvalid()
+        {
+            throw new NotImplementedException();
+        }
+        [TestMethod]
+        public void CreateSession_UserIdInvalid()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
