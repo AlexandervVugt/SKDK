@@ -1,6 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Stexchange.Controllers;
 using System;
+using Moq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Stexchange.Controllers.Exceptions;
 
 namespace Tests
 {
@@ -146,6 +150,76 @@ namespace Tests
             Tuple<int, string> user = new Tuple<int, string>(-1, "7384UY");
             //Act
             StexChangeController.CreateSession(user);
+        }
+        [TestMethod]
+        public void GetUserId_Normal()
+        {
+            //Arrange
+            int expected = 47;
+            Tuple<int, string> user = new Tuple<int, string>(expected, "4329TU");
+            var mockedController = MockController(StexChangeController.CreateSession(user).ToString(), true);
+            //Act
+            int actual = mockedController.GetUserId();
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void GetUserId_Mismatch()
+        {
+            string message = "Session token should be invalid, but was found to be valid";
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(34, "7684IO");
+            var mockedController = MockController("12345", true);
+            //Act
+            try
+            {
+                int actual = mockedController.GetUserId();
+                Assert.Fail(message);
+            } catch (InvalidSessionException except)
+            {
+                if (except.Message != "Session does not exist")
+                {
+                    Assert.Fail(message);
+                }
+            }
+        }
+        [TestMethod]
+        public void GetUserId_NoCookie()
+        {
+            string message = "Session token should be invalid, but was found to be valid";
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(908, "3342PE");
+            var mockedController = MockController(null, false);
+            //Act
+            try
+            {
+                mockedController.GetUserId();
+                Assert.Fail(message);
+            } catch (InvalidSessionException except)
+            {
+                if(except.Message != "Cookie does not exist")
+                {
+                    Assert.Fail(message);
+                }
+            }
+        }
+
+        private StexChangeController MockController(string value, bool createCookie)
+        {
+            var responseMock = new Mock<HttpResponse>().Object;
+            if (createCookie)
+            {
+                responseMock.Cookies.Append(StexChangeController.Cookies.SessionToken, value);
+            }
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(c => c.Response).Returns(responseMock);
+            return new HomeController()
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = contextMock.Object
+                }
+            };
         }
     }
 }
