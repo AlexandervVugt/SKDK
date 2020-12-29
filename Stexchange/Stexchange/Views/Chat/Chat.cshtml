@@ -52,6 +52,7 @@
 <script type="text/javascript" src="~/js/chat/conversation_switcher.js" asp-append-version="true"></script>
 
 <script type="text/javascript">
+    displayConvo(@Model.RecentChat)
     let spamChat = @(TempData["Error"] ?? 0);
     if (spamChat == 1) {
         window.onload = function () {

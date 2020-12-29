@@ -12,11 +12,13 @@ namespace Stexchange.Models
     {
         public List<Chat> ChatInbox { get; }
         public int UserId { get; }
+         public int RecentChat { get; }
 
-        public ChatViewModel(List<Chat> chatInbox, int userId)
+        public ChatViewModel(List<Chat> chatInbox, int userId, int recentChat)
         {
             ChatInbox = chatInbox;
             UserId = userId;
+            RecentChat = recentChat;
         }
     }
 }

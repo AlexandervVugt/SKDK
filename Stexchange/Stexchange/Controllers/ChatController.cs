@@ -70,7 +70,28 @@ namespace Stexchange.Controllers
                      where chat.Messages.Any()
                      orderby chat.Messages[0].Timestamp descending
                      select chat).ToList();
-            return View(model: new ChatViewModel(chats, userId));
+            
+      
+            try
+            {
+                int recentChat = chats[0].Id;
+                var RecentTimestamp = chats[0].Messages[0].Timestamp;
+                
+                foreach (Chat ch in chats)
+                {
+                    if (ch.Messages.Last().Timestamp > RecentTimestamp)
+                    {
+                      RecentTimestamp = ch.Messages.Last().Timestamp;
+                      recentChat = ch.Id;
+                    }
+                    
+                }
+                return View(model: new ChatViewModel(chats, userId, recentChat));
+            }
+            catch(ArgumentOutOfRangeException)
+            {
+                return View(model: new ChatViewModel(chats, userId, -1));
+            }      
         }
 
         /// <summary>
