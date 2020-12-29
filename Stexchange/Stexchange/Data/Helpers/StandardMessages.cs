@@ -15,16 +15,16 @@ namespace Stexchange.Data.Helpers
         public static string RequiredField(string fieldName)
         {
             fieldName = fieldName.First().ToString().ToUpper() + fieldName.Substring(1);
-            return $"Oops! {fieldName} is een verplicht veld.";
+            return $"{fieldName} is een verplicht veld.";
         }
 
         /// <summary>
         /// the amount of chars is incorrect
         /// </summary>
         /// <returns></returns>
-        public static string AmountOfCharacters()
+        public static string AmountOfCharacters(string fieldName)
         {
-            return $"De hoeveelheid karakters is onjuist.";
+            return $"De hoeveelheid karakters in de {fieldName} veld is onjuist.";
         }
 
         /// <summary>
@@ -45,10 +45,24 @@ namespace Stexchange.Data.Helpers
         {
             if (String.IsNullOrEmpty(input))
             {
-                return "Oops, something went wrong";
+                return "Er is iets misgegaan";
             }
 
-            return $"Oops, something went wrong with the {input}";
+            return $"Er is iets misgegaan met de {input}";
+        }
+
+        /// <summary>
+        /// your input does not match the options given
+        /// </summary>
+        /// <returns></returns>
+        public static string InvalidOptionUsed(string choice)
+        {
+            return $"{choice} keuze is geen geldige optie.";
+        }
+
+        public static string NoMatch(string fieldName)
+        {
+            return $"De {fieldName} moet minstens 1 letter bevatten";
         }
     }
 }

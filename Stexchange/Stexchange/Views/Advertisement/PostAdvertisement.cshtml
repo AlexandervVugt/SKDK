@@ -1,11 +1,28 @@
 ﻿@{
     ViewData["Title"] = "Post Advertisement";
 }
+
 <link rel="stylesheet" href="~/css/postadvertisement.css" />
 
 <h2>ADVERTENTIE PLAATSEN</h2>
 <h3>Vul de volgende gegevens in om een advertentie te plaatsen.</h3>
-<h3><strong>Aangeboden planten mogen geen pesticiden bevatten!</strong></h3><br>
+<h3><strong>Aangeboden planten mogen geen pesticiden bevatten!</strong></h3>
+<br>
+
+@if (ViewBag.Messages is object)
+{
+    <form id="errorpopup">
+        <div id="errorblock" onload="toggleElements()">
+            <h3>ERROR</h3>
+            @foreach (var message in ViewBag.Messages)
+            {
+                <p>@message</p>
+            }
+            <input type="button" value="OK" onclick="hideForm()" id="errorbutton" />
+        </div>
+    </form>
+}
+<br>
 <form action="PostAdvertisement" method="post" class="advertisementform" enctype="multipart/form-data">
     <p>
         <span id="messagepicture">Klik op "Bestand selecteren" om foto's toe te voegen</span>
@@ -25,7 +42,7 @@
     </p>
     <p>
         <label for="description" class="labeltext">Beschrijving</label>
-        <textarea class="descriptionInput" name="description" maxlength="500" required></textarea>
+        <textarea class="descriptionInput" name="description" maxlength="500" placeholder="Beschrijf in 50-500 karakters je buitenplantje. Bv. reden van weggave, verzorging, welke dieren deze plant aantrekt; bijvriendelijk etc." required></textarea>
     </p>
     <p>
         <label for="name_lt" class="labeltext">Latijnse naam</label>
@@ -111,10 +128,6 @@
     <p>
         <button type="submit" class="submit advertisement" id="advertisementsubmit">Advertentie plaatsen</button>
     </p>
-    @if(TempData["errormessage"] is object)
-    {
-        <h1>@TempData["errormessage"]</h1>
-    }
 </form>
 
 <script type="text/javascript" src="~/js/postadvertisement.js" asp-append-version="true"></script>

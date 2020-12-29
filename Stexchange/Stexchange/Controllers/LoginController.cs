@@ -15,21 +15,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Stexchange.Controllers
 {
 	public class LoginController : StexChangeController
 	{
-		public LoginController(Database db, IConfiguration config, EmailService emailService)
+		public LoginController(Database db, IConfiguration config, EmailService emailService, ILogger<LoginController> logger)
 		{
 			Database = db;
 			EmailService = emailService;
 			Config = config.GetSection("MailSettings");
+			Log = logger;
 		}
 
 		private Database Database { get; }
 		private EmailService EmailService { get; }
 		private IConfiguration Config { get; }
+		private ILogger Log { get; }
 		public IActionResult Login()
         {
             return View();
@@ -204,8 +207,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 			}
 			catch (Exception ex)
 			{
-				ViewBag.Error = "Error: " + ex.ToString();
-				Console.WriteLine(ex.ToString());
+				Log.LogWarning(ex.ToString());
 			}
 			return View("Login");
 		}
