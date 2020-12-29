@@ -126,6 +126,11 @@ namespace Stexchange.Controllers
                 _db.SaveChanges();
 
             }
+            else
+            {
+                TempData["Error"] = 1;
+                TempData.Keep("Error");
+            }
             return RedirectToAction("Chat");    
 
 
