@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Stexchange.Controllers.Exceptions;
@@ -60,10 +61,21 @@ namespace Stexchange.Controllers
         
         /// <summary>
         /// Creates a key, value pair for the session in the session dictionary.
+        /// If a user already has a session, the old session is deleted and a new one is created.
         /// </summary>
-        /// <param name="user">The value of the session (user id and name)</param>
+        /// <param name="user">The value of the session (user id and postal code)</param>
+        /// <exception cref="ArgumentNullException">When user or postal code is null</exception>
+        /// <excpetion cref="ArgumentException">When the user id or postal code are an invalid value.</excpetion>
         public static long CreateSession(Tuple<int, string> user)
         {
+            if(user is null || string.IsNullOrWhiteSpace(user.Item2))
+            {
+                throw new ArgumentNullException();
+            }
+            if (user.Item1 < 0 || !CheckPostalCode(user.Item2))
+            {
+                throw new ArgumentException("exception thrown from createsession");
+            }
             ClearSessions(user.Item1);
             long token = generateToken(user);
             sessions.Add(token, user);
@@ -93,6 +105,16 @@ namespace Stexchange.Controllers
             {
                 sessions.Remove(token);
             }
+        }
+
+        /// <summary>
+        /// Checks if the input string is a valid postal code.
+        /// </summary>
+        /// <param name="postalCode"></param>
+        /// <returns></returns>
+        private static bool CheckPostalCode(string postalCode)
+        {
+            return postalCode.Length == 6 && new Regex(@"\d{4}[A-Z]{2}", RegexOptions.IgnoreCase).IsMatch(postalCode);
         }
 
         /// <summary>

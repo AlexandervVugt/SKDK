@@ -151,7 +151,6 @@ namespace Tests
             //Act
             StexChangeController.CreateSession(user);
         }
-        [TestMethod]
         public void GetUserId_Normal()
         {
             //Arrange
@@ -163,7 +162,6 @@ namespace Tests
             //Assert
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
         public void GetUserId_Mismatch()
         {
             string message = "Session token should be invalid, but was found to be valid";
@@ -183,7 +181,6 @@ namespace Tests
                 }
             }
         }
-        [TestMethod]
         public void GetUserId_NoCookie()
         {
             string message = "Session token should be invalid, but was found to be valid";
