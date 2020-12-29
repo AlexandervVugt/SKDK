@@ -35,46 +35,45 @@
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/css/trade.css" />
-<div class="fullwidth">
-    <div class="searchbar" id="search">
-        <form action="Search" method="post">
+<form action="Search" method="get" id="search_form">
+    <div class="fullwidth">
+        <div class="searchbar" id="search">
+
             <input type="text" placeholder="Zoek op trefwoord..." name="searchbar" id="searchbar" />
-            <button id="searchquery"><i class="fa fa-search"></i></button>
-            <input type="checkbox" name="search_description" id="search_description" value="true"/>
+            <button id="searchquery" onclick="onClick()"><i class="fa fa-search"></i></button>
+            <input type="checkbox" name="search_description" id="search_description" value="true" />
             <label for="search_description">Doorzoek ook de beschrijving</label>
-        </form>
+        </div>
     </div>
-</div>
-@{
-    if (TempData["SearchResults"] != null)
-    {
-        if (int.Parse(TempData["SearchResults"].ToString()) == 1)
+    @{
+        if (TempData["SearchResults"] != null)
         {
-            <p id="searchResults">@TempData["SearchResults"] resultaat</p>
-        }
-        else
-        {
-            <p id="searchResults">@TempData["SearchResults"] resultaten</p>
+            if (int.Parse(TempData["SearchResults"].ToString()) == 1)
+            {
+                <p id="searchResults">@TempData["SearchResults"] resultaat</p>
+            }
+            else
+            {
+                <p id="searchResults">@TempData["SearchResults"] resultaten</p>
+            }
         }
     }
-}
-<div class="" id="forms">
-    <form id="filer_form">
+    <div class="" id="forms">
         <strong>Filters</strong>
         <ul id="filter_list">
             <li>
                 <img class="caret rotated" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Zonlicht</span>
                 <ul class="nested expanded">
                     <li>
-                        <input type="checkbox" id="zonlicht1" name="zonlicht" value="zon" />
-                        <label for="zonlicht1">Zon</label>
+                        <input type="checkbox" id="zonlicht1" name="light" value="light_volle_zon" />
+                        <label for="zonlicht1">Volle zon</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="zonlicht2" name="zonlicht" value="halfschaduw" />
+                        <input type="checkbox" id="zonlicht2" name="light" value="light_halfschaduw" />
                         <label for="zonlicht2">Halfschaduw</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="zonlicht3" name="zonlicht" value="schaduw" />
+                        <input type="checkbox" id="zonlicht3" name="light" value="light_schaduw" />
                         <label for="zonlicht3">Schaduw</label>
                     </li>
                 </ul>
@@ -83,28 +82,28 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Herkomst</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="herkomst1" name="herkomst" value="inheems" />
+                        <input type="checkbox" id="herkomst1" name="indigenous" value="indigenous_inheems" />
                         <label for="herkomst1">Inheems</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="herkomst2" name="herkomst" value="niet_inheems" />
+                        <input type="checkbox" id="herkomst2" name="indigenous" value="indigenous_niet_inheems" />
                         <label for="herkomst2">Niet inheems</label>
                     </li>
                 </ul>
             </li>
             <li>
-                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Zuurgraad</span>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Bodem</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="zuurgraad1" name="zuurgraad" value="zuur" />
+                        <input type="checkbox" id="zuurgraad1" name="ph" value="ph_zuur" />
                         <label for="zuurgraad1">Zuur</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="zuurgraad2" name="zuurgraad" value="neutraal" />
+                        <input type="checkbox" id="zuurgraad2" name="ph" value="ph_neutraal" />
                         <label for="zuurgraad2">Neutraal</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="zuurgraad3" name="zuurgraad" value="kalkrijk" />
+                        <input type="checkbox" id="zuurgraad3" name="ph" value="ph_kalkrijk" />
                         <label for="zuurgraad3">Kalkrijk</label>
                     </li>
                 </ul>
@@ -113,16 +112,16 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Voedselrijkdom</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="voedselrijkdom1" name="voedselrijkdom" value="arm" />
-                        <label for="voedselrijkdom1">Arm</label>
+                        <input type="checkbox" id="voedselrijkdom1" name="nutrients" value="nutrients_weinig" />
+                        <label for="voedselrijkdom1">Weinig</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="voedselrijkdom2" name="voedselrijkdom" value="matig" />
-                        <label for="voedselrijkdom2">Matig</label>
+                        <input type="checkbox" id="voedselrijkdom2" name="nutrients" value="nutrients_gemiddeld" />
+                        <label for="voedselrijkdom2">Gemiddeld</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="voedselrijkdom3" name="voedselrijkdom" value="rijk" />
-                        <label for="voedselrijkdom3">Rijk</label>
+                        <input type="checkbox" id="voedselrijkdom3" name="nutrients" value="nutrients_veel" />
+                        <label for="voedselrijkdom3">Veel</label>
                     </li>
                 </ul>
             </li>
@@ -130,19 +129,19 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Vocht</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="vocht1" name="vocht" value="droog" />
+                        <input type="checkbox" id="vocht1" name="water" value="water_droog" />
                         <label for="vocht1">Droog</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="vocht2" name="vocht" value="matig" />
-                        <label for="vocht2">Matig vochtig</label>
+                        <input type="checkbox" id="vocht2" name="water" value="water_normaal" />
+                        <label for="vocht2">Normaal</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="vocht3" name="vocht" value="vochtig" />
-                        <label for="vocht3">Vochtig</label>
+                        <input type="checkbox" id="vocht3" name="water" value="water_nat" />
+                        <label for="vocht3">Nat</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="vocht4" name="vocht" value="wisselnat" />
+                        <input type="checkbox" id="vocht4" name="water" value="water_wisselnat" />
                         <label for="vocht4">Wisselnat</label>
                     </li>
                 </ul>
@@ -151,51 +150,124 @@
                 <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Faunawaarde</span>
                 <ul class="nested">
                     <li>
-                        <input type="checkbox" id="faunawaarde1" name="faunawaarde" value="vlinders" />
+                        <input type="checkbox" id="faunawaarde1" name="fauna" value="vlinders" />
                         <label for="faunawaarde1">Vlinders</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="faunawaarde2" name="faunawaarde" value="wilde_bijen" />
+                        <input type="checkbox" id="faunawaarde2" name="fauna" value="wilde_bijen" />
                         <label for="faunawaarde2">Wilde bijen</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="faunawaarde3" name="faunawaarde" value="honing_bijen" />
+                        <input type="checkbox" id="faunawaarde3" name="fauna" value="honing_bijen" />
                         <label for="faunawaarde3">Honing bijen</label>
                     <li>
-                        <input type="checkbox" id="faunawaarde4" name="faunawaarde" value="hommels" />
+                        <input type="checkbox" id="faunawaarde4" name="fauna" value="hommels" />
                         <label for="faunawaarde4">Hommels</label>
                     </li>
                     <li>
-                        <input type="checkbox" id="faunawaarde5" name="faunawaarde" value="vogels" />
+                        <input type="checkbox" id="faunawaarde5" name="fauna" value="vogels" />
                         <label for="faunawaarde5">Vogels</label>
                     </li>
                 </ul>
             </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Plantsoort</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="plant_type1" name="plant_type" value="plant_type_plant" />
+                        <label for="plant_type1">Plant</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="plant_type2" name="plant_type" value="plant_type_stek" />
+                        <label for="plant_type2">Stek</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="plant_type3" name="plant_type" value="plant_type_zaad" />
+                        <label for="plant_type3">Zaad</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Gratis</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="giveaway1" name="give_away" value="give_away_ja" />
+                        <label for="giveaway1">Ja</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="giveaway2" name="give_away" value="give_away_nee" />
+                        <label for="giveaway2">Nee</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Met pot</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="with_pot1" name="with_pot" value="with_pot_ja" />
+                        <label for="with_pot1">Ja</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="with_pot2" name="with_pot" value="with_pot_nee" />
+                        <label for="with_pot2">Nee</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Afstand</span>
+                <ul class="nested">
+                    <li class="liwithtoggle">
+                        <input type="checkbox" class="sort-range-toggle" name="distance_toggle" id="distance_toggle" value="true" />
+                        <label for="distance_toggle">Afstand begrenzen</label>
+                        <input type="range" class="sort-range" name="distance" id="distance" min="5" max="30" value="5" step="5" disabled />
+                        <span class="sort-range-display" name="distance_amount" id="distance_amount" hidden><span>5</span> km</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Tijd</span>
+                <ul class="nested">
+                    <li class="liwithtoggle">
+                        <input type="checkbox" class="sort-range-toggle" name="recent_toggle" id="recent_toggle" value="true" />
+                        <label for="recent_toggle">Geplaatst sinds</label>
+                        <input type="range" class="sort-range" name="recent" id="recent" min="1" max="57" value="1" disabled />
+                        <span class="sort-range-display" name="recent_amount" id="recent_amount" hidden><span>1</span> dag</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Beoordeling</span>
+                <ul class="nested">
+                    <li class="liwithtoggle">
+                        <input type="checkbox" class="sort-range-toggle" name="rating_toggle" id="rating_toggle" value="true" />
+                        <label for="rating_toggle">Minimum beoordeling</label>
+                        <input type="range" class="sort-range" name="rating" id="rating" min="1" max="5" value="3" disabled />
+                        <span class="sort-range-display" name="rating_amount" id="rating_amount" hidden><span>3</span> sterren</span>
+                    </li>
+                </ul>
+            </li>
         </ul>
-        <button type="submit" id="apply_filter">Filters toepassen</button>
-    </form>
-    <form id="sort_form">
+        <div class="fullwidth2">
+            <button type="submit" id="apply_filter" onclick="onClick()">Filters toepassen</button>
+        </div>
+        
+
         <strong class="sort">Sorteren</strong>
         <label class="chose" for="sort">Kies een criterium om op te sorteren</label>
 
-        <input type="checkbox" class="sort-range-toggle" name="distance_toggle" id="distance_toggle" />
-        <label for="distance_toggle">Afstand begrenzen</label>
-        <input type="range" class="sort-range" name="distance" id="distance" min="5" max="30" value="5" step="5" disabled />
-        <span class="sort-range-display" name="distance_amount" id="distance_amount" hidden><span>5</span> km</span><p></p>
+        <div class="fullwidth2">
+            <input type="checkbox" class="sort-range-toggle" name="sort_distance" id="sort_distance" value="true" />
+            <label for="sort_distance">Afstand</label>
+        </div>
+        <div class="fullwidth2">
+            <input type="checkbox" class="sort-range-toggle" name="sort_time" id="sort_time" value="true" />
+            <label for="sort_time">Datum (nieuw - oud)</label>
+        </div>
 
-        <input type="checkbox" class="sort-range-toggle" name="recent_toggle" id="recent_toggle" />
-        <label for="recent_toggle">Maximum tijd sinds plaatsing</label>
-        <input type="range" class="sort-range" name="recent" id="recent" min="1" max="57" value="1" disabled />
-        <span class="sort-range-display" name="recent_amount" id="recent_amount" hidden><span>1</span> dagen</span><p></p>
+                <button type="submit" id="apply_sort" onclick="onClick()">Criteria toepassen</button>
 
-        <input type="checkbox" class="sort-range-toggle" name="rating_toggle" id="rating_toggle" />
-        <label for="rating_toggle">Minimum beoordeling</label>
-        <input type="range" class="sort-range" name="rating" id="rating" min="1" max="5" value="3" disabled />
-        <span class="sort-range-display" name="rating_amount" id="rating_amount" hidden><span>3</span> sterren</span><p></p>
-
-        <button type="submit" id="apply_sort">Criteria toepassen</button>
-    </form>
-</div>
+            </div>
+</form>
 <div class="" id="listings">
     @foreach (Listing listing in Model.Listings)
     {
@@ -206,8 +278,9 @@
                 <code class="owner">@listing.OwningUserName</code>
                 @if (!(listing.Distance == -1))
                 {
-                <span class="distance">Distance: <code>@listing.Distance</code> km</span>}
-                <span class="since">Uploaded: 
+                    <span class="distance">Distance: <code>@listing.Distance</code> km</span>}
+                <span class="since">
+                    Uploaded:
                     <code>@(TimeSpanDisplay(listing.CreatedAt))</code>
                 </span>
 
@@ -216,7 +289,10 @@
                     {
                         @foreach (string filter in listing.Filters)
                         {
-                            <code class="filter_tag">@filter</code>
+                            if (!filter.Contains("null") && !filter.Contains("nee"))
+                            {
+                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "").Replace("ph", "bodem")</code>
+                            }
                         }
                     }
                 </div>
