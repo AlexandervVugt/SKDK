@@ -157,7 +157,11 @@ namespace Tests
             //Arrange
             int expected = 47;
             Tuple<int, string> user = new Tuple<int, string>(expected, "4329TU");
-            var mockedController = MockController(StexChangeController.CreateSession(user).ToString(), true);
+            var mockedController = new HomeController()
+            {
+                ControllerContext = ControllerContextFactory
+                    .CreateControllerContext(StexChangeController.CreateSession(user).ToString())
+            };
             //Act
             int actual = mockedController.GetUserId();
             //Assert
@@ -169,7 +173,10 @@ namespace Tests
             string message = "Session token should be invalid, but was found to be valid";
             //Arrange
             Tuple<int, string> user = new Tuple<int, string>(34, "7684IO");
-            var mockedController = MockController("12345", true);
+            var mockedController = new HomeController()
+            {
+                ControllerContext = ControllerContextFactory.CreateControllerContext("12345")
+            };
             //Act
             try
             {
@@ -189,7 +196,10 @@ namespace Tests
             string message = "Session token should be invalid, but was found to be valid";
             //Arrange
             Tuple<int, string> user = new Tuple<int, string>(908, "3342PE");
-            var mockedController = MockController(null, false);
+            var mockedController = new HomeController()
+            {
+                ControllerContext = ControllerContextFactory.CreateControllerContext(null, false)
+            };
             //Act
             try
             {
@@ -202,37 +212,6 @@ namespace Tests
                     Assert.Fail(message);
                 }
             }
-        }
-
-        private StexChangeController MockController(string value, bool createCookie)
-        {
-            //mock the response
-            var responseMock = new Mock<HttpResponse>();
-            var resCookies = new Mock<IResponseCookies>();
-            responseMock.Setup(res => res.Cookies).Returns(resCookies.Object);
-            var response = responseMock.Object;
-
-            //mock the request
-            var requestMock = new Mock<HttpRequest>();
-            var reqCookies = new Mock<IRequestCookieCollection>();
-            if (createCookie)
-            {
-                response.Cookies.Append(StexChangeController.Cookies.SessionToken, value);
-                reqCookies.Setup(cookies => cookies.TryGetValue(StexChangeController.Cookies.SessionToken, out value)).Returns(true);
-            }
-            requestMock.Setup(req => req.Cookies).Returns(reqCookies.Object);
-            var request = requestMock.Object;
-            
-            var contextMock = new Mock<HttpContext>();
-            contextMock.Setup(c => c.Response).Returns(response);
-            contextMock.Setup(c => c.Request).Returns(request);
-            return new HomeController()
-            {
-                ControllerContext = new ControllerContext()
-                {
-                    HttpContext = contextMock.Object
-                }
-            };
         }
     }
 }
