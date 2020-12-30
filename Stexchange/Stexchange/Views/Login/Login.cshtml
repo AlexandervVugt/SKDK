@@ -6,7 +6,7 @@
         <article class="loginarticle">
             <h1 class="titleleft">STEX</h1><h1 class="titleright">CHANGE</h1>
             <p class="textlogin">
-                Stekje over? Teveel planten op je balkon? Op zoek naar een nieuwe soort?
+                Stekje over? Te veel planten op je balkon? Op zoek naar een nieuwe soort?
                 Op deze site kun je makkelijk zaden en planten met elkaar ruilen of weggeven.
             </p>
         </article>
@@ -26,12 +26,12 @@
             @switch (TempData["message"])
             {
                 case "username of email error":
-                    <div>
+                    <div class="errormsg2">
                         <span>Het e-mailadres of de gebruikersnaam is niet juist</span>
                     </div>
                     break;
                 case "wachtwoord error":
-                    <div>
+                    <div class="errormsg2">
                         <span>Het wachtwoord is niet juist.</span>
                     </div>
                     break;
@@ -48,37 +48,37 @@
             @switch (TempData["Message"])
             {
                 case "InvalidEmail":
-                    <div>
+                    <div class="errormsg">
                         <span>Ongeldig Emailadres</span>
                     </div>
                     break;
                 case "EmailExists":
-                    <div>
+                    <div class="errormsg">
                         <span>Email is al gebruikt</span>
                     </div>
                     break;
                 case "InvalidPostalCode":
-                    <div>
+                    <div class="errormsg">
                         <span>Ongeldige Postcode</span>
                     </div>
                     break;
                 case "UsernameTaken":
-                    <div>
+                    <div class="errormsg">
                         <span>Gebruikersnaam is al bezet</span>
                     </div>
                     break;
                 case "IncorrectPasswords":
-                    <div>
+                    <div class="errormsg">
                         <span>Wachtwoorden komen niet overeen</span>
                     </div>
                     break;
                 case "IncorrectEmails":
-                    <div>
+                    <div class="errormsg">
                         <span>E-mails komen niet met overeen</span>
                     </div>
                     break;
                 case "InvalidPassword":
-                    <div>
+                    <div class="errormsg">
                         <span>Ongeldig wachtwoord. Wachtwoord moet uit minimaal 8 karakters bestaan</span>
                     </div>
                     break;

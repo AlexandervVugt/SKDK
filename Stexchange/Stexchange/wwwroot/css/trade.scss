@@ -3,7 +3,7 @@ $green: #19ff30;
 $darkgreen: #005709;
 $lightshadow: rgba(0,0,0,0.1);
 $shadow: #b2e8d4;
-$darkshadow: rgba(0,0,0,0.8);
+$darkshadow: rgba(0,0,0,0.5);
 $lightshadowwhite: rgba(255,255,255,0.1);
 $shadowwhite: rgba(255,255,255,0.3);
 $darkshadowwhite: rgba(255,255,255,0.8);
@@ -101,7 +101,7 @@ html {
             font-size: 1.5vh;
 
             .fullwidth2 {
-                width:100%;
+                width: 100%;
             }
 
 
@@ -248,15 +248,15 @@ html {
                     display: inline-block;
 
                     .filter_tag {
-                        font-size: 1.2vh;
+                        font-size: 1.5vh;
                         line-height: 1.5vh;
                         float: left;
                         margin-left: 2%;
                         margin-right: 2%;
                         margin-top: 2%;
                         color: white;
-                        background-color: $greenshadow;
-                        padding: 0.2vh 0.5vh 0.2vh;
+                        background-color: rgba(25, 255, 48, 0.5);
+                        padding: 0.6vh 1vh 0.4vh;
                         border-radius: 0.2vh;
                         text-transform: uppercase;
                     }

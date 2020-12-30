@@ -278,6 +278,26 @@ html {
         font-size: 2.3vh;
         display: flex;
         justify-content: center; }
+        html body main .logincontainer .errormsg {
+          text-align: center;
+          color: white;
+          position: absolute;
+          line-height: 3vh;
+          font-size: 2vh;
+          border-radius: 0.5vh;
+          width: 15vw;
+          margin-left: 3vh;
+          margin-top: 22vh; }
+        html body main .logincontainer .errormsg2 {
+          text-align: center;
+          color: white;
+          position: absolute;
+          line-height: 3vh;
+          font-size: 2vh;
+          border-radius: 0.5vh;
+          width: 15vw;
+          margin-left: 3vh;
+          margin-top: 2vh; }
         html body main .logincontainer .item1 {
           width: 40%; }
           html body main .logincontainer .item1 .loginarticle {
@@ -293,6 +313,9 @@ html {
             margin-right: 10%;
             float: right;
             background-image: url("../img/login.png");
+            background-repeat: no-repeat;
+            max-width: 18vw;
+            max-height: 70vh;
             background-size: 110% auto;
             width: 60%;
             border-radius: 1vh; }
@@ -304,7 +327,7 @@ html {
             html body main .logincontainer .item2 form p {
               margin-left: 10%; }
             html body main .logincontainer .item2 form a {
-              margin-top: 65%;
+              margin-top: 70%;
               font-size: 1.2vh;
               text-align: center;
               display: block;
@@ -343,9 +366,11 @@ html {
             margin-top: 10%;
             margin-right: 30%;
             float: right;
-            background-color: #2b2b2b;
             background-image: url("../img/register.png");
-            background-size: 103% auto;
+            background-repeat: no-repeat;
+            max-width: 18vw;
+            max-height: 70vh;
+            background-size: 110% auto;
             width: 60%;
             border-radius: 1vh; }
             html body main .logincontainer .item3 form h2 {
