@@ -151,6 +151,7 @@ namespace Tests
             //Act
             StexChangeController.CreateSession(user);
         }
+        [TestMethod]
         public void GetUserId_Normal()
         {
             //Arrange
@@ -162,6 +163,7 @@ namespace Tests
             //Assert
             Assert.AreEqual(expected, actual);
         }
+        [TestMethod]
         public void GetUserId_Mismatch()
         {
             string message = "Session token should be invalid, but was found to be valid";
@@ -181,6 +183,7 @@ namespace Tests
                 }
             }
         }
+        [TestMethod]
         public void GetUserId_NoCookie()
         {
             string message = "Session token should be invalid, but was found to be valid";
@@ -203,13 +206,26 @@ namespace Tests
 
         private StexChangeController MockController(string value, bool createCookie)
         {
-            var responseMock = new Mock<HttpResponse>().Object;
+            //mock the response
+            var responseMock = new Mock<HttpResponse>();
+            var resCookies = new Mock<IResponseCookies>();
+            responseMock.Setup(res => res.Cookies).Returns(resCookies.Object);
+            var response = responseMock.Object;
+
+            //mock the request
+            var requestMock = new Mock<HttpRequest>();
+            var reqCookies = new Mock<IRequestCookieCollection>();
             if (createCookie)
             {
-                responseMock.Cookies.Append(StexChangeController.Cookies.SessionToken, value);
+                response.Cookies.Append(StexChangeController.Cookies.SessionToken, value);
+                reqCookies.Setup(cookies => cookies.TryGetValue(StexChangeController.Cookies.SessionToken, out value)).Returns(true);
             }
+            requestMock.Setup(req => req.Cookies).Returns(reqCookies.Object);
+            var request = requestMock.Object;
+            
             var contextMock = new Mock<HttpContext>();
-            contextMock.Setup(c => c.Response).Returns(responseMock);
+            contextMock.Setup(c => c.Response).Returns(response);
+            contextMock.Setup(c => c.Request).Returns(request);
             return new HomeController()
             {
                 ControllerContext = new ControllerContext()
