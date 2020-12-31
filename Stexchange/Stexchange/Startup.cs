@@ -30,6 +30,7 @@ namespace Stexchange
 			services.AddControllersWithViews();
 			services.AddDbContext<Database>();
 			services.AddSingleton<EmailService>();
+			services.AddHostedService<DatabaseCleanupService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

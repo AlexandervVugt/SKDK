@@ -255,12 +255,9 @@ namespace Stexchange.Controllers
                 var lCoord = new GeoCoordinate(lat_listing_us/1000, lon_listing_us/1000);
 
                 var distance = cCoord.GetDistanceTo(lCoord);
-                Console.WriteLine($"resulting distance : {distance}");
                 return Math.Round(distance/1000, 2); //to km
             } catch(Exception e)
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
                 if(e.Message == "Postal code not recognized")
                 {
                     return -1;
