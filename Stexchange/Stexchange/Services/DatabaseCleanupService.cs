@@ -44,7 +44,6 @@ namespace Stexchange.Services
                 {
                     // Checks if advertisement is older than 8 weeks
                     int weeks = (int)((DateTime.Now - advertisement.CreatedAt).TotalDays / 7);
-                    Console.WriteLine("check");
                     if (weeks > 8)
                     {
                         database.Remove(advertisement);
