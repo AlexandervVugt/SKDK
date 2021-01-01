@@ -32,7 +32,13 @@ namespace Stexchange.Services
             // Returns Task.CompletedTask because it's not async
             return Task.CompletedTask;
         }
-        
+
+        /// <summary>
+        /// Databasecleanupservice has a singleton lifetime, which is a longer lifetime than scoped.
+        /// Database contexts are scoped and shouldn't be kept alive indefinitely.
+        /// With scopeFactory you can create a new scope and use the db contexts whenever you need it.
+        /// </summary>
+        /// <returns></returns>
         public async Task RemoveAdvertisements()
         {
             // Creates a new IServiceScope
