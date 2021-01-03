@@ -340,8 +340,7 @@ namespace Stexchange.Controllers
         //[HttpGet]
         public List<Listing> FilterSearch(List<Listing> advertisements, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] plant_order, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance)
         {
-            // TO DO: Fauna value
-            //        Rating filter
+            // TODO: Rating filter
 
             // List of advertisements that contains selected filter values and search input
             List<Listing> searchList = new List<Listing>();

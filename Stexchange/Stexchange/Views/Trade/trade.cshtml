@@ -209,7 +209,7 @@
                     </li>
                     <li>
                         <input type="checkbox" id="giveaway2" name="give_away" value="give_away_nee" />
-                        <label for="giveaway2">Nee</label>
+                        <label for="giveaway2">Ruilen</label>
                     </li>
                 </ul>
             </li>
@@ -302,9 +302,9 @@
                     {
                         @foreach (string filter in listing.Filters)
                         {
-                            if (!filter.Contains("null") && !filter.Contains("nee"))
+                            if (!filter.Contains("null") && !filter.Contains("with_pot_nee"))
                             {
-                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "").Replace("ph", "bodem").Replace("plant order ","")</code>
+                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "").Replace("nutrients", "voeding").Replace("ph", "bodem").Replace("plant order ","").Replace("give away nee", "ruilen").Replace("give away ", "gratis")</code>
                             }
                         }
                     }
