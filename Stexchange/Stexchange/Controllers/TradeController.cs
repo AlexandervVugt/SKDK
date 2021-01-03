@@ -75,7 +75,7 @@ namespace Stexchange.Controllers
 
         private Dictionary<string, string> FormatFilters(List<string> filters)
         {
-            List<string> filteroptions = new List<string> { "light_", "water_", "plant_type_", "nutrients_", "ph_", "indigenous_", "with_pot_", "give_away_" };
+            List<string> filteroptions = new List<string> { "light_", "water_", "plant_type_", "nutrients_", "ph_", "indigenous_", "with_pot_", "give_away_", "plant_order_" };
             Dictionary<string, string> Filters = new Dictionary<string, string>();
 
             // Loops through advertisementfilters and compares each filter to each filteroptions
@@ -338,7 +338,7 @@ namespace Stexchange.Controllers
         /// <param name="distance"></param>
         /// <returns> A new trademodel with filtered advertisements to view </returns>
         //[HttpGet]
-        public List<Listing> FilterSearch(List<Listing> advertisements, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance)
+        public List<Listing> FilterSearch(List<Listing> advertisements, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] plant_order, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance)
         {
             // TO DO: Fauna value
             //        Rating filter
@@ -347,7 +347,7 @@ namespace Stexchange.Controllers
             List<Listing> searchList = new List<Listing>();
 
             // All plant filters
-            List<string[]> filters = new List<string[]> { light, indigenous, ph, nutrients, water, plant_type, give_away, with_pot };
+            List<string[]> filters = new List<string[]> { light, indigenous, ph, nutrients, water, plant_type, plant_order, give_away, with_pot };
 
             // Adds selected plant filters with a length greater than 0 to a new list
             List<string[]> selectedFilters = new List<string[]>();
@@ -448,10 +448,10 @@ namespace Stexchange.Controllers
         /// <param name="sort_time"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Search(string searchbar, bool search_description, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance, bool sort_distance, bool sort_time)
+        public IActionResult Search(string searchbar, bool search_description, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] plant_order, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance, bool sort_distance, bool sort_time)
         {
             ICollection<Listing> advertisements = _listingCache.Values;
-            List<Listing> searchList = FilterSearch(Searchbar(advertisements, searchbar, search_description), light, indigenous, ph, nutrients, water, plant_type, give_away, with_pot, recent_toggle, recent, distance_toggle, distance);
+            List<Listing> searchList = FilterSearch(Searchbar(advertisements, searchbar, search_description), light, indigenous, ph, nutrients, water, plant_type, plant_order, give_away, with_pot, recent_toggle, recent, distance_toggle, distance);
 
             if (sort_distance == true || sort_time == true)
             {

@@ -126,9 +126,12 @@
     margin-left: 10%;
     margin-right: 10%;
     font-size: 25px; }
-  body span {
+  body #messagepicture, body #imagecounter {
     margin-left: 10%;
     margin-right: 10%; }
+  body #requiredFields {
+    font-size: 1.1vh;
+    color: red; }
   body h2 {
     margin-left: 10%;
     margin-right: 10%; }

@@ -16,7 +16,6 @@ namespace Stexchange.Data.Validation
             RuleFor(x => new EmailAddressAttribute().IsValid(x.Email)).Must(x => x == true).WithMessage("Ongeldig e-mailadres").When(x => x.Email.Length > 0);
             RuleFor(x => x.Email).Must(x => x.Length <= 254).WithMessage("E-mailadres mag maximaal uit 15 karakters bestaan").When(x => x.Email.Length > 0);
 
-
             // Validate verificationEmail
             RuleFor(x => x.VEmail).NotEmpty().WithMessage("Bevestig e-mail is een verplicht veld");
             RuleFor(x => new EmailAddressAttribute().IsValid(x.VEmail)).Must(x => x == true).WithMessage("Ongeldig e-mailadres").When(x => x.VEmail.Length > 0);
