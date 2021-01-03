@@ -12,19 +12,23 @@ using Stexchange.Data.Validation;
 using static System.String;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using FluentValidation;
+using Microsoft.Extensions.Logging;
 
 namespace Stexchange.Controllers
 {
     public class AdvertisementController : StexChangeController
     {
-        public AdvertisementController(Database db, IConfiguration config)
+        public AdvertisementController(Database db, IConfiguration config, ILogger<AdvertisementController> logger)
         {
             _database = db;
             _config = config;
+            Log = logger;
         }
 
         private Database _database { get; }
         private IConfiguration _config { get; }
+        private ILogger Log { get; }
 
         public IActionResult PostAdvertisement()
         {
@@ -40,11 +44,12 @@ namespace Stexchange.Controllers
 
         [HttpPost]
         public async Task<IActionResult> PostAdvertisement(List<IFormFile> files, string title, string description, 
-            string name_nl, uint quantity, string plant_type, string give_away, string with_pot, string name_lt="",
-            string light = "", string water = "", string ph = "", string indigenous = "", string nutrients="")
+            string name_nl, int quantity, string plant_type, string plant_order, string give_away, string with_pot, string light, string water, string name_lt="",
+            string ph = "", string indigenous = "", string nutrients="")
         {
             try
             {
+                List<string> errormessages = new List<string>();
                 if (ModelState.IsValid)
                 {
                     EntityBuilder<Listing> listingBuilder = new EntityBuilder<Listing>();
@@ -54,20 +59,28 @@ namespace Stexchange.Controllers
                     WithPotFilterValidator potVal = new WithPotFilterValidator();
                     GiveAwayFilterValidator giveVal = new GiveAwayFilterValidator();
                     PlantTypeFilterValidator typeVal = new PlantTypeFilterValidator();
+                    OrderFilterValidator orderVal = new OrderFilterValidator();
+                    WaterFilterValidator waterVal = new WaterFilterValidator();
+                    LightFilterValidator lightVal = new LightFilterValidator();
                     List<Filter> mandatoryFilters = new List<Filter>();
 
                     ValidationResult hasTypeFilter = typeVal.Validate(new Filter { Value = plant_type });
                     ValidationResult hasPotFilter = potVal.Validate(new Filter{ Value = with_pot });
                     ValidationResult hasGiveFilter = giveVal.Validate(new Filter{ Value = give_away });
+                    ValidationResult waterresult = waterVal.Validate(new Filter { Value = water });
+                    ValidationResult lightresult = lightVal.Validate(new Filter { Value = light });
+                    ValidationResult orderFilter = orderVal.Validate(new Filter { Value = plant_order});
                     ValidationResult hasValProps = listingVal.Validate(new Listing
                                                                             {
-                                                                                Description = description,
-                                                                                Title = title,
-                                                                                NameNl = name_nl,
-                                                                                Quantity = quantity
+                                                                                // If value will be empty string if it's null
+                                                                                Description = description ?? "",
+                                                                                Title = title ?? "",
+                                                                                NameNl = name_nl ?? "",
+                                                                                Quantity = quantity > 0 ? (uint)quantity : 0
                                                                             });
 
-                    if (hasValProps.IsValid && hasPotFilter.IsValid && hasGiveFilter.IsValid && hasTypeFilter.IsValid)
+
+                    if (hasValProps.IsValid && hasPotFilter.IsValid && hasGiveFilter.IsValid && hasTypeFilter.IsValid && waterresult.IsValid && lightresult.IsValid && orderFilter.IsValid)
                     {
                         listingBuilder.SetProperty("Title", StandardMessages.CapitalizeFirst(title).Trim())
                                       .SetProperty("Description", StandardMessages.CapitalizeFirst(description).Trim())
@@ -81,9 +94,20 @@ namespace Stexchange.Controllers
                         mandatoryFilters.Add(new Filter{ Value = with_pot });
                         mandatoryFilters.Add(new Filter{ Value = give_away });
                         mandatoryFilters.Add(new Filter{ Value = plant_type });
+                        mandatoryFilters.Add(new Filter { Value = water });
+                        mandatoryFilters.Add(new Filter { Value = light });
+                        mandatoryFilters.Add(new Filter { Value = plant_order });
 
                         // non-required properties
-                        List<Filter> validatedFilters = FilterListValidator(mandatoryFilters, ph, water, indigenous, light, nutrients);
+                        Tuple<bool, List<Filter>, List<string>> filtersWithFlag = FilterListValidator(errormessages, mandatoryFilters, ph, indigenous, nutrients);
+
+                        if(filtersWithFlag.Item1 == false)
+                        {
+                            ViewBag.Messages = filtersWithFlag.Item3;
+                            return RedirectToAction("PostAdvertisement");
+                        }
+
+                        List<Filter> validatedFilters = filtersWithFlag.Item2;
 
                         if (!IsNullOrEmpty(name_lt)) listingBuilder.SetProperty("NameLatin", StandardMessages.CapitalizeFirst(name_lt).Trim());
 
@@ -91,18 +115,19 @@ namespace Stexchange.Controllers
 
                         List<FilterListing> filterListings = MakeFilterListing(validatedFilters, finishedListing);
 
-                       
                         // ensures that the listing is inserted before the tables who need this FK
                         await _database.AddAsync(finishedListing);
 
-
                         List<Task> tasks = new List<Task>();
                         // Insert byte[] image into database
-                        await OnPostUploadAsync(files, finishedListing);
+                        await OnPostUploadAsync(files, finishedListing, errormessages);
+                        if(errormessages.Count > 0)
+                        {
+                            ViewBag.Messages = errormessages;
+                            return View();
+                        }
                         // loops through filterlist to add each advertisementfilter
                         await _database.AddRangeAsync(filterListings);
-
-                        
 
                         //passing data to the view
                         TempData["Title"] = finishedListing.Title;
@@ -113,19 +138,19 @@ namespace Stexchange.Controllers
                         return RedirectToAction("Posted");
                     }
 
-                    //todo: passing error messages to the view
                     if (!hasPotFilter.IsValid)
                     { 
                         foreach (ValidationFailure error in hasPotFilter.Errors)
                         {
-                            TempData["errormessage"] += error.ErrorMessage;
+                            errormessages.Add(error.ErrorMessage);
                         }
                     }
+
                     if (!hasGiveFilter.IsValid)
                     {
                         foreach (ValidationFailure error in hasGiveFilter.Errors)
                         {
-                            TempData["errormessage"] += error.ErrorMessage;
+                            errormessages.Add(error.ErrorMessage);
                         }
                     }
 
@@ -133,15 +158,52 @@ namespace Stexchange.Controllers
                     {
                         foreach (ValidationFailure error in hasValProps.Errors)
                         {
-                            TempData["errormessage"] += error.ErrorMessage;
+                            errormessages.Add(error.ErrorMessage);
                         }
                     }
+
+                    if (!hasTypeFilter.IsValid)
+                    {
+                        foreach (ValidationFailure error in hasTypeFilter.Errors)
+                        {
+                            errormessages.Add(error.ErrorMessage);
+                        }
+                    }
+
+                    if (!waterresult.IsValid) 
+                    { 
+                        foreach (ValidationFailure error in waterresult.Errors) 
+                        { 
+                            errormessages.Add(error.ErrorMessage); 
+                        }
+                    };
+
+                    if (!lightresult.IsValid)
+                    {   foreach (ValidationFailure error in lightresult.Errors) 
+                        { 
+                            errormessages.Add(error.ErrorMessage); 
+                        } 
+                    };
+
+                    if (!orderFilter.IsValid)
+                    {
+                        foreach (ValidationFailure error in orderFilter.Errors)
+                        {
+                            errormessages.Add(error.ErrorMessage);
+                        }
+                    };
+
+                    ViewBag.Messages = errormessages;
+                }
+                else
+                {
+                    errormessages.Add("Zorg ervoor dat alle verplichte velden correct zijn ingevuld");
+                    ViewBag.Messages = errormessages;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.ToString());
-                ViewBag.Error = "Error: " + e;
+                Log.LogWarning(ex.ToString());
             }
             return View();
         }
@@ -154,7 +216,7 @@ namespace Stexchange.Controllers
         /// <param name="files"></param>
         /// <param name="finishedListing"></param>
         /// <returns></returns>
-        public async Task OnPostUploadAsync(List<IFormFile> files, Listing finishedListing)
+        public async Task OnPostUploadAsync(List<IFormFile> files, Listing finishedListing, List<string> errormessages)
         {
             //creates memorystream for each image
             foreach (IFormFile file in files)
@@ -164,7 +226,8 @@ namespace Stexchange.Controllers
                     await file.CopyToAsync(memoryStream);
 
                     // Upload the file if less than 5 MB
-                    if (memoryStream.Length < 4997152)
+                    Console.WriteLine(memoryStream.Length);
+                    if (memoryStream.Length < 5000000)
                     {
                         var imagefile = new ImageData()
                         {
@@ -177,7 +240,7 @@ namespace Stexchange.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("File", "De maximale bestandsgrootte 5MB");
+                        errormessages.Add("De maximale bestandsgrootte van een foto is 5MB");
                     }
                 }
             }
@@ -229,26 +292,26 @@ namespace Stexchange.Controllers
         /// <param name="light"></param>
         /// <param name="nutrients"></param>
         /// <returns></returns>
-        private List<Filter> FilterListValidator(List<Filter> filters, string ph, string water, string indigenous, string light, string nutrients)
+        private Tuple<bool, List<Filter>, List<string>> FilterListValidator(List<string> errormessages, List<Filter> filters, string ph, string indigenous, string nutrients)
         {
             PhFilterValidator phVal = new PhFilterValidator();
-            WaterFilterValidator waterVal = new WaterFilterValidator();
-            LightFilterValidator lightVal = new LightFilterValidator();
             IndigenousFilterValidator indiVal = new IndigenousFilterValidator();
+            NutrientsFilterValidator nutrientsVal = new NutrientsFilterValidator();
 
             Filter phFilter = new Filter { Value = ph };
-            Filter waterFilter = new Filter { Value = water };
-            Filter lightFilter = new Filter { Value = light };
             Filter indigenousFilter = new Filter { Value = indigenous };
             Filter nutrientsFilter = new Filter { Value = nutrients };
 
-            if (phVal.Validate(phFilter).IsValid) filters.Add(phFilter);
-            if (waterVal.Validate(waterFilter).IsValid) filters.Add(waterFilter); 
-            if (lightVal.Validate(lightFilter).IsValid) filters.Add(lightFilter);
-            if (indiVal.Validate(indigenousFilter).IsValid) filters.Add(indigenousFilter);
-            if (indiVal.Validate(nutrientsFilter).IsValid) filters.Add(nutrientsFilter);
+            ValidationResult phresult = phVal.Validate(phFilter);
+            ValidationResult indigenousresult = indiVal.Validate(indigenousFilter);
+            ValidationResult nutrientsresult = nutrientsVal.Validate(nutrientsFilter);
 
-            return filters;
+            if (phresult.IsValid) { filters.Add(phFilter); } else { foreach (ValidationFailure error in phresult.Errors) { errormessages.Add(error.ErrorMessage); } };
+            if (indigenousresult.IsValid) { filters.Add(indigenousFilter); } else { foreach (ValidationFailure error in indigenousresult.Errors) { errormessages.Add(error.ErrorMessage); } };
+            if (nutrientsresult.IsValid) { filters.Add(nutrientsFilter); } else { foreach (ValidationFailure error in nutrientsresult.Errors) { errormessages.Add(error.ErrorMessage); } };
+            bool check = phresult.IsValid && indigenousresult.IsValid && nutrientsresult.IsValid;
+            
+            return Tuple.Create(check, filters, errormessages);
         }
     }
 }

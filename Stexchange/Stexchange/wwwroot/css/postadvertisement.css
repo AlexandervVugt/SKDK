@@ -54,7 +54,18 @@
     resize: none;
     margin-left: 10%;
     margin-right: 10%;
-    font-size: 25px; }
+    font-size: 25px;
+    color: black; }
+  body textarea::-webkit-input-placeholder {
+    color: gray; }
+  body textarea:-moz-placeholder {
+    /* Firefox 18- */
+    color: gray; }
+  body textarea::-moz-placeholder {
+    /* Firefox 19+ */
+    color: gray; }
+  body textarea:-ms-input-placeholder {
+    color: gray; }
   body input[type=text]:focus {
     border: 2.5px solid #015e54; }
   body input[type=number] {
@@ -115,9 +126,12 @@
     margin-left: 10%;
     margin-right: 10%;
     font-size: 25px; }
-  body span {
+  body #messagepicture, body #imagecounter {
     margin-left: 10%;
     margin-right: 10%; }
+  body #requiredFields {
+    font-size: 1.1vh;
+    color: red; }
   body h2 {
     margin-left: 10%;
     margin-right: 10%; }
@@ -149,3 +163,26 @@
     border-radius: 50vh;
     line-height: 0;
     color: white; }
+  body #errorpopup {
+    z-index: 3;
+    border: 2.5px solid #015e54;
+    margin: auto;
+    width: 60vh;
+    padding: 1%;
+    border-radius: 1vh;
+    text-align: center;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    body #errorpopup #errorbutton {
+      margin-left: 10%;
+      margin-right: 10%;
+      background-color: #015e54;
+      width: 25%;
+      border-radius: 1vh;
+      height: calc(4vh);
+      font-size: 2vh;
+      color: white;
+      margin-top: 1%; }
