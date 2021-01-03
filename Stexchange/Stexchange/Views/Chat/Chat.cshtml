@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Chat";
 }
+
 @model ChatViewModel
 @using Stexchange.Data.Models
 
@@ -32,6 +33,7 @@
 
 </div>
 
+}
 <script type="text/javascript">
     var temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ChatInbox));
     var userId = @Model.UserId;
@@ -46,4 +48,15 @@
         }
     };
 </script>
+
 <script type="text/javascript" src="~/js/chat/conversation_switcher.js" asp-append-version="true"></script>
+
+<script type="text/javascript">
+    displayConvo(@Model.RecentChat)
+    let spamChat = @(TempData["Error"] ?? 0);
+    if (spamChat == 1) {
+        window.onload = function () {
+            alert("Wacht alstublieft op een reactie!");
+        }
+    }
+</script>
