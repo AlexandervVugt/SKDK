@@ -8,7 +8,7 @@ namespace Stexchange.Data.Helpers
     public static class StandardMessages
     {
         /// <summary>
-        /// oops, fieldname is a required field
+        /// fieldname is a required field
         /// </summary>
         /// <param name="fieldName"></param>
         /// <returns></returns>

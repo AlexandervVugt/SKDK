@@ -45,43 +45,12 @@
     <div class="item3">
         <form action="Register" method="post" class="accountform">
             <h2 class="logintitle">Nog geen lid?<br>Word lid!</h2>
-            @switch (TempData["Message"])
+            @if (ViewBag.Messages is object)
             {
-                case "InvalidEmail":
-                    <div>
-                        <span>Ongeldig Emailadres</span>
-                    </div>
-                    break;
-                case "EmailExists":
-                    <div>
-                        <span>Email is al gebruikt</span>
-                    </div>
-                    break;
-                case "InvalidPostalCode":
-                    <div>
-                        <span>Ongeldige Postcode</span>
-                    </div>
-                    break;
-                case "UsernameTaken":
-                    <div>
-                        <span>Gebruikersnaam is al bezet</span>
-                    </div>
-                    break;
-                case "IncorrectPasswords":
-                    <div>
-                        <span>Wachtwoorden komen niet overeen</span>
-                    </div>
-                    break;
-                case "IncorrectEmails":
-                    <div>
-                        <span>E-mails komen niet met overeen</span>
-                    </div>
-                    break;
-                case "InvalidPassword":
-                    <div>
-                        <span>Ongeldig wachtwoord. Wachtwoord moet uit minimaal 8 karakters bestaan</span>
-                    </div>
-                    break;
+                @foreach (var message in ViewBag.Messages)
+                {
+                    <p>@message</p>
+                }
             }
             <p>
                 <label for="Email" class="labeltext"></label>
