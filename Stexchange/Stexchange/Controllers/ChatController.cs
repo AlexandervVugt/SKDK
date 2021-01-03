@@ -31,6 +31,7 @@ namespace Stexchange.Controllers
         /// 
         public IActionResult Chat()
         {
+            
             int userId;
             try
             {
@@ -69,7 +70,28 @@ namespace Stexchange.Controllers
                      where chat.Messages.Any()
                      orderby chat.Messages[0].Timestamp descending
                      select chat).ToList();
-            return View(model: new ChatViewModel(chats, userId));
+            
+      
+            try
+            {
+                int recentChat = chats[0].Id;
+                var RecentTimestamp = chats[0].Messages[0].Timestamp;
+                
+                foreach (Chat ch in chats)
+                {
+                    if (ch.Messages.Last().Timestamp > RecentTimestamp)
+                    {
+                      RecentTimestamp = ch.Messages.Last().Timestamp;
+                      recentChat = ch.Id;
+                    }
+                    
+                }
+                return View(model: new ChatViewModel(chats, userId, recentChat));
+            }
+            catch(ArgumentOutOfRangeException)
+            {
+                return View(model: new ChatViewModel(chats, userId, -1));
+            }      
         }
 
         /// <summary>
@@ -87,7 +109,7 @@ namespace Stexchange.Controllers
         /// <param name="message"></param>
         /// <returns></returns>
         [HttpPost]
-        public  IActionResult PostMessage(string message, int activeId)
+        public IActionResult PostMessage(string message, int activeId)
         {
             int userId;
             TempData["Active"] = activeId;
@@ -99,32 +121,45 @@ namespace Stexchange.Controllers
             try
             {
                 userId = GetUserId();
-                
-                
 
-            } catch (InvalidSessionException) {
+
+
+            }
+            catch (InvalidSessionException)
+            {
                 return RedirectToAction("Login", "Login");
             }
-            //if(message.ChatId == -1)
-            //{
-                //TODO: create a new chat
-            //}
-            var newMessage = new Message
+            var messages = (from m in _db.Messages
+                            where m.ChatId == activeId
+                            orderby m.Timestamp descending
+                            select m.SenderId).Take(10).ToArray();
+            if (messages.Length < 10 || !Array.TrueForAll(messages, value => value == userId))
             {
-                ChatId = activeId,
-                Content = message,
-                SenderId = userId
+                
+                var newMessage = new Message
+                {
+                    ChatId = activeId,
+                    Content = message,
+                    SenderId = userId
 
-            };
+                };
+                _db.Messages.Add(newMessage);
+                _db.SaveChanges();
+
+            }
+            else
+            {
+                TempData["Error"] = 1;
+                TempData.Keep("Error");
+            }
+            return RedirectToAction("Chat");    
+
 
             //TODO: implement user blocking
             //TODO: implement chat content filter
-            
-            
-            _db.Messages.Add(newMessage);
-            _db.SaveChanges();
-             return RedirectToAction("Chat");
-            
+
+
+
 
         }
         [HttpPost]
