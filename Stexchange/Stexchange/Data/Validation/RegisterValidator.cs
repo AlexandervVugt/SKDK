@@ -19,7 +19,7 @@ namespace Stexchange.Data.Validation
             // Validate verificationEmail
             RuleFor(x => x.VEmail).NotEmpty().WithMessage("Bevestig e-mail is een verplicht veld");
             RuleFor(x => new EmailAddressAttribute().IsValid(x.VEmail)).Must(x => x == true).WithMessage("Ongeldig e-mailadres").When(x => x.VEmail.Length > 0);
-            RuleFor(x => x.VEmail).Must((x, vEmail) => x.Email.Equals(vEmail, StringComparison.OrdinalIgnoreCase)).WithMessage("E-mailadressen komen niet met overeen").When(x => x.VEmail.Length > 0);
+            RuleFor(x => x.VEmail).Must((x, vEmail) => x.Email.Equals(vEmail, StringComparison.OrdinalIgnoreCase)).WithMessage("E-mailadressen komen niet met elkaar overeen").When(x => x.VEmail.Length > 0);
 
             // Validate password
             RuleFor(x => x.Password).NotEmpty().WithMessage("Wachtwoord is een verplicht verld");
@@ -28,7 +28,7 @@ namespace Stexchange.Data.Validation
             // Validate confirm password
             RuleFor(x => x.Confirm_password).NotEmpty().WithMessage("Bevestig wachtwoord is een verplicht veld");
             RuleFor(x => x.Confirm_password).Must(x => x.Length >= 8).WithMessage("Ongeldig wachtwoord. Wachtwoord moet uit minimaal 8 karakters bestaan").When(x => x.Confirm_password.Length > 0);
-            RuleFor(x => x.Confirm_password).Must((x, password) => x.Password.Equals(password)).WithMessage("Wachtwoorden komen niet met overeen").When(x => x.Confirm_password.Length > 0);
+            RuleFor(x => x.Confirm_password).Must((x, password) => x.Password.Equals(password)).WithMessage("Wachtwoorden komen niet met elkaar overeen").When(x => x.Confirm_password.Length > 0);
 
             // Validate username
             RuleFor(x => x.Username).NotEmpty().WithMessage("Gebruikersnaam is een verplicht veld");
@@ -37,6 +37,15 @@ namespace Stexchange.Data.Validation
             // Validate postal code
             RuleFor(x => x.Postalcode).NotEmpty().WithMessage("Postcode is een verplicht veld");
             RuleFor(x => x.Postalcode).Must(x => new Regex(@"\d{4}[A-Z]{2}", RegexOptions.IgnoreCase).IsMatch(x)).WithMessage("Ongeldige postcode").When(x => x.Postalcode.Length > 0);
+        }
+    }
+
+    public class LoginValidator : AbstractValidator<LoginViewModel>
+    {
+        public LoginValidator()
+        {
+            RuleFor(x => x.UserNameEmail).NotEmpty().WithMessage("E-mail of gebruikersnaam is een verplicht veld");
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Wachtwoord is een verplicht verld");
         }
     }
 }

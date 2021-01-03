@@ -1,17 +1,31 @@
 ﻿@{
     ViewData["Title"] = "Inloggen/Registreren";
 }
+<link rel="stylesheet" href="~/css/Login.css" />
+
 <div class="logincontainer">
     <div class="item1">
         <article class="loginarticle">
             <h1 class="titleleft">STEX</h1><h1 class="titleright">CHANGE</h1>
             <p class="textlogin">
-                Stekje over? Teveel planten op je balkon? Op zoek naar een nieuwe soort?
+                Stekje over? Te veel planten op je balkon? Op zoek naar een nieuwe soort?
                 Op deze site kun je makkelijk zaden en planten met elkaar ruilen of weggeven.
             </p>
         </article>
     </div>
 
+    @if (ViewBag.LoginMessages is object){
+        <form id="errorpopup">
+            <div id="errorblock" onload="toggleElements()">
+                <h3>ERROR</h3>
+                @foreach (var message in ViewBag.LoginMessages)
+                {
+                    <p>@message</p>
+                }
+                <input type="button" value="OK" onclick="hideForm()" id="errorbutton" />
+            </div>
+        </form>
+    }
     <div class="item2">
         <form action="Inloggen" method="post" class="accountform">
             <h2 class="logintitle">Hallo!<br>Welkom terug.</h2>
@@ -23,35 +37,29 @@
                 <label for="password" class="labeltext"></label>
                 <input class="nonsubmit" placeholder="Wachtwoord" name="password" type="password" required>
             </p>
-            @switch (TempData["message"])
-            {
-                case "username of email error":
-                    <div>
-                        <span>Het e-mailadres of de gebruikersnaam is niet juist</span>
-                    </div>
-                    break;
-                case "wachtwoord error":
-                    <div>
-                        <span>Het wachtwoord is niet juist.</span>
-                    </div>
-                    break;
-
-            }
             <a href="www.link.here"><span class="forgetpasslink">Wachtwoord vergeten?</span></a>
-            <input type="submit" value="Inloggen" class="submit">
+            <input type="submit" value="Inloggen" class="submit" id="loginsubmit">
         </form>
     </div>
 
+
+
+     @if (ViewBag.Messages is object)
+      {
+          <form id="errorpopup">
+              <div id="errorblock" onload="toggleElements()">
+                   <h3>ERROR</h3>
+                   @foreach (var message in ViewBag.Messages)
+                   {
+                        <p>@message</p>
+                   }
+                   <input type="button" value="OK" onclick="hideForm()" id="errorbutton" />
+              </div>
+          </form>            
+      }
     <div class="item3">
         <form action="Register" method="post" class="accountform">
             <h2 class="logintitle">Nog geen lid?<br>Word lid!</h2>
-            @if (ViewBag.Messages is object)
-            {
-                @foreach (var message in ViewBag.Messages)
-                {
-                    <p>@message</p>
-                }
-            }
             <p>
                 <label for="Email" class="labeltext"></label>
                 <input class="nonsubmit" name="Email" type="text" placeholder="E-mail" required>
@@ -82,5 +90,7 @@
         </form>
     </div>
 </div>
+<script type="text/javascript" src="~/js/Login.js" asp-append-version="true"></script>
+
 
 

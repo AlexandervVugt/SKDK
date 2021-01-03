@@ -235,18 +235,48 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 		{
 			if (ModelState.IsValid)
 			{
+				List<string> errormessages = new List<string>();
+
+				LoginValidator loginValidator = new LoginValidator();
+				ValidationResult resultsValidator = loginValidator.Validate(new LoginViewModel
+				{
+					UserNameEmail = emailOrUname,
+					Password = password
+				});
+
+				if (!resultsValidator.IsValid)
+                {
+					foreach (ValidationFailure error in resultsValidator.Errors)
+					{
+						errormessages.Add(error.ErrorMessage);
+					}
+				}
+
+				if (errormessages.Count > 0) 
+				{
+					ViewBag.LoginMessages = errormessages;
+					return View("Login"); 
+				}
+
 				string username = (from u in Database.Users
-								   where u.Email == emailOrUname
+								   where u.Email == emailOrUname || u.Username == emailOrUname
 								   select u.Username).FirstOrDefault();
 
 				var user = (from u in Database.Users
 							where u.Username == (username ?? emailOrUname) &&
 							u.Password == CreatePasswordHash(password, username ?? emailOrUname)
 							select u).FirstOrDefault();
+
 				// Checks if the combination exists
 				if (user is null)
 				{
-					TempData["message"] = (username is object) ? "wachtwoord error" : "username of email error";
+					if (username is object) 
+					{ 
+						errormessages.Add("Het wachtwoord is niet juist"); 
+					} else { 
+						errormessages.Add("Het e-mailadres of de gebruikersnaam is niet juist"); 
+					}
+					ViewBag.LoginMessages = errormessages;
 					return View("Login");
 				}
 				// Checks if the user is verified

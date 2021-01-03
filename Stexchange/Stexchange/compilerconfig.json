@@ -16,7 +16,11 @@
     "inputFile": "wwwroot/css/chat.scss"
   },
   {
-      "inputFile": "wwwroot/css/postadvertisement.scss",
-      "outputFile": "wwwroot/css/postadvertisement.css"
+    "outputFile": "wwwroot/css/postadvertisement.css",
+    "inputFile": "wwwroot/css/postadvertisement.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Login.css",
+    "inputFile": "wwwroot/css/Login.scss"
   }
 ]

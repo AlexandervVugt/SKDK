@@ -7,6 +7,8 @@ namespace Stexchange.Models
 {
     public class LoginViewModel
     {
+        public string UserNameEmail { get; set; }
+        public string Password { get; set; }
     }
 
     public class RegisterModel
