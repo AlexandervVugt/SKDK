@@ -22,5 +22,9 @@
   {
     "outputFile": "wwwroot/css/Login.css",
     "inputFile": "wwwroot/css/Login.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/VerificationVerify.css",
+    "inputFile": "wwwroot/css/VerificationVerify.scss"
   }
 ]
