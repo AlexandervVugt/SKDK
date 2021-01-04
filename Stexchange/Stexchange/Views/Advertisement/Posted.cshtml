@@ -1,12 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Posted";
 }
+<link rel="stylesheet" href="~/css/Posted.css" />
 
 <h2>Gelukt!</h2>
 <div>
     <p>Je advertentie "@TempData["Title"]" is succesvol geplaatst.</p>
 </div>
-<a href="@Url.Action("PostAdvertisement", "Advertisement")">
+<button href="@Url.Action("PostAdvertisement", "Advertisement")">
     Maak nog een advertentie
-</a>
+</button>
 

@@ -37,6 +37,7 @@ namespace Stexchange.Controllers
 
         public IActionResult Posted()
         {
+            TempData.Keep("Title");
             return View("Posted");
         }
 
@@ -131,7 +132,6 @@ namespace Stexchange.Controllers
 
                         //passing data to the view
                         TempData["Title"] = finishedListing.Title;
-                        TempData.Keep("Title");
 
                         await _database.SaveChangesAsync();
 

@@ -26,5 +26,9 @@
   {
     "outputFile": "wwwroot/css/VerificationVerify.css",
     "inputFile": "wwwroot/css/VerificationVerify.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Posted.css",
+    "inputFile": "wwwroot/css/Posted.scss"
   }
 ]
