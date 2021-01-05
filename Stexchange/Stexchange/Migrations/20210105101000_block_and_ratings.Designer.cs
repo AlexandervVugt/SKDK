@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stexchange.Data;
 
 namespace Stexchange.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20210105101000_block_and_ratings")]
+    partial class block_and_ratings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,8 +30,6 @@ namespace Stexchange.Migrations
                         .HasColumnType("bigint(20) unsigned");
 
                     b.HasKey("BlockedId", "BlockerId");
-
-                    b.HasIndex("BlockerId");
 
                     b.ToTable("Blocks");
                 });
@@ -343,12 +343,6 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.User", "Blocked")
                         .WithMany()
                         .HasForeignKey("BlockedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Stexchange.Data.Models.User", "Blocker")
-                        .WithMany()
-                        .HasForeignKey("BlockerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
