@@ -19,6 +19,10 @@ namespace Stexchange.Controllers
             _db = db;
         }
 
+        /// <summary>
+        /// Returns the MyAccount view, populated with data from the logged in user.
+        /// </summary>
+        /// <returns>MyAccount view iff logged in, else Login view</returns>
         public IActionResult MyAccount()
         {
             int userId = -1;
