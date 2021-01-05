@@ -41,7 +41,7 @@
         </div>
         <div id="advertisementOptions">
             <input type="range" value="true" />
-            <input type="button" id="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm')"/>
+            <input type="button" id="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton')"/>
             <input type="button" id="modifyButton" value="WIJZIGEN" />
             <input type="button" id="deleteButton" value="VERWIJDEREN" />
         </div>
@@ -51,7 +51,7 @@
 <div id="requestForm">
     <h3>Ruil registreren</h3>
     <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('requestForm')" />
-    <form action="" method="post" id="myrequestForm">
+    <form action="#" method="post" id="myrequestForm">
         <p>Advertentie: Mooi plantje voor in de tuin</p>
         <label for="receiver" class="labeltext">Ontvanger</label>
         <select id="selectOptions">
@@ -60,7 +60,7 @@
         </select>
         <label>Aantal geruilde / weggegeven planten</label>
         <input type="number" name="quantity" id="quantity" />
-        <input type="button" id="confirmButton" value="BEVESTIGEN" onclick="submitForm('myrequestForm')" />
+        <input type="button" id="confirmButton" value="BEVESTIGEN" onclick="submitForm('requestForm', 'myrequestForm')" />
     </form>
 </div>
 

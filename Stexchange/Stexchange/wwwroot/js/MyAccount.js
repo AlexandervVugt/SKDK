@@ -1,4 +1,7 @@
-﻿function showRequestForm(form, buttonId) {
+﻿document.getElementById("accountsettingsButton").style.backgroundColor = "#465D43";
+document.getElementById("accountsettingsButton").style.color = "white";
+
+function showRequestForm(form, buttonId) {
     let requestform = document.getElementById(form);
 
     let myadvertisementColumn = document.getElementById("myadvertisementsColumn");
@@ -24,11 +27,13 @@ function closeRequestForm(form) {
     if (form == 'mySettingsColumn') {
         myadvertisementColumn.style.display = "block";
     }
+    toggleActive("accountsettingsButton");
 }
 
-function submitForm(form) {
-    let requestform = document.getElementById(form);
+function submitForm(form, submitform) {
+    let requestform = document.getElementById(submitform);
     closeRequestForm(form);
+    toggleActive("accountsettingsButton");
     requestform.submit();
 }
 
