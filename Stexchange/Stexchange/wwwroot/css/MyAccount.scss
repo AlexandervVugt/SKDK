@@ -37,7 +37,7 @@ $color-red: #C51014;
     }
 
     button {
-        border: 1.5px solid #465D43;
+        border: 1.5px solid $color-darkgreen;
         width: 80%;
         height: 5vh;
         margin-top: 3%;
@@ -45,11 +45,12 @@ $color-red: #C51014;
         margin-right: 10%;
         text-align: center;
         font-size: 2vh;
+        background-color: white;
         color: $color-darkgreen;
     }
 
     button:hover {
-        background-color: $color-green;
+        background-color: $color-darkgreen;
         color: white;
         cursor: pointer;
     }

@@ -1,4 +1,4 @@
-﻿function showRequestForm(form) {
+﻿function showRequestForm(form, buttonId) {
     let requestform = document.getElementById(form);
 
     let myadvertisementColumn = document.getElementById("myadvertisementsColumn");
@@ -13,6 +13,8 @@
     } else {
         requestform.style.display = "block";
     }
+
+    toggleActive(buttonId);
 }
 
 function closeRequestForm(form) {
@@ -29,3 +31,17 @@ function submitForm(form) {
     closeRequestForm(form);
     requestform.submit();
 }
+
+function toggleActive(buttonId) {
+    var buttons = document.getElementsByTagName("button");
+    let i;
+
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].style.backgroundColor = "white";
+        buttons[i].style.color = "#465D43"; 
+    }
+
+    document.getElementById(buttonId).style.backgroundColor = "#465D43";
+    document.getElementById(buttonId).style.color = "white";
+}
+
