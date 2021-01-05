@@ -52,8 +52,95 @@ namespace Stexchange.Controllers
             accModel.RatingRequests = (from rr in _db.RatingRequests
                                        where rr.ReviewerId == accModel.User.Id
                                        select rr).ToList();
-            TempData.Keep("RemoveListingError");
+            TempData.Keep("AccountControllerError");
             return View(model: accModel);
+        }
+
+        /// <summary>
+        /// Deletes the specified listing and returns the MyAccount view.
+        /// If the user is not logged in, redirects to the Login view.
+        /// </summary>
+        /// <seealso cref="RemoveListing(int)"/>
+        /// <param name="id">Id of the listing</param>
+        /// <returns></returns>
+        public async Task<IActionResult> DeleteListing(int id)
+        {
+            return await RemoveListing(id);
+        }
+
+        /// <summary>
+        /// Creates RatingRequests for the trade and reduces the remaining quantity.
+        /// If the remaining quantity is 0, the listing is removed.
+        /// </summary>
+        /// <seealso cref="RemoveListing(int)"/>
+        /// <param name="id">The id of the listing</param>
+        /// <param name="quantity">The quantity of the trade</param>
+        /// <param name="username">The user that was traded with</param>
+        /// <returns></returns>
+        public async Task<IActionResult> RegisterTrade(int id, uint quantity, string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                TempData["AccountControllerError"] = "U moet aangeven met wie u geruild heeft om een ruil te registreren.";
+                return RedirectToAction("MyAccount");
+            }
+            Listing listing = null;
+            try
+            {
+                listing = (from l in _db.Listings
+                                   where l.Id == id
+                                   select l).First();
+            }
+            catch (InvalidOperationException)
+            {
+                TempData["AccountControllerError"] = "De listing is niet gevonden.";
+                return RedirectToAction("MyAccount");
+            }
+            bool authorized = false;
+            try
+            {
+                authorized = listing.UserId == GetUserId();
+            } catch (InvalidSessionException)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            if (!authorized)
+            {
+                TempData["AccountControllerError"] = "U bent niet gemachtigd om deze actie uit te voeren.";
+            }
+            else if(listing.Quantity < quantity)
+            {
+                TempData["AccountControllerError"] = "Er kunnen niet meer planten geruild worden dan aangeboden zijn.";
+            }else
+            {
+                listing.Quantity -= quantity;
+                int? otherUserId = null;
+                try
+                {
+                    otherUserId = (from user in _db.Users where user.Username == username select user.Id).First();
+                } catch (InvalidOperationException)
+                {
+                    TempData["AccountControllerError"] = "De gebruiker is niet gevonden.";
+                    return RedirectToAction("MyAccount");
+                }
+                await _db.AddAsync(new RatingRequest
+                {
+                    ReviewerId = GetUserId(),
+                    RevieweeId = otherUserId ?? throw new InvalidOperationException()
+                });
+                await _db.AddAsync(new RatingRequest
+                {
+                    ReviewerId = otherUserId ?? throw new InvalidOperationException(),
+                    RevieweeId = GetUserId()
+                });
+                if (listing.Quantity == quantity)
+                {
+                    return await RemoveListing(id);
+                }
+                _db.Update(listing);
+                await _db.SaveChangesAsync();
+            }
+            return RedirectToAction("MyAccount");
         }
 
         /// <summary>
@@ -62,7 +149,7 @@ namespace Stexchange.Controllers
         /// If the Listing is not found, or the User does not own it, an error message is set.
         /// </summary>
         /// <param name="id"></param>
-        private async void RemoveListing(int id)
+        private async Task<IActionResult> RemoveListing(int id)
         {
             try
             {
@@ -71,13 +158,15 @@ namespace Stexchange.Controllers
                             select listing).First());
             } catch (InvalidSessionException)
             {
-                RedirectToAction("Login", "Login");
+                return RedirectToAction("Login", "Login");
             } catch (InvalidOperationException)
             {
                 //TODO: set error message (listing not found or unauthorised)
-                TempData["RemoveListingError"] = "Aanbieding verwijderen mislukt.\n" +
+                TempData["AccountControllerError"] = "Aanbieding verwijderen mislukt.\n" +
                     "De aanbieding werd niet gevonden, of u bent niet gemachtigd om deze te verwijderen.";
             }
+            await _db.SaveChangesAsync();
+            return RedirectToAction("MyAccount");
         }
     }
 }
