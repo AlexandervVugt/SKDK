@@ -143,7 +143,7 @@ namespace Stexchange.Controllers
             {
                 ResponderId = userId,
                 AdId = listId
-
+                
             };
             try
             {
@@ -162,6 +162,32 @@ namespace Stexchange.Controllers
             }
             return RedirectToAction("Chat");
         }
+        [HttpPost]
+        public IActionResult Block(int listid)
+        {
+            int userId;
+            try
+            {
+                userId = GetUserId();
+                int blockedUserId = (from l in _db.Listings
+                                   where (l.Id == listid)
+                                   select l.UserId).FirstOrDefault();
+                var newBlock = new Block
+                {
+                    Blocker_Id = userId,
+                    Blocked_Id = blockedUserId
+                };
+                _db.Blocks.Add(newBlock);
+                _db.SaveChanges();
+                return View("trade");
+            }
+            catch (InvalidSessionException)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+        }
+
 
 
 

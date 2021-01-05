@@ -38,6 +38,9 @@
                 <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
                 <input type="submit" id="sendmessage" value="Stuur een bericht" />
             </form>
+            <form id="block" method="post" action="@Url.Action("Block","Chat", new {listId = Model.Listing.Id})">
+                <input type="submit" id="blockUser" value="Blokkeren" />
+            </form>
         }
     </div>
 </div>
