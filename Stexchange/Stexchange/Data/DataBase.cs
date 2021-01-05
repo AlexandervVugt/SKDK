@@ -125,6 +125,58 @@ namespace Stexchange.Data
 				.WithMany()
 				.HasForeignKey(m => m.SenderId)
 				.HasPrincipalKey(u => u.Id);
+
+			modelBuilder.Entity<Block>()
+				.HasKey(b => new { b.BlockedId, b.BlockerId });
+
+			modelBuilder.Entity<Block>()
+				.HasOne(b => b.Blocked)
+				.WithMany()
+				.HasForeignKey(b => b.BlockedId)
+				.HasPrincipalKey(u => u.Id);
+
+			modelBuilder.Entity<Block>()
+				.HasOne(b => b.Blocker)
+				.WithMany()
+				.HasForeignKey(b => b.BlockerId)
+				.HasPrincipalKey(u => u.Id);
+
+			modelBuilder.Entity<Rating>(entity =>
+			{
+				entity.Property(r => r.Communication).IsRequired();
+				entity.Property(r => r.ReviewerId).IsRequired();
+				entity.Property(r => r.RevieweeId).IsRequired();
+			});
+
+			modelBuilder.Entity<Rating>()
+				.HasOne(r => r.Reviewer)
+				.WithMany()
+				.HasForeignKey(r => r.ReviewerId)
+				.HasPrincipalKey(u => u.Id);
+
+			modelBuilder.Entity<Rating>()
+				.HasOne(r => r.Reviewee)
+				.WithMany()
+				.HasForeignKey(r => r.RevieweeId)
+				.HasPrincipalKey(u => u.Id);
+
+			modelBuilder.Entity<RatingRequest>(entity =>
+			{
+				entity.Property(r => r.ReviewerId).IsRequired();
+				entity.Property(r => r.RevieweeId).IsRequired();
+			});
+
+			modelBuilder.Entity<RatingRequest>()
+				.HasOne(r => r.Reviewer)
+				.WithMany()
+				.HasForeignKey(r => r.ReviewerId)
+				.HasPrincipalKey(u => u.Id);
+
+			modelBuilder.Entity<RatingRequest>()
+				.HasOne(r => r.Reviewee)
+				.WithMany()
+				.HasForeignKey(r => r.RevieweeId)
+				.HasPrincipalKey(u => u.Id);
 		}
 
 		public DbSet<User> Users { get; set; }
@@ -135,5 +187,8 @@ namespace Stexchange.Data
 		public DbSet<FilterListing> FilterListings { get; set; }
 		public DbSet<Chat> Chats { get; set; }
 		public DbSet<Message> Messages { get; set; }
+		public DbSet<Block> Blocks { get; set; }
+		public DbSet<Rating> Ratings { get; set; }
+		public DbSet<RatingRequest> RatingRequests { get; set; }
 	}
 }

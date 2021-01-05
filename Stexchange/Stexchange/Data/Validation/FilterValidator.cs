@@ -42,6 +42,15 @@ namespace Stexchange.Data.Validation
         }
     }
 
+    public class OrderFilterValidator : AbstractValidator<Filter>
+    {
+        private readonly List<string> valueList = new List<string>() { "plant_order_boom", "plant_order_struik", "plant_order_kruidachtig", "plant_order_bodembedekker", "plant_order_klimplant", "plant_order_waterplant" };
+        public OrderFilterValidator()
+        {
+            RuleFor(x => valueList.Contains(x.Value)).Must(x => x == true).WithMessage(StandardMessages.InvalidOptionUsed("plantsoort"));
+        }
+    }
+
     public class IndigenousFilterValidator : AbstractValidator<Filter>
     {
         private readonly List<string> valueList = new List<string>() { "indigenous_null", "indigenous_inheems", "indigenous_niet_inheems" };
@@ -71,10 +80,10 @@ namespace Stexchange.Data.Validation
 
     public class PlantTypeFilterValidator : AbstractValidator<Filter>
     {
-        private readonly List<string> valueList = new List<string>() { "plant_type_plant", "plant_type_zaad", "plant_type_stek" };
+        private readonly List<string> valueList = new List<string>() { "plant_type_plant", "plant_type_zaad", "plant_type_stek", "plant_type_bol", "plant_type_zaailing" };
         public PlantTypeFilterValidator()
         {
-            RuleFor(x => valueList.Contains(x.Value)).Must(x => x == true).WithMessage(StandardMessages.InvalidOptionUsed("plant soort"));
+            RuleFor(x => valueList.Contains(x.Value)).Must(x => x == true).WithMessage(StandardMessages.InvalidOptionUsed("plant eigenschap"));
         }
     }
 }

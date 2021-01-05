@@ -171,9 +171,14 @@ body {
         font-size: 25px;
     }
 
-    span {
+    #messagepicture, #imagecounter {
         margin-left: 10%;
         margin-right: 10%;
+    }
+
+    #requiredFields{
+        font-size: 1.1vh;
+        color: red;
     }
 
     h2 {

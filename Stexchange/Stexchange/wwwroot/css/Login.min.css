@@ -1,0 +1,1 @@
+﻿#errorpopup{z-index:3;border:2.5px solid #015e54;margin:auto;width:60vh;padding:1%;border-radius:1vh;text-align:center;background-color:#fff;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);}#errorpopup #errorbutton{margin-left:10%;margin-right:10%;background-color:#015e54;width:25%;border-radius:1vh;height:calc(4vh);font-size:2vh;color:#fff;margin-top:1%;}

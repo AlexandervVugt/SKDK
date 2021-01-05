@@ -25,7 +25,7 @@
 <br>
 <form action="PostAdvertisement" method="post" class="advertisementform" enctype="multipart/form-data">
     <p>
-        <span id="messagepicture">Klik op "Bestand selecteren" om foto's toe te voegen</span>
+        <span id="messagepicture">Klik op "Bestand selecteren" om foto's toe te voegen<span id="requiredFields"> *verplicht</span></span>
         <img id="imgoutput" />
         <div class="imageslides">
             <a class="previous" onclick="previousImg(1)">&#10094;</a>
@@ -37,66 +37,85 @@
         <input type="file" id="imginput" name="files" onchange="loadFile(event)" accept="image/*" multiple required>
     </p>
     <p>
-        <label for="title" class="labeltext">Titel</label>
+        <label for="title" class="labeltext">Titel<span id="requiredFields"> *verplicht</span></label>
         <input class="labelinput" name="title" type="text" maxlength="80" required />
     </p>
     <p>
-        <label for="description" class="labeltext">Beschrijving</label>
-        <textarea class="descriptionInput" name="description" maxlength="500" placeholder="Beschrijf in 50-500 karakters je buitenplantje. Bv. reden van weggave, verzorging, welke dieren deze plant aantrekt; bijvriendelijk etc." required></textarea>
+        <label for="description" class="labeltext">Beschrijving<span id="requiredFields"> *verplicht</span></label>
+        <textarea class="descriptionInput" name="description" maxlength="500" placeholder="Beschrijf in 10-500 karakters je buitenplantje. Bv. reden van weggave, verzorging, welke dieren deze plant aantrekt; bijvriendelijk etc." required></textarea>
     </p>
     <p>
         <label for="name_lt" class="labeltext">Latijnse naam</label>
         <input class="labelinput" name="name_lt" type="text" maxlength="50" />
     </p>
     <p>
-        <label for="name_nl" class="labeltext">Nederlandse naam</label>
+        <label for="name_nl" class="labeltext">Nederlandse naam<span id="requiredFields"> *verplicht</span></label>
         <input class="labelinput" name="name_nl" type="text" maxlength="50" required />
     </p>
     <p>
-        <label for="quantity" class="labeltext">Aantal</label>
+        <label for="quantity" class="labeltext">Aantal<span id="requiredFields"> *verplicht</span></label>
         <input class="labelinput" name="quantity" type="number" min="1" required />
     </p>
     <p>
-        <label for="plant_type">Wat voor soort plant is het?</label>
+        <label for="plant_type">Welke eigenschap heeft de plant?<span id="requiredFields"> *verplicht</span></label>
         <select name="plant_type" id="plant_type" required>
+            <option value="plant_type_null"></option>
             <option value="plant_type_plant">Plant</option>
             <option value="plant_type_zaad">Zaad</option>
             <option value="plant_type_stek">Stek</option>
+            <option value="plant_type_bol">Bol</option>
+            <option value="plant_type_zaailing">Zaailing</option>
         </select>
     </p>
     <p>
-        <label for="with_pot">De plant is voorzien van een pot</label>
+        <label for="plant_order">Wat voor soort plant is het?<span id="requiredFields"> *verplicht</span></label>
+        <select name="plant_order" id="plant_order" required>
+            <option value="plant_order_null"></option>
+            <option value="plant_order_boom">Boom</option>
+            <option value="plant_order_struik">Struik</option>
+            <option value="plant_order_kruidachtig">Kruidachtig</option>
+            <option value="plant_order_bodembedekker">Bodembedekker</option>
+            <option value="plant_order_klimplant">Klimplant</option>
+            <option value="plant_order_waterplant">Waterplant</option>
+        </select>
+    </p>
+    <p>
+        <label for="light">Hoeveel licht heeft de plant nodig<span id="requiredFields"> *verplicht</span></label>
+        <select name="light" id="light">
+            <option value="light_null"></option>
+            <option value="light_volle_zon">Volle zon</option>
+            <option value="light_halfschaduw">Halfschaduw</option>
+            <option value="light_schaduw">Schaduw</option>
+        </select>
+    </p>
+    <p>
+        <label for="water">Hoeveel vocht heeft de plant nodig<span id="requiredFields"> *verplicht</span></label>
+        <select name="water" id="water">
+            <option value="water_null"></option>
+            <option value="water_wisselnat">Wisselnat</option>
+            <option value="water_nat">Nat</option>
+            <option value="water_normaal">Normaal</option>
+            <option value="water_droog">Droog</option>
+        </select>
+    </p>
+    <p>
+        <label for="with_pot">De plant is voorzien van een pot<span id="requiredFields"> *verplicht</span></label>
         <select name="with_pot" id="with_pot" required>
+            <option value="with_pot_null"></option>
             <option value="with_pot_ja">Ja</option>
             <option value="with_pot_nee">Nee</option>
         </select>
     </p>
     <p>
-        <label for="give_away">De plant is gratis weg te geven</label>
-        <select name="give_away" id="give_away" value="nee" required>
+        <label for="give_away">De plant is gratis weg te geven<span id="requiredFields"> *verplicht</span></label>
+        <select name="give_away" id="give_away" required>
+            <option value="give_away_null"></option>
             <option value="give_away_ja">Ja</option>
-            <option value="give_away_nee">Nee</option>
+            <option value="give_away_nee">Ruilen</option>
         </select>
     </p>
     <div class="accordion"><p>Extra filters</p></div>
     <div id="extrafilters">
-        <p>
-            <label for="light">Hoeveel licht heeft de plant nodig</label>
-            <select name="light" id="light">
-                <option value="light_volle_zon">Volle zon</option>
-                <option value="light_halfschaduw">Halfschaduw</option>
-                <option value="light_schaduw">Schaduw</option>
-            </select>
-        </p>
-        <p>
-            <label for="water">Hoeveel vocht heeft de plant nodig</label>
-            <select name="water" id="water">
-                <option value="water_wisselnat">Wisselnat</option>
-                <option value="water_nat">Nat</option>
-                <option value="water_normaal">Normaal</option>
-                <option value="water_droog">Droog</option>
-            </select>
-        </p>
         <p>
             <label for="nutrients">Hoeveel voeding heeft de plant nodig</label>
             <select name="nutrients" id="nutrients">

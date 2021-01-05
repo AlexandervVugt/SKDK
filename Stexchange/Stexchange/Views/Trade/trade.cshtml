@@ -147,31 +147,7 @@
                 </ul>
             </li>
             <li>
-                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Faunawaarde</span>
-                <ul class="nested">
-                    <li>
-                        <input type="checkbox" id="faunawaarde1" name="fauna" value="vlinders" />
-                        <label for="faunawaarde1">Vlinders</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="faunawaarde2" name="fauna" value="wilde_bijen" />
-                        <label for="faunawaarde2">Wilde bijen</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="faunawaarde3" name="fauna" value="honing_bijen" />
-                        <label for="faunawaarde3">Honing bijen</label>
-                    <li>
-                        <input type="checkbox" id="faunawaarde4" name="fauna" value="hommels" />
-                        <label for="faunawaarde4">Hommels</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="faunawaarde5" name="fauna" value="vogels" />
-                        <label for="faunawaarde5">Vogels</label>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Plantsoort</span>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Eigenschap</span>
                 <ul class="nested">
                     <li>
                         <input type="checkbox" id="plant_type1" name="plant_type" value="plant_type_plant" />
@@ -185,6 +161,43 @@
                         <input type="checkbox" id="plant_type3" name="plant_type" value="plant_type_zaad" />
                         <label for="plant_type3">Zaad</label>
                     </li>
+                    <li>
+                        <input type="checkbox" id="plant_type4" name="plant_type" value="plant_type_bol" />
+                        <label for="plant_type4">Bol</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="plant_type5" name="plant_type" value="plant_type_zaailing" />
+                        <label for="plant_type5">Zaailing</label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img class="caret" src="~/img/caret_leaf.svg" alt="arrow" width="20"><span>Plantsoort</span>
+                <ul class="nested">
+                    <li>
+                        <input type="checkbox" id="plant_order1" name="plant_order" value="plant_order_boom" />
+                        <label for="plant_order1">Boom</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="plant_order2" name="plant_order" value="plant_order_struik" />
+                        <label for="plant_order2">Struik</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="plant_order3" name="plant_order" value="plant_order_kruidachtig" />
+                        <label for="plant_order3">Kruidachtig</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="plant_order4" name="plant_order" value="plant_order_bodembedekker" />
+                        <label for="plant_order4">Bodembedekker</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="plant_order5" name="plant_order" value="plant_order_klimplant" />
+                        <label for="plant_order5">Klimplant</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="plant_order6" name="plant_order" value="plant_order_waterplant" />
+                        <label for="plant_order6">Waterplant</label>
+                    </li>
                 </ul>
             </li>
             <li>
@@ -196,7 +209,7 @@
                     </li>
                     <li>
                         <input type="checkbox" id="giveaway2" name="give_away" value="give_away_nee" />
-                        <label for="giveaway2">Nee</label>
+                        <label for="giveaway2">Ruilen</label>
                     </li>
                 </ul>
             </li>
@@ -289,9 +302,9 @@
                     {
                         @foreach (string filter in listing.Filters)
                         {
-                            if (!filter.Contains("null") && !filter.Contains("nee"))
+                            if (!filter.Contains("null") && !filter.Contains("with_pot_nee"))
                             {
-                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "").Replace("ph", "bodem")</code>
+                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "").Replace("nutrients", "voeding").Replace("ph", "bodem").Replace("plant order ","").Replace("give away nee", "ruilen").Replace("give away ", "gratis")</code>
                             }
                         }
                     }
