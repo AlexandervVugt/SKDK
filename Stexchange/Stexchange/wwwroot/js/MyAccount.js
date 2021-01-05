@@ -50,3 +50,36 @@ function toggleActive(buttonId) {
     document.getElementById(buttonId).style.color = "white";
 }
 
+
+window.onload = function () {
+    if (document.getElementById("errorpopup")) {
+        toggleElements();
+    }
+}
+
+function hideForm() {
+    let errorElement = document.getElementById("errorpopup");
+    errorElement.style.display = "none";
+    toggleElements();
+}
+
+function toggleElements() {
+    let inputs = document.getElementsByTagName("input");
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].id != "errorbutton") {
+            inputs[i].disabled = !inputs[i].disabled;
+        }
+    }
+
+    let buttons = document.getElementsByTagName("button");
+    for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].id == "accountsettingsButton" || buttons[i].id == "ratingreviewButton" || buttons[i].id == "mySettingsButton") {
+            buttons[i].disabled = !buttons[i].disabled;
+        }
+    }
+
+    let selects = document.getElementsByTagName("select");
+    for (var i = 0; i < selects.length; i++) {
+        selects[i].disabled = !selects[i].disabled
+    }
+}

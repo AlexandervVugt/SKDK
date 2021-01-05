@@ -345,6 +345,37 @@ $color-red: #C51014;
     }
 }
 
+#errorpopup {
+    z-index: 3;
+    border: 2.5px solid $color-darkgreen;
+    margin: auto;
+    width: 60vh;
+    padding: 1%;
+    border-radius: 1vh;
+    text-align: center;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h3 {
+        color: $color-darkgreen;
+    }
+
+    #errorbutton {
+        margin-left: 10%;
+        margin-right: 10%;
+        background-color: $color-darkgreen;
+        width: 25%;
+        border-radius: 1vh;
+        height: calc(4vh);
+        font-size: 2vh;
+        color: white;
+        margin-top: 1%;
+        cursor: pointer;
+    }
+}
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: $color-darkgreen;
     opacity: 1; /* Firefox */

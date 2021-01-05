@@ -3,6 +3,20 @@
 }
 <link rel="stylesheet" href="~/css/MyAccount.css" />
 
+@if (ViewBag.Messages is object)
+{
+    <form id="errorpopup">
+        <div id="errorblock" onload="toggleElements()">
+            <h3>ERROR</h3>
+            @foreach (var message in ViewBag.Messages)
+            {
+                <p>@message</p>
+            }
+            <input type="button" value="OK" onclick="hideForm()" id="errorbutton" />
+        </div>
+    </form>
+}
+
 <div id="profileColumn">
     <h4>Wings</h4>
     <p>Gemiddelde beoordeling op</p>
@@ -41,7 +55,7 @@
         </div>
         <div id="advertisementOptions">
             <input type="range" value="true" />
-            <input type="button" id="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton')"/>
+            <input type="button" id="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton')" />
             <input type="button" id="modifyButton" value="WIJZIGEN" />
             <input type="button" id="deleteButton" value="VERWIJDEREN" />
         </div>
