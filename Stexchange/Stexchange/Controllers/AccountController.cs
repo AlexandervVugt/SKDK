@@ -39,6 +39,8 @@ namespace Stexchange.Controllers
                              where user.Id == userId
                              select user).FirstOrDefault();
             accModel.User.Password = null; //remove sensitive data
+            accModel.User.Rating = new User.RatingAggregation(
+                from rating in _db.Ratings where rating.RevieweeId == userId select rating);
             //load users listings
             accModel.Listings = (from listing in _db.Listings
                                  where listing.UserId == userId

@@ -25,5 +25,23 @@ namespace Stexchange.Data.Models
         public bool IsVerified { get; set; }
         [NotMapped]
         public UserVerification Verification { get; set; }
+        [NotMapped]
+        public RatingAggregation Rating { get; set; }
+
+        public class RatingAggregation
+        {
+            public double QualityAvg { get; set; }
+            public uint QualityCount { get; set; }
+            public double CommunicationAvg { get; set; }
+            public uint CommunicationCount { get; set; }
+            public RatingAggregation(IQueryable<Rating> ratings)
+            {
+                QualityCount = (uint) (from rating in ratings where rating.Quality is object select rating).Count();
+                QualityAvg = (from rating in ratings where rating.Quality is object select (byte)rating.Quality)
+                    .Aggregate(0, (total, next) => total + next, total => total / QualityCount);
+                CommunicationCount = (uint) ratings.Count();
+                CommunicationAvg = ratings.Aggregate(0, (total, next) => total + next.Communication, total => total / CommunicationCount);
+            }
+        }
     }
 }
