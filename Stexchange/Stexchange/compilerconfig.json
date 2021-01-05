@@ -34,5 +34,9 @@
   {
     "outputFile": "wwwroot/css/ReviewAdvertisement.css",
     "inputFile": "wwwroot/css/ReviewAdvertisement.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/MyAccount.css",
+    "inputFile": "wwwroot/css/MyAccount.scss"
   }
 ]

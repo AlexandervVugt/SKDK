@@ -1,65 +1,107 @@
 ﻿@{
     ViewData["Title"] = "Mijn Account";
 }
+<link rel="stylesheet" href="~/css/MyAccount.css" />
 
 <div id="profileColumn">
     <h4>Wings</h4>
     <p>Gemiddelde beoordeling op</p>
-    <p>Communicatie</p>&#9733;&#9733;&#9733;&#9733;&#9733;<label>(13)</label>
-    <p>Kwaliteit</p>&#9733;&#9733;&#9733;&#9733;&#9733;<label>(13)</label>
-    <button onclick="">Account instellingen</button>
+    <p id="communication">
+        Communicatie
+        <span id="communicationReviews">(13)</span>
+        <label class="stars" for="communication" id="communication1">&#9733;</label>
+        <label class="stars" for="communication" id="communication2">&#9733;</label>
+        <label class="stars" for="communication" id="communication3">&#9733;</label>
+        <label class="stars" for="communication" id="communication4">&#9733;</label>
+        <label class="stars" for="communication" id="communication5">&#9733;</label>
+    </p>
+    <p id="quality">
+        Kwaliteit
+        <span id="qualityReviews">(13)</span>
+        <label class="stars" for="quality" id="quality1">&#9733;</label>
+        <label class="stars" for="quality" id="quality2">&#9733;</label>
+        <label class="stars" for="quality" id="quality3">&#9733;</label>
+        <label class="stars" for="quality" id="quality4">&#9733;</label>
+        <label class="stars" for="quality" id="quality5">&#9733;</label>
+    </p>
+    <button onclick="showRequestForm('myadvertisementsColumn')" id="accountsettingsButton">Mijn aanbiedingen</button>
+    <button onclick="showRequestForm('ratingreviewColumn')" id="ratingreviewButton">Beoordelingsverzoeken</button>
+    <button onclick="showRequestForm('mySettingsColumn')" id="mySettingsButton">Account instellingen</button>
 </div>
 
 <div id="myadvertisementsColumn">
     <h3>Mijn aanbiedingen</h3>
     <p>1 actieve aanbieding</p>
-    <!--foreach loop-->
+    <!--foreach loop advertisements-->
     <div id="advertisementColumn">
-        <p id="title">Mooie plant voor in de tuin</p>
-        <p>04-01-2021</p>
-        <!--slider-->
-        <input type="range"/>
-        <input type="button" id="ratingrequestButton" value="BEOORDELING AANVRAGEN" />
-        <input type="button" id="modifyButton" value="WIJZIGEN" />
-        <input type="button" id="deleteButton" value="VERWIJDEREN" />
+        <div id="advertisementInfo">
+            <img src="~/img/plantje.png" />
+            <h4 id="title">Mooie plant voor in de tuin</h4>
+            <p>04-01-2021</p>
+        </div>
+        <div id="advertisementOptions">
+            <input type="range" value="true" />
+            <input type="button" id="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm')"/>
+            <input type="button" id="modifyButton" value="WIJZIGEN" />
+            <input type="button" id="deleteButton" value="VERWIJDEREN" />
+        </div>
     </div>
 </div>
 
 <div id="requestForm">
     <h3>Ruil registreren</h3>
-    <form action="#" method="post">
+    <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('requestForm')" />
+    <form action="" method="post" id="myrequestForm">
         <p>Advertentie: Mooi plantje voor in de tuin</p>
         <label for="receiver" class="labeltext">Ontvanger</label>
-        <!--foreach loop-->
         <select id="selectOptions">
+            <!--foreach loop users from chat-->
             <option value="Tester">Tester</option>
         </select>
         <label>Aantal geruilde / weggegeven planten</label>
         <input type="number" name="quantity" id="quantity" />
-        <input type="button" id="confirmButton" value="BEVESTIGEN" />
+        <input type="button" id="confirmButton" value="BEVESTIGEN" onclick="submitForm('myrequestForm')" />
     </form>
 </div>
 
 <div id="mySettingsColumn">
-    <h3>Account instellingen</h3>
     <div id="formColumn">
+        <h3>Account instellingen</h3>
+        <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('mySettingsColumn')" />
         <form action="#" method="post">
             <label for="username" class="labeltext">Gebruikersnaam</label>
-            <input type="text" name="username" id="username" />
+            <input type="text" name="username" id="username" placeholder="Wings" />
 
             <label for="postcalcode" class="labeltext">Postcode</label>
-            <input type="text" name="postalcode" id="postalcode" />
+            <input type="text" name="postalcode" id="postalcode" placeholder="4207JG" />
 
             <label for="email" class="labeltext">E-mail</label>
-            <input type="text" name="email" id="email" />
+            <input type="text" name="email" id="email" placeholder="wingyeechung12@gmail.com" />
 
             <label for="password" class="labeltext">Wachtwoord</label>
-            <input type="text" name="password" id="password" />
+            <input type="text" name="password" id="password" placeholder="Hello123" />
 
             <label for="confirm_password" class="labeltext">Bevestig wachtwoord</label>
-            <input type="text" name="confirm_password" id="confirm_password" />
+            <input type="text" name="confirm_password" id="confirm_password" placeholder="Hello123" />
 
-            <input type="button" id="saveButton" value="OPSLAAN"/>
+            <input type="button" id="saveButton" value="Opslaan" />
         </form>
     </div>
 </div>
+
+<div id="ratingreviewColumn">
+    <h3>Beoordelingsverzoeken</h3>
+    <p>1 beoordelingsverzoek</p>
+    <!--foreach loop rating requests-->
+    <div id="reviewRequest">
+        <div id="reviewInfo">
+            <h4 id="title">Orchidee</h4>
+            <p>Tester</p>
+        </div>
+        <div id="reviewOptions">
+            <input type="button" id="reviewButton" value="BEOORDELING PLAATSEN" />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/js/MyAccount.js" asp-append-version="true"></script>
