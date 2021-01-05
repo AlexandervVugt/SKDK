@@ -82,6 +82,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="compilerconfig.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\ReviewAdvertisement.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\VerificationVerify.css" />
   </ItemGroup>
 

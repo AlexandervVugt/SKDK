@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Mijn Account";
+}
+
+<div id="profileColumn">
+    <h4>Wings</h4>
+    <p>Gemiddelde beoordeling op</p>
+    <p>Communicatie</p>&#9733;&#9733;&#9733;&#9733;&#9733;<label>(13)</label>
+    <p>Kwaliteit</p>&#9733;&#9733;&#9733;&#9733;&#9733;<label>(13)</label>
+    <button onclick="">Account instellingen</button>
+</div>
+
+<div id="myadvertisementsColumn">
+    <h3>Mijn aanbiedingen</h3>
+    <p>1 actieve aanbieding</p>
+    <!--foreach loop-->
+    <div id="advertisementColumn">
+        <p id="title">Mooie plant voor in de tuin</p>
+        <p>04-01-2021</p>
+        <!--slider-->
+        <input type="range"/>
+        <input type="button" id="ratingrequestButton" value="BEOORDELING AANVRAGEN" />
+        <input type="button" id="modifyButton" value="WIJZIGEN" />
+        <input type="button" id="deleteButton" value="VERWIJDEREN" />
+    </div>
+</div>
+
+<div id="requestForm">
+    <h3>Ruil registreren</h3>
+    <form action="#" method="post">
+        <p>Advertentie: Mooi plantje voor in de tuin</p>
+        <label for="receiver" class="labeltext">Ontvanger</label>
+        <!--foreach loop-->
+        <select id="selectOptions">
+            <option value="Tester">Tester</option>
+        </select>
+        <label>Aantal geruilde / weggegeven planten</label>
+        <input type="number" name="quantity" id="quantity" />
+        <input type="button" id="confirmButton" value="BEVESTIGEN" />
+    </form>
+</div>
+
+<div id="mySettingsColumn">
+    <h3>Account instellingen</h3>
+    <div id="formColumn">
+        <form action="#" method="post">
+            <label for="username" class="labeltext">Gebruikersnaam</label>
+            <input type="text" name="username" id="username" />
+
+            <label for="postcalcode" class="labeltext">Postcode</label>
+            <input type="text" name="postalcode" id="postalcode" />
+
+            <label for="email" class="labeltext">E-mail</label>
+            <input type="text" name="email" id="email" />
+
+            <label for="password" class="labeltext">Wachtwoord</label>
+            <input type="text" name="password" id="password" />
+
+            <label for="confirm_password" class="labeltext">Bevestig wachtwoord</label>
+            <input type="text" name="confirm_password" id="confirm_password" />
+
+            <input type="button" id="saveButton" value="OPSLAAN"/>
+        </form>
+    </div>
+</div>
