@@ -136,9 +136,9 @@ namespace Stexchange.Data
 				.HasPrincipalKey(u => u.Id);
 
 			modelBuilder.Entity<Block>()
-				.HasOne(b => b.Blocked)
+				.HasOne(b => b.Blocker)
 				.WithMany()
-				.HasForeignKey(b => b.BlockedId)
+				.HasForeignKey(b => b.BlockerId)
 				.HasPrincipalKey(u => u.Id);
 
 			modelBuilder.Entity<Rating>(entity =>
