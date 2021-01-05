@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Stexchange.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : StexChangeController
     {
         private readonly Database _db;
         public AccountController(Database db)
