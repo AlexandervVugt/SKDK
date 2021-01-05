@@ -144,6 +144,31 @@ namespace Stexchange.Controllers
         }
 
         /// <summary>
+        /// Returns a string array of users that interacted with the specified listing.
+        /// </summary>
+        /// <param name="listingId"></param>
+        /// <returns></returns>
+        public string[] GetInteractingUsers(int listingId)
+        {
+            return (from chat in _db.Chats
+                    join user in _db.Users on chat.ResponderId equals user.Id
+                    where chat.AdId == listingId
+                    select user.Username).ToArray();
+        }
+
+        /// <summary>
+        /// Returns the quantity of the specified listing
+        /// </summary>
+        /// <param name="listingId"></param>
+        /// <returns></returns>
+        public uint GetQuantity(int listingId)
+        {
+            return (from listing in _db.Listings
+                    where listing.Id == listingId
+                    select listing.Quantity).FirstOrDefault();
+        }
+
+        /// <summary>
         /// Removes the listing with the specified id.
         /// If the User is not logged in, they will be redirected to the login view.
         /// If the Listing is not found, or the User does not own it, an error message is set.
