@@ -52,7 +52,32 @@ namespace Stexchange.Controllers
             accModel.RatingRequests = (from rr in _db.RatingRequests
                                        where rr.ReviewerId == accModel.User.Id
                                        select rr).ToList();
+            TempData.Keep("RemoveListingError");
             return View(model: accModel);
+        }
+
+        /// <summary>
+        /// Removes the listing with the specified id.
+        /// If the User is not logged in, they will be redirected to the login view.
+        /// If the Listing is not found, or the User does not own it, an error message is set.
+        /// </summary>
+        /// <param name="id"></param>
+        private async void RemoveListing(int id)
+        {
+            try
+            {
+                _db.Remove((from listing in _db.Listings
+                            where listing.Id == id && listing.UserId == GetUserId()
+                            select listing).First());
+            } catch (InvalidSessionException)
+            {
+                RedirectToAction("Login", "Login");
+            } catch (InvalidOperationException)
+            {
+                //TODO: set error message (listing not found or unauthorised)
+                TempData["RemoveListingError"] = "Aanbieding verwijderen mislukt.\n" +
+                    "De aanbieding werd niet gevonden, of u bent niet gemachtigd om deze te verwijderen.";
+            }
         }
     }
 }
