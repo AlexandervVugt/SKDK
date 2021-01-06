@@ -266,27 +266,27 @@
     color: #465D43; }
   #ratingreviewColumn p {
     color: #465D43; }
-  #ratingreviewColumn #reviewRequest {
+  #ratingreviewColumn .reviewRequest {
     margin-bottom: 1.5%;
     background-color: rgba(255, 255, 255, 0.8);
     overflow: hidden;
     border: 1.5px solid #465D43;
     line-height: 3vh; }
-    #ratingreviewColumn #reviewRequest #reviewInfo {
+    #ratingreviewColumn .reviewRequest .reviewInfo {
       float: left;
       padding: 1%; }
-      #ratingreviewColumn #reviewRequest #reviewInfo h4 {
+      #ratingreviewColumn .reviewRequest .reviewInfo h4 {
         margin-left: 10%;
         font-size: 2.2vh;
         color: #465D43; }
-      #ratingreviewColumn #reviewRequest #reviewInfo p {
+      #ratingreviewColumn .reviewRequest .reviewInfo p {
         margin-left: 10%;
         font-size: 2vh; }
-    #ratingreviewColumn #reviewRequest #reviewOptions {
+    #ratingreviewColumn .reviewRequest .reviewOptions {
       float: right;
       padding: 1%;
       margin-top: 0.25%; }
-      #ratingreviewColumn #reviewRequest #reviewOptions input {
+      #ratingreviewColumn .reviewRequest .reviewOptions input {
         float: right;
         clear: both;
         background-color: #465D43;
@@ -298,7 +298,7 @@
         text-align: center;
         font-size: 2vh;
         color: white; }
-      #ratingreviewColumn #reviewRequest #reviewOptions input[type=button]:hover {
+      #ratingreviewColumn .reviewRequest .reviewOptions input[type=button]:hover {
         cursor: pointer; }
 
 #errorpopup {
@@ -321,6 +321,34 @@
     margin-right: 10%;
     background-color: #465D43;
     width: 25%;
+    border-radius: 1vh;
+    height: calc(4vh);
+    font-size: 2vh;
+    color: white;
+    margin-top: 1%;
+    cursor: pointer; }
+
+#confirmDelete {
+  display: none;
+  z-index: 3;
+  border: 2.5px solid #465D43;
+  margin: auto;
+  width: 60vh;
+  padding: 1%;
+  border-radius: 1vh;
+  text-align: center;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  #confirmDelete h4 {
+    color: #465D43; }
+  #confirmDelete input[type="button"] {
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: #465D43;
+    width: 20%;
     border-radius: 1vh;
     height: calc(4vh);
     font-size: 2vh;

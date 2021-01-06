@@ -119,3 +119,8 @@ function toggleElements() {
         selects[i].disabled = !selects[i].disabled
     }
 }
+
+function confirmToDelete() {
+    let confirmMessage = document.getElementById("confirmDelete");
+    confirmMessage.style.display = "block";
+}

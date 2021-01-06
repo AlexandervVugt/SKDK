@@ -368,14 +368,14 @@ $color-red: #C51014;
             color: $color-darkgreen;
         }
 
-        #reviewRequest {
+        .reviewRequest {
             margin-bottom: 1.5%;
             background-color: rgba(255, 255, 255, 0.8);
             overflow: hidden;
             border: 1.5px solid $color-darkgreen;
             line-height: 3vh;
 
-            #reviewInfo {
+            .reviewInfo {
                 float: left;
                 padding: 1%;
 
@@ -391,7 +391,7 @@ $color-red: #C51014;
                 }
             }
 
-            #reviewOptions {
+            .reviewOptions {
                 float: right;
                 padding: 1%;
                 margin-top: 0.25%;
@@ -448,6 +448,39 @@ $color-red: #C51014;
             cursor: pointer;
         }
     }
+
+#confirmDelete {
+    display: none;
+    z-index: 3;
+    border: 2.5px solid $color-darkgreen;
+    margin: auto;
+    width: 60vh;
+    padding: 1%;
+    border-radius: 1vh;
+    text-align: center;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h4 {
+        color: $color-darkgreen;
+    }
+
+    input[type="button"] {
+        margin-left: 10%;
+        margin-right: 10%;
+        background-color: $color-darkgreen;
+        width: 20%;
+        border-radius: 1vh;
+        height: calc(4vh);
+        font-size: 2vh;
+        color: white;
+        margin-top: 1%;
+        cursor: pointer;
+    }
+}
 
     ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: $color-darkgreen;
