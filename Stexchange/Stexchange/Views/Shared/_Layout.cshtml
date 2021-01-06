@@ -32,9 +32,6 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Trade" asp-action="Trade">AANBOD</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="MyAccount">MIJN ACCOUNT</a>
-                </li>
                 @if (!(Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken)))
                 {
                     <li class="nav-item">
@@ -45,6 +42,9 @@
                 {
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="PostAdvertisement">ADVERTENTIE PLAATSEN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="MyAccount">MIJN ACCOUNT</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">UITLOGGEN</a>
