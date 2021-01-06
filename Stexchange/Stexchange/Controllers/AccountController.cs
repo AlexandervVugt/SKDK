@@ -135,7 +135,7 @@ namespace Stexchange.Controllers
                     ReviewerId = otherUserId ?? throw new InvalidOperationException(),
                     RevieweeId = GetUserId()
                 });
-                if (listing.Quantity == quantity)
+                if (listing.Quantity == 0)
                 {
                     return await RemoveListing(id);
                 }
