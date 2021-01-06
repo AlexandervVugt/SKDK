@@ -27,10 +27,12 @@ function toggleVisible(id) {
         type: "POST",
         url: `/Account/SetVisible?listingId=${id}&value=${value}`,
         success: function (data) {
-            alert(data.message);
+            console.log(data);
+            alert(data);
         },
         error: function (err) {
-            alert(err.message);
+            console.log("toggleVisible ajax request error");
+            alert(err.responseText);
         }
     })
 }

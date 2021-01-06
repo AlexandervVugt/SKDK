@@ -7,6 +7,7 @@ using Stexchange.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Stexchange.Controllers
@@ -193,9 +194,14 @@ namespace Stexchange.Controllers
                     select listing.Quantity).FirstOrDefault();
         }
 
-        public ActionResult SetVisible(int listingId, bool value)
+        /// <summary>
+        /// Sets the visibility of the specified listing to the specified value.
+        /// </summary>
+        /// <param name="listingId"></param>
+        /// <param name="value"></param>
+        /// <returns>A json string that specifies status and a message.</returns>
+        public string SetVisible(int listingId, bool value)
         {
-            string status = "";
             string message = "";
             try
             {
@@ -205,18 +211,17 @@ namespace Stexchange.Controllers
                 listing.Visible = value;
                 _db.Update(listing);
                 _db.SaveChanges();
-                status = "success";
                 message = $"Gelukt!\nUw advertentie \"{listing.Title}\" is nu {(listing.Visible ? "actief" : "inactief")}";
             }catch (InvalidOperationException)
             {
-                status = "error";
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 message = "De aanbieding bestaat niet, of u bent niet gemachtigd om deze aan te passen.";
             }catch (InvalidSessionException)
             {
-                status = "error";
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 message = "Sessie bestaat niet of is verlopen.";
             }
-            return Json(new { status, message });
+            return message;
         }
     }
 }
