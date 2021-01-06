@@ -103,6 +103,10 @@ namespace Stexchange.Controllers
             {
                 TempData["AccountControllerError"] = "U moet aangeven met wie u geruild heeft om een ruil te registreren.";
                 return RedirectToAction("MyAccount");
+            }else if (quantity == 0)
+            {
+                TempData["AccountControllerError"] = "Ongeldige quantiteit";
+                return RedirectToAction("MyAccount");
             }
             Listing listing = null;
             try
