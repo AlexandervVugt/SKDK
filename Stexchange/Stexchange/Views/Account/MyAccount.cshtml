@@ -1,6 +1,8 @@
-﻿@{
+@{
     ViewData["Title"] = "Mijn Account";
 }
+@model AccountViewModel
+@using Stexchange.Data.Models
 <link rel="stylesheet" href="~/css/MyAccount.css" />
 
 @if (ViewBag.Messages is object)
@@ -18,25 +20,23 @@
 }
 
 <div id="profileColumn">
-    <h4>Wings</h4>
+    <h4>@Model.User.Username</h4>
     <p>Gemiddelde beoordeling op</p>
     <p id="communication">
         Communicatie
-        <span id="communicationReviews">(13)</span>
-        <label class="stars" for="communication" id="communication1">&#9733;</label>
-        <label class="stars" for="communication" id="communication2">&#9733;</label>
-        <label class="stars" for="communication" id="communication3">&#9733;</label>
-        <label class="stars" for="communication" id="communication4">&#9733;</label>
-        <label class="stars" for="communication" id="communication5">&#9733;</label>
+        <span id="communicationReviews">(@Model.User.Rating.CommunicationCount)</span>
+        @for (int i = (int)Math.Round(Model.User.Rating.CommunicationAvg); i > 0; i--)
+        {
+            <label class="stars communicationrating" for="communication">&#9733;</label>
+        }
     </p>
     <p id="quality">
         Kwaliteit
-        <span id="qualityReviews">(13)</span>
-        <label class="stars" for="quality" id="quality1">&#9733;</label>
-        <label class="stars" for="quality" id="quality2">&#9733;</label>
-        <label class="stars" for="quality" id="quality3">&#9733;</label>
-        <label class="stars" for="quality" id="quality4">&#9733;</label>
-        <label class="stars" for="quality" id="quality5">&#9733;</label>
+        <span id="qualityReviews">(@Model.User.Rating.QualityCount)</span>
+        @for (int i = (int)Math.Round(Model.User.Rating.QualityAvg); i > 0; i--)
+        {
+            <label class="stars qualityrating" for="quality" id="quality">&#9733;</label>
+        }
     </p>
     <button onclick="showRequestForm('myadvertisementsColumn', this.id)" id="accountsettingsButton">Mijn aanbiedingen</button>
     <button onclick="showRequestForm('ratingreviewColumn', this.id)" id="ratingreviewButton">Beoordelingsverzoeken</button>
