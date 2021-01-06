@@ -120,7 +120,8 @@ function toggleElements() {
     }
 }
 
-function confirmToDelete() {
+function confirmToDelete(id) {
     let confirmMessage = document.getElementById("confirmDelete");
+    document.querySelector("#confirmDelete > [name='listingId']").value = id;
     confirmMessage.style.display = "block";
 }

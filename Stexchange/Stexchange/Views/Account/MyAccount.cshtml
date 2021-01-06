@@ -16,12 +16,13 @@
     </form>
 }
 
-<div id="confirmDelete">
+<form id="confirmDelete" action="DeleteListing" method="post">
     <h4>Advertentie verwijderen</h4>
     <p>Weet je zeker dat je deze advertentie wilt verwijderen?</p>
-    <input type="button" value="ja" onclick=""/>
+    <input type="number" name="listingId" hidden/>
+    <input type="submit" value="ja"/>
     <input type="button" value="nee" onclick="closeRequestForm('confirmDelete')"/>
-</div>
+</form>
 
 <div id="profileColumn">
     <h4>@Model.User.Username</h4>
@@ -70,10 +71,7 @@
                 <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton', '@listing.Id', '@listing.Title')" />
                 <!--TODO: linken aan controller action-->
                 <input type="button" class="modifyButton" value="WIJZIGEN"/>
-                <form action="DeleteListing" method="post">
-                    <input type="number" name="listingId" value="@listing.Id" hidden />
-                    <input type="submit" class="deleteButton" value="VERWIJDEREN" onclick="confirmToDelete()"/>
-                </form>
+                <input type="button" class="deleteButton" value="VERWIJDEREN" onclick="confirmToDelete(@listing.Id)"/>
             </div>
         </div>
     }
