@@ -1,7 +1,7 @@
 ﻿document.getElementById("accountsettingsButton").style.backgroundColor = "#465D43";
 document.getElementById("accountsettingsButton").style.color = "white";
 
-function showRequestForm(form, buttonId) {
+function showRequestForm(form, buttonId, listingId) {
     let requestform = document.getElementById(form);
 
     let myadvertisementColumn = document.getElementById("myadvertisementsColumn");
@@ -13,11 +13,41 @@ function showRequestForm(form, buttonId) {
     if (form == "requestForm") {
         myadvertisementColumn.style.display = "block";
         requestform.style.display = "block";
+        populateRequestForm(listingId);
     } else {
         requestform.style.display = "block";
     }
 
     toggleActive(buttonId);
+}
+
+function populateRequestForm(listingId) {
+    let select = document.getElementById("selectOptions");
+    $.ajax({
+        type: "GET",
+        url: `/AccountController/GetInteractingUsers?listingId=${listingId}`,
+        success: function (data) {
+            $(data.d).each(function (index, value) {
+                let option = document.createElement("option");
+                option.value = value;
+                option.innerHTML = value;
+                select.appendChild(option);
+            });
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+    $.ajax({
+        type: "GET",
+        url: `/AccountController/GetQuantity?listingId=${listingId}`,
+        success: function (data) {
+            document.getElementById("quantity").value = data;
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
 }
 
 function closeRequestForm(form) {

@@ -42,7 +42,7 @@
 
 <div id="myadvertisementsColumn">
     <h3>Mijn aanbiedingen</h3>
-    <p><code>@Model.Listings.Count</code> actieve aanbieding</p>
+    <p><code>@Model.Listings.Count</code> actieve aanbieding(en)</p>
     <!--foreach loop advertisements-->
     @foreach (Listing listing in Model.Listings)
     {
@@ -60,7 +60,7 @@
                     <input type="checkbox" class="toggle" name="toggleActive" value="true" @(listing.Visible ? "checked" : "")>
                     <span class="slider round"></span>
                 </label>
-                <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton')" />
+                <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton', @listing.Id)" />
                 <!--TODO: linken aan controller action-->
                 <input type="button" class="modifyButton" value="WIJZIGEN"/>
                 <input type="button" class="deleteButton" value="VERWIJDEREN" />
@@ -72,13 +72,10 @@
 <div id="requestForm">
     <h3>Ruil registreren</h3>
     <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('requestForm')" />
-    <form action="#" method="post" id="myrequestForm">
+    <form action="RegisterTrade" method="post" id="myrequestForm">
         <p>Advertentie: Mooi plantje voor in de tuin</p>
         <label for="receiver" class="labeltext">Ontvanger</label>
-        <select id="selectOptions">
-            <!--foreach loop users from chat-->
-            <option value="Tester">Tester</option>
-        </select>
+        <select id="selectOptions"></select>
         <label>Aantal geruilde / weggegeven planten</label>
         <input type="number" name="quantity" id="quantity" />
         <input type="button" id="confirmButton" value="BEVESTIGEN" onclick="submitForm('requestForm', 'myrequestForm')" />
@@ -91,20 +88,21 @@
         <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('mySettingsColumn')" />
         <form action="#" method="post">
             <label for="username" class="labeltext">Gebruikersnaam</label>
-            <input type="text" name="username" id="username" placeholder="Wings" />
+            <input type="text" name="username" id="username" value="@Model.User.Username" required/>
 
             <label for="postcalcode" class="labeltext">Postcode</label>
-            <input type="text" name="postalcode" id="postalcode" placeholder="4207JG" />
+            <input type="text" name="postalcode" id="postalcode" value="@Model.User.Postal_Code" required/>
 
             <label for="email" class="labeltext">E-mail</label>
-            <input type="text" name="email" id="email" placeholder="wingyeechung12@gmail.com" />
+            <input type="text" name="email" id="email" value="@Model.User.Email" required/>
 
-            <label for="password" class="labeltext">Wachtwoord</label>
-            <input type="text" name="password" id="password" placeholder="Hello123" />
+            <label for="password" class="labeltext">Nieuw wachtwoord</label>
+            <input type="text" name="password" id="password" />
 
-            <label for="confirm_password" class="labeltext">Bevestig wachtwoord</label>
-            <input type="text" name="confirm_password" id="confirm_password" placeholder="Hello123" />
+            <label for="confirm_password" class="labeltext">Bevestig nieuw wachtwoord</label>
+            <input type="text" name="confirm_password" id="confirm_password" />
 
+            <!--TODO: link to asp action-->
             <input type="button" id="saveButton" value="Opslaan" />
         </form>
     </div>
@@ -112,17 +110,19 @@
 
 <div id="ratingreviewColumn">
     <h3>Beoordelingsverzoeken</h3>
-    <p>1 beoordelingsverzoek</p>
+    <p>@Model.RatingRequests.Count beoordelingsverzoek(en)</p>
     <!--foreach loop rating requests-->
-    <div id="reviewRequest">
-        <div id="reviewInfo">
-            <h4 id="title">Orchidee</h4>
-            <p>Tester</p>
+    @foreach (RatingRequest rr in Model.RatingRequests)
+    {
+        <div class="reviewRequest">
+            <div class="reviewInfo">
+                <p>@rr.Reviewee</p>
+            </div>
+            <div class="reviewOptions">
+                <input type="button" class="reviewButton" value="BEOORDELING PLAATSEN" />
+            </div>
         </div>
-        <div id="reviewOptions">
-            <input type="button" id="reviewButton" value="BEOORDELING PLAATSEN" />
-        </div>
-    </div>
+    }
 </div>
 
 <script type="text/javascript" src="~/js/MyAccount.js" asp-append-version="true"></script>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
 using Stexchange.Data.Models;
@@ -53,7 +54,7 @@ namespace Stexchange.Controllers
             //load users rating requests
             accModel.RatingRequests = (from rr in _db.RatingRequests
                                        where rr.ReviewerId == accModel.User.Id
-                                       select rr).ToList();
+                                       select rr).Include("Reviewee").ToList();
             TempData.Keep("AccountControllerError");
             return View(model: accModel);
         }
