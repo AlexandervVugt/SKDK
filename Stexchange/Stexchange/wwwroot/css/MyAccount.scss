@@ -70,14 +70,14 @@ $color-red: #C51014;
         color: $color-darkgreen;
     }
 
-    #advertisementColumn {
+    .advertisementColumn {
         margin-bottom: 1.5%;
         background-color: rgba(255, 255, 255, 0.8);
         overflow: hidden;
         display: flex;
         border: 1.5px solid $color-darkgreen;
 
-        #advertisementInfo {
+        .advertisementInfo {
             float: left;
             padding: 1%;
 
@@ -98,7 +98,7 @@ $color-red: #C51014;
             }
         }
 
-        #advertisementOptions {
+        .advertisementOptions {
             float: right;
             padding: 1%;
 
@@ -117,7 +117,7 @@ $color-red: #C51014;
                 color: white;
             }
 
-            #deleteButton {
+            .deleteButton {
                 border: 1.5px solid $color-red;
                 background-color: $color-red;
             }
@@ -146,7 +146,7 @@ $color-red: #C51014;
                 font-size: 2vh;
             }
             // round circle inside switch
-            .slider:before {
+            .slider::before {
                 position: absolute;
                 content: "";
                 height: 4vh;
@@ -172,7 +172,7 @@ $color-red: #C51014;
                 transform: translateX(220px);
             }
 
-            .slider:after {
+            .slider::after {
                 content: 'Inactief';
                 color: $color-darkgreen;
                 display: block;
@@ -184,7 +184,7 @@ $color-red: #C51014;
                 font-family: Verdana, sans-serif;
             }
 
-            input:checked + .slider:after {
+            input:checked + .slider::after {
                 content: 'Actief';
                 color:white;
             }

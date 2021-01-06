@@ -46,29 +46,29 @@
     color: #465D43; }
   #myadvertisementsColumn p {
     color: #465D43; }
-  #myadvertisementsColumn #advertisementColumn {
+  #myadvertisementsColumn .advertisementColumn {
     margin-bottom: 1.5%;
     background-color: rgba(255, 255, 255, 0.8);
     overflow: hidden;
     display: flex;
     border: 1.5px solid #465D43; }
-    #myadvertisementsColumn #advertisementColumn #advertisementInfo {
+    #myadvertisementsColumn .advertisementColumn .advertisementInfo {
       float: left;
       padding: 1%; }
-      #myadvertisementsColumn #advertisementColumn #advertisementInfo img {
+      #myadvertisementsColumn .advertisementColumn .advertisementInfo img {
         float: left;
         width: 25%; }
-      #myadvertisementsColumn #advertisementColumn #advertisementInfo h4 {
+      #myadvertisementsColumn .advertisementColumn .advertisementInfo h4 {
         margin-left: 27%;
         font-size: 2vh;
         color: #465D43; }
-      #myadvertisementsColumn #advertisementColumn #advertisementInfo p {
+      #myadvertisementsColumn .advertisementColumn .advertisementInfo p {
         margin-left: 27%;
         font-size: 1.8vh; }
-    #myadvertisementsColumn #advertisementColumn #advertisementOptions {
+    #myadvertisementsColumn .advertisementColumn .advertisementOptions {
       float: right;
       padding: 1%; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions input {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions input {
         float: right;
         clear: both;
         background-color: #465D43;
@@ -81,14 +81,14 @@
         text-align: center;
         font-size: 2vh;
         color: white; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions #deleteButton {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions .deleteButton {
         border: 1.5px solid #C51014;
         background-color: #C51014; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions input[type=button]:hover {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions input[type=button]:hover {
         cursor: pointer; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions input[type=checkbox] {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions input[type=checkbox] {
         display: none; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions .slider {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider {
         position: relative;
         display: inline-block;
         float: right;
@@ -102,7 +102,7 @@
         margin-right: 10%;
         text-align: center;
         font-size: 2vh; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions .slider:before {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider::before {
         position: absolute;
         content: "";
         height: 4vh;
@@ -112,15 +112,15 @@
         background-color: white;
         -webkit-transition: .4s;
         transition: .4s; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions input:checked + .slider {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions input:checked + .slider {
         background-color: #465D43; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions input:focus + .slider {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions input:focus + .slider {
         box-shadow: 0 0 1px #465D43; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions input:checked + .slider:before {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions input:checked + .slider:before {
         -webkit-transform: translateX(220px);
         -ms-transform: translateX(220px);
         transform: translateX(220px); }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions .slider:after {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider::after {
         content: 'Inactief';
         color: #465D43;
         display: block;
@@ -130,12 +130,12 @@
         left: 50%;
         font-size: 2vh;
         font-family: Verdana, sans-serif; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions input:checked + .slider:after {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions input:checked + .slider::after {
         content: 'Actief';
         color: white; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions .slider.round {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider.round {
         border-radius: 12px; }
-      #myadvertisementsColumn #advertisementColumn #advertisementOptions .slider.round:before {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider.round:before {
         border-radius: 50%; }
 
 #requestForm {

@@ -36,11 +36,26 @@ namespace Stexchange.Data.Models
             public uint CommunicationCount { get; set; }
             public RatingAggregation(IQueryable<Rating> ratings)
             {
-                QualityCount = (uint) (from rating in ratings where rating.Quality is object select rating).Count();
-                QualityAvg = (from rating in ratings where rating.Quality is object select (byte)rating.Quality)
-                    .Aggregate(0, (total, next) => total + next, total => total / QualityCount);
+                QualityCount = (uint) (from rating in ratings where rating.Quality != null select rating).Count();
+                if (QualityCount > 0)
+                {
+                    QualityAvg = (from rating in ratings where rating.Quality != null select (byte)rating.Quality)
+                        .AsEnumerable()
+                        .Aggregate(0, (total, next) => total + next, total => total / QualityCount);
+                }
+                else
+                {
+                    QualityAvg = 5;
+                }
                 CommunicationCount = (uint) ratings.Count();
-                CommunicationAvg = ratings.Aggregate(0, (total, next) => total + next.Communication, total => total / CommunicationCount);
+                if (CommunicationCount > 0)
+                {
+                    CommunicationAvg = ratings.AsEnumerable().Aggregate(0, (total, next) => total + next.Communication, total => total / CommunicationCount);
+                }
+                else
+                {
+                    CommunicationAvg = 5;
+                }
             }
         }
     }
