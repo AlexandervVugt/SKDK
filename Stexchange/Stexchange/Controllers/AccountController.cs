@@ -192,5 +192,31 @@ namespace Stexchange.Controllers
                     where listing.Id == listingId
                     select listing.Quantity).FirstOrDefault();
         }
+
+        public ActionResult SetVisible(int listingId, bool value)
+        {
+            string status = "";
+            string message = "";
+            try
+            {
+                Listing listing = (from li in _db.Listings
+                                   where li.Id == listingId && li.UserId == GetUserId()
+                                   select li).First();
+                listing.Visible = value;
+                _db.Update(listing);
+                _db.SaveChanges();
+                status = "success";
+                message = $"Gelukt!\nUw advertentie \"{listing.Title}\" is nu {(listing.Visible ? "actief" : "inactief")}";
+            }catch (InvalidOperationException)
+            {
+                status = "error";
+                message = "De aanbieding bestaat niet, of u bent niet gemachtigd om deze aan te passen.";
+            }catch (InvalidSessionException)
+            {
+                status = "error";
+                message = "Sessie bestaat niet of is verlopen.";
+            }
+            return Json(new { status, message });
+        }
     }
 }

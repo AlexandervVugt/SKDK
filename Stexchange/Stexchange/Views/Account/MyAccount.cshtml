@@ -54,7 +54,7 @@
     <!--foreach loop advertisements-->
     @foreach (Listing listing in Model.Listings)
     {
-        <div class="advertisementColumn" id="@listing.Id">
+        <div class="advertisementColumn" id="@($"li{listing.Id}")">
             <div class="advertisementInfo">
                 @if (listing.Pictures.Count > 0)
                 {
@@ -65,7 +65,7 @@
             </div>
             <div class="advertisementOptions">
                 <label class="switch">
-                    <input type="checkbox" class="toggle" name="toggleActive" value="true" @(listing.Visible ? "checked" : "")>
+                    <input type="checkbox" class="toggle" name="toggleActive" value="true" onchange="toggleVisible(@listing.Id)" @(listing.Visible ? "checked" : "")>
                     <span class="slider round"></span>
                 </label>
                 <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton', '@listing.Id', '@listing.Title')" />

@@ -21,6 +21,20 @@ function showRequestForm(form, buttonId, listingId, listingTitle) {
     toggleActive(buttonId);
 }
 
+function toggleVisible(id) {
+    value = document.querySelector(`#li${id} > div.advertisementOptions > label > input`).checked;
+    $.ajax({
+        type: "POST",
+        url: `/Account/SetVisible?listingId=${id}&value=${value}`,
+        success: function (data) {
+            alert(data.message);
+        },
+        error: function (err) {
+            alert(err.message);
+        }
+    })
+}
+
 function populateRequestForm(listingId, listingTitle) {
     document.querySelector("#myrequestForm > p").innerHTML = listingTitle;
     document.getElementById("listingId").value = listingId;
