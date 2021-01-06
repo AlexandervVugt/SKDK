@@ -80,20 +80,23 @@ $color-red: #C51014;
         .advertisementInfo {
             float: left;
             padding: 1%;
+            width: 80%;
 
             img {
                 float: left;
                 width: 25%;
+                height: calc(100%);
+                object-fit: cover;
             }
 
             h4 {
-                margin-left: 27%;
+                margin-left: 26%;
                 font-size: 2vh;
                 color: $color-darkgreen;
             }
 
             p {
-                margin-left: 27%;
+                margin-left: 26%;
                 font-size: 1.8vh;
             }
         }
@@ -101,13 +104,14 @@ $color-red: #C51014;
         .advertisementOptions {
             float: right;
             padding: 1%;
+            width: 20%;
 
             input {
                 float: right;
                 clear: both;
                 background-color: $color-darkgreen;
                 border: 1.5px solid $color-darkgreen;
-                width: 110%;
+                width: 100%;
                 padding: 1%;
                 height: 5vh;
                 margin-bottom: 5%;
@@ -137,7 +141,7 @@ $color-red: #C51014;
                 clear: both;
                 background-color: rgba(0, 0, 0, 0.2);
                 border: 1.5px solid $color-darkgreen;
-                width: 108%;
+                width: 97.5%;
                 padding: 1%;
                 height: 4vh;
                 margin-bottom: 5%;
@@ -146,13 +150,12 @@ $color-red: #C51014;
                 font-size: 2vh;
             }
             // round circle inside switch
-            .slider::before {
+            .slider:before {
                 position: absolute;
                 content: "";
                 height: 4vh;
                 width: 4vh;
                 left: 4px;
-                bottom: 4px;
                 background-color: white;
                 -webkit-transition: .4s;
                 transition: .4s;
@@ -165,14 +168,12 @@ $color-red: #C51014;
             input:focus + .slider {
                 box-shadow: 0 0 1px $color-darkgreen;
             }
-
+            // round circle end
             input:checked + .slider:before {
-                -webkit-transform: translateX(220px);
-                -ms-transform: translateX(220px);
-                transform: translateX(220px);
+                left: 82.5%;
             }
 
-            .slider::after {
+            .slider:after {
                 content: 'Inactief';
                 color: $color-darkgreen;
                 display: block;
@@ -184,13 +185,13 @@ $color-red: #C51014;
                 font-family: Verdana, sans-serif;
             }
 
-            input:checked + .slider::after {
+            input:checked + .slider:after {
                 content: 'Actief';
-                color:white;
+                color: white;
             }
 
             .slider.round {
-                border-radius: 12px;
+                border-radius: 10px;
             }
 
             .slider.round:before {

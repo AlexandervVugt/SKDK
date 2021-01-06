@@ -54,26 +54,30 @@
     border: 1.5px solid #465D43; }
     #myadvertisementsColumn .advertisementColumn .advertisementInfo {
       float: left;
-      padding: 1%; }
+      padding: 1%;
+      width: 80%; }
       #myadvertisementsColumn .advertisementColumn .advertisementInfo img {
         float: left;
-        width: 25%; }
+        width: 25%;
+        height: calc(100%);
+        object-fit: cover; }
       #myadvertisementsColumn .advertisementColumn .advertisementInfo h4 {
-        margin-left: 27%;
+        margin-left: 26%;
         font-size: 2vh;
         color: #465D43; }
       #myadvertisementsColumn .advertisementColumn .advertisementInfo p {
-        margin-left: 27%;
+        margin-left: 26%;
         font-size: 1.8vh; }
     #myadvertisementsColumn .advertisementColumn .advertisementOptions {
       float: right;
-      padding: 1%; }
+      padding: 1%;
+      width: 20%; }
       #myadvertisementsColumn .advertisementColumn .advertisementOptions input {
         float: right;
         clear: both;
         background-color: #465D43;
         border: 1.5px solid #465D43;
-        width: 110%;
+        width: 100%;
         padding: 1%;
         height: 5vh;
         margin-bottom: 5%;
@@ -95,20 +99,19 @@
         clear: both;
         background-color: rgba(0, 0, 0, 0.2);
         border: 1.5px solid #465D43;
-        width: 108%;
+        width: 97.5%;
         padding: 1%;
         height: 4vh;
         margin-bottom: 5%;
         margin-right: 10%;
         text-align: center;
         font-size: 2vh; }
-      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider::before {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider:before {
         position: absolute;
         content: "";
         height: 4vh;
         width: 4vh;
         left: 4px;
-        bottom: 4px;
         background-color: white;
         -webkit-transition: .4s;
         transition: .4s; }
@@ -117,10 +120,8 @@
       #myadvertisementsColumn .advertisementColumn .advertisementOptions input:focus + .slider {
         box-shadow: 0 0 1px #465D43; }
       #myadvertisementsColumn .advertisementColumn .advertisementOptions input:checked + .slider:before {
-        -webkit-transform: translateX(220px);
-        -ms-transform: translateX(220px);
-        transform: translateX(220px); }
-      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider::after {
+        left: 82.5%; }
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider:after {
         content: 'Inactief';
         color: #465D43;
         display: block;
@@ -130,11 +131,11 @@
         left: 50%;
         font-size: 2vh;
         font-family: Verdana, sans-serif; }
-      #myadvertisementsColumn .advertisementColumn .advertisementOptions input:checked + .slider::after {
+      #myadvertisementsColumn .advertisementColumn .advertisementOptions input:checked + .slider:after {
         content: 'Actief';
         color: white; }
       #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider.round {
-        border-radius: 12px; }
+        border-radius: 10px; }
       #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider.round:before {
         border-radius: 50%; }
 
