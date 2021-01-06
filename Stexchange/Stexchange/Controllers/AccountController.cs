@@ -31,13 +31,13 @@ namespace Stexchange.Controllers
                 userId = GetUserId();
             } catch (InvalidSessionException)
             {
-                RedirectToAction("Login", "Login");
+                return RedirectToAction("Login", "Login");
             }
             var accModel = new AccountViewModel();
             //load users data
             accModel.User = (from user in _db.Users
                              where user.Id == userId
-                             select user).FirstOrDefault();
+                             select user).First();
             accModel.User.Password = null; //remove sensitive data
             accModel.User.Rating = new User.RatingAggregation(
                 from rating in _db.Ratings where rating.RevieweeId == userId select rating);
