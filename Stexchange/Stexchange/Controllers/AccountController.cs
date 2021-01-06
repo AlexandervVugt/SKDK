@@ -61,13 +61,31 @@ namespace Stexchange.Controllers
         /// <summary>
         /// Deletes the specified listing and returns the MyAccount view.
         /// If the user is not logged in, redirects to the Login view.
+        /// If the Listing is not found, or the User does not own it, an error message is set.
         /// </summary>
         /// <seealso cref="RemoveListing(int)"/>
         /// <param name="id">Id of the listing</param>
         /// <returns></returns>
         public async Task<IActionResult> DeleteListing(int id)
         {
-            return await RemoveListing(id);
+            try
+            {
+                _db.Remove((from listing in _db.Listings
+                            where listing.Id == id && listing.UserId == GetUserId()
+                            select listing).First());
+            }
+            catch (InvalidSessionException)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            catch (InvalidOperationException)
+            {
+                //TODO: set error message (listing not found or unauthorised)
+                TempData["AccountControllerError"] = "Aanbieding verwijderen mislukt.\n" +
+                    "De aanbieding werd niet gevonden, of u bent niet gemachtigd om deze te verwijderen.";
+            }
+            await _db.SaveChangesAsync();
+            return RedirectToAction("MyAccount");
         }
 
         /// <summary>
@@ -137,7 +155,7 @@ namespace Stexchange.Controllers
                 });
                 if (listing.Quantity == 0)
                 {
-                    return await RemoveListing(id);
+                    return RedirectToAction("DeleteListing", new { id });
                 }
                 _db.Update(listing);
                 await _db.SaveChangesAsync();
@@ -168,32 +186,6 @@ namespace Stexchange.Controllers
             return (from listing in _db.Listings
                     where listing.Id == listingId
                     select listing.Quantity).FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Removes the listing with the specified id.
-        /// If the User is not logged in, they will be redirected to the login view.
-        /// If the Listing is not found, or the User does not own it, an error message is set.
-        /// </summary>
-        /// <param name="id"></param>
-        private async Task<IActionResult> RemoveListing(int id)
-        {
-            try
-            {
-                _db.Remove((from listing in _db.Listings
-                            where listing.Id == id && listing.UserId == GetUserId()
-                            select listing).First());
-            } catch (InvalidSessionException)
-            {
-                return RedirectToAction("Login", "Login");
-            } catch (InvalidOperationException)
-            {
-                //TODO: set error message (listing not found or unauthorised)
-                TempData["AccountControllerError"] = "Aanbieding verwijderen mislukt.\n" +
-                    "De aanbieding werd niet gevonden, of u bent niet gemachtigd om deze te verwijderen.";
-            }
-            await _db.SaveChangesAsync();
-            return RedirectToAction("MyAccount");
         }
     }
 }
