@@ -46,11 +46,30 @@ namespace Stexchange.Controllers
         public IActionResult Trade()
         {
             BlockedPoller(); //Wait for our turn to read the resource
-
             //Shallow copy, this was accounted for in the design of this method.
             var listings = _listingCache.Values.ToList();
             listings.ForEach(listing => PrepareListing(ref listing));
-            listings = (from listing in listings orderby listing.CreatedAt descending select listing).ToList();
+            try
+            {
+                int userId = GetUserId();
+                List<int> blockedUsers = (from b in _db.Blocks
+                                          where b.BlockerId == userId
+                                          select b.BlockedId).ToList();
+                listings = (from listing in listings
+                            where !(blockedUsers.Contains(listing.UserId))
+                            orderby listing.CreatedAt 
+                            descending
+                            select listing).ToList();
+            }
+            catch(InvalidSessionException)
+            {
+                listings = (from listing in listings
+                            orderby listing.CreatedAt 
+                            descending
+                            select listing).ToList();
+            }
+
+
             var tradeModel = new TradeViewModel(listings);
 
             //TODO: move releasing the resource to this class' Dispose method

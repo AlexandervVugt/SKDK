@@ -209,12 +209,12 @@ namespace Stexchange.Controllers
                                    select l.UserId).FirstOrDefault();
                 var newBlock = new Block
                 {
-                    Blocker_Id = userId,
-                    Blocked_Id = blockedUserId
+                    BlockerId = userId,
+                    BlockedId = blockedUserId
                 };
                 _db.Blocks.Add(newBlock);
                 _db.SaveChanges();
-                return View("trade");
+                return RedirectToAction("Trade", "Trade");
             }
             catch (InvalidSessionException)
             {
