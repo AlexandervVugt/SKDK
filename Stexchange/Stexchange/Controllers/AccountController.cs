@@ -98,7 +98,7 @@ namespace Stexchange.Controllers
         /// <param name="quantity">The quantity of the trade</param>
         /// <param name="username">The user that was traded with</param>
         /// <returns></returns>
-        public async Task<IActionResult> RegisterTrade(int id, uint quantity, string username)
+        public async Task<IActionResult> RegisterTrade(int listingId, uint quantity, string username)
         {
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -113,7 +113,7 @@ namespace Stexchange.Controllers
             try
             {
                 listing = (from l in _db.Listings
-                                   where l.Id == id
+                                   where l.Id == listingId
                                    select l).First();
             }
             catch (InvalidOperationException)
@@ -160,7 +160,7 @@ namespace Stexchange.Controllers
                 });
                 if (listing.Quantity == 0)
                 {
-                    return RedirectToAction("DeleteListing", new { id });
+                    return RedirectToAction("DeleteListing", new { listingId });
                 }
                 _db.Update(listing);
                 await _db.SaveChangesAsync();

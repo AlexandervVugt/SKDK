@@ -23,12 +23,16 @@ function showRequestForm(form, buttonId, listingId, listingTitle) {
 
 function populateRequestForm(listingId, listingTitle) {
     document.querySelector("#myrequestForm > p").innerHTML = listingTitle;
-    let select = document.getElementById("selectOptions");
+    document.getElementById("listingId").value = listingId;
+    let select = document.getElementById("username");
     $.ajax({
         type: "GET",
         url: `/Account/GetInteractingUsers?listingId=${listingId}`,
         success: function (data) {
-            $(data.d).each(function (index, value) {
+            console.log("hello");
+            console.log(data);
+            $(data).each(function (index, value) {
+                console.log("hello" + index);
                 let option = document.createElement("option");
                 option.value = value;
                 option.innerHTML = value;
@@ -43,6 +47,7 @@ function populateRequestForm(listingId, listingTitle) {
         type: "GET",
         url: `/Account/GetQuantity?listingId=${listingId}`,
         success: function (data) {
+            console.log(data);
             document.getElementById("quantity").value = data;
         },
         error: function (err) {

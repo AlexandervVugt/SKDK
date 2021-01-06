@@ -75,9 +75,10 @@
     <form action="RegisterTrade" method="post" id="myrequestForm">
         <p>Advertentie: Mooi plantje voor in de tuin</p>
         <label for="receiver" class="labeltext">Ontvanger</label>
-        <select id="selectOptions"></select>
+        <select name="username" id="username"></select>
         <label>Aantal geruilde / weggegeven planten</label>
         <input type="number" name="quantity" id="quantity" />
+        <input type="number" name="listingId" id="listingId" hidden />
         <input type="button" id="confirmButton" value="BEVESTIGEN" onclick="submitForm('requestForm', 'myrequestForm')" />
     </form>
 </div>
@@ -116,7 +117,7 @@
     {
         <div class="reviewRequest">
             <div class="reviewInfo">
-                <p>@rr.Reviewee</p>
+                <p>@rr.Reviewee.Username</p>
             </div>
             <div class="reviewOptions">
                 <input type="button" class="reviewButton" value="BEOORDELING PLAATSEN" />
