@@ -56,11 +56,14 @@
                 <p>@listing.CreatedAt</p>
             </div>
             <div class="advertisementOptions">
-                <input type="range" value="@listing.Visible" />
-                <input type="button" id="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton')" />
+                <label class="switch" for="toggle">
+                    <input type="checkbox" class="toggle" name="toggleActive" value="true" @(listing.Visible ? "checked" : "")>
+                    <span class="slider round"></span>
+                </label>
+                <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton')" />
                 <!--TODO: linken aan controller action-->
-                <input type="button" id="modifyButton" value="WIJZIGEN"/>
-                <input type="button" id="deleteButton" value="VERWIJDEREN" />
+                <input type="button" class="modifyButton" value="WIJZIGEN"/>
+                <input type="button" class="deleteButton" value="VERWIJDEREN" />
             </div>
         </div>
     }
