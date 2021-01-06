@@ -22,7 +22,7 @@ function showRequestForm(form, buttonId, listingId, listingTitle) {
 }
 
 function populateRequestForm(listingId, listingTitle) {
-    document.QuerySelector("#myrequestform > p").innerHTML = listingTitle;
+    document.querySelector("#myrequestForm > p").innerHTML = listingTitle;
     let select = document.getElementById("selectOptions");
     $.ajax({
         type: "GET",
