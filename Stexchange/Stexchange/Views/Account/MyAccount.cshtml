@@ -1,4 +1,4 @@
-@{
+﻿@{
     ViewData["Title"] = "Mijn Account";
 }
 @model AccountViewModel
@@ -45,21 +45,28 @@
 
 <div id="myadvertisementsColumn">
     <h3>Mijn aanbiedingen</h3>
-    <p>1 actieve aanbieding</p>
+    <p><code>@Model.Listings.Count</code> actieve aanbieding</p>
     <!--foreach loop advertisements-->
-    <div id="advertisementColumn">
-        <div id="advertisementInfo">
-            <img src="~/img/plantje.png" />
-            <h4 id="title">Mooie plant voor in de tuin</h4>
-            <p>04-01-2021</p>
+    @foreach (Listing listing in Model.Listings)
+    {
+        <div class="advertisementColumn" id="@listing.Id">
+            <div class="advertisementInfo">
+                @if (listing.Pictures.Count > 0)
+                {
+                    <img class="picture" src="@listing.Pictures.First().GetImage()" alt="Foto van de plant" />
+                }
+                <h4 class="title">@listing.Title</h4>
+                <p>@listing.CreatedAt</p>
+            </div>
+            <div class="advertisementOptions">
+                <input type="range" value="@listing.Visible" />
+                <input type="button" id="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton')" />
+                <!--TODO: linken aan controller action-->
+                <input type="button" id="modifyButton" value="WIJZIGEN"/>
+                <input type="button" id="deleteButton" value="VERWIJDEREN" />
+            </div>
         </div>
-        <div id="advertisementOptions">
-            <input type="range" value="true" />
-            <input type="button" id="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton')" />
-            <input type="button" id="modifyButton" value="WIJZIGEN" />
-            <input type="button" id="deleteButton" value="VERWIJDEREN" />
-        </div>
-    </div>
+    }
 </div>
 
 <div id="requestForm">
