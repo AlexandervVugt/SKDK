@@ -63,7 +63,10 @@
                 <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton', '@listing.Id', '@listing.Title')" />
                 <!--TODO: linken aan controller action-->
                 <input type="button" class="modifyButton" value="WIJZIGEN"/>
-                <input type="button" class="deleteButton" value="VERWIJDEREN" />
+                <form action="DeleteListing" method="post">
+                    <input type="number" name="listingId" value="@listing.Id" hidden />
+                    <input type="submit" class="deleteButton" value="VERWIJDEREN" />
+                </form>
             </div>
         </div>
     }

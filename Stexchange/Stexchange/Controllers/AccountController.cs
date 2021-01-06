@@ -67,12 +67,12 @@ namespace Stexchange.Controllers
         /// <seealso cref="RemoveListing(int)"/>
         /// <param name="id">Id of the listing</param>
         /// <returns></returns>
-        public async Task<IActionResult> DeleteListing(int id)
+        public async Task<IActionResult> DeleteListing(int listingId)
         {
             try
             {
                 _db.Remove((from listing in _db.Listings
-                            where listing.Id == id && listing.UserId == GetUserId()
+                            where listing.Id == listingId && listing.UserId == GetUserId()
                             select listing).First());
             }
             catch (InvalidSessionException)
