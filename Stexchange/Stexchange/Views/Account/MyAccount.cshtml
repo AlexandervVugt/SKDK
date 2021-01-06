@@ -60,7 +60,7 @@
                     <input type="checkbox" class="toggle" name="toggleActive" value="true" @(listing.Visible ? "checked" : "")>
                     <span class="slider round"></span>
                 </label>
-                <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton', @listing.Id)" />
+                <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton', @listing.Id, @listing.Title)" />
                 <!--TODO: linken aan controller action-->
                 <input type="button" class="modifyButton" value="WIJZIGEN"/>
                 <input type="button" class="deleteButton" value="VERWIJDEREN" />

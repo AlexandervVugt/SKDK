@@ -1,7 +1,7 @@
 ﻿document.getElementById("accountsettingsButton").style.backgroundColor = "#465D43";
 document.getElementById("accountsettingsButton").style.color = "white";
 
-function showRequestForm(form, buttonId, listingId) {
+function showRequestForm(form, buttonId, listingId, listingTitle) {
     let requestform = document.getElementById(form);
 
     let myadvertisementColumn = document.getElementById("myadvertisementsColumn");
@@ -13,7 +13,7 @@ function showRequestForm(form, buttonId, listingId) {
     if (form == "requestForm") {
         myadvertisementColumn.style.display = "block";
         requestform.style.display = "block";
-        populateRequestForm(listingId);
+        populateRequestForm(listingId, listingTitle);
     } else {
         requestform.style.display = "block";
     }
@@ -21,11 +21,12 @@ function showRequestForm(form, buttonId, listingId) {
     toggleActive(buttonId);
 }
 
-function populateRequestForm(listingId) {
+function populateRequestForm(listingId, listingTitle) {
+    document.QuerySelector("#myrequestform > p").innerHTML = listingTitle;
     let select = document.getElementById("selectOptions");
     $.ajax({
         type: "GET",
-        url: `/AccountController/GetInteractingUsers?listingId=${listingId}`,
+        url: `/Account/GetInteractingUsers?listingId=${listingId}`,
         success: function (data) {
             $(data.d).each(function (index, value) {
                 let option = document.createElement("option");
@@ -40,7 +41,7 @@ function populateRequestForm(listingId) {
     })
     $.ajax({
         type: "GET",
-        url: `/AccountController/GetQuantity?listingId=${listingId}`,
+        url: `/Account/GetQuantity?listingId=${listingId}`,
         success: function (data) {
             document.getElementById("quantity").value = data;
         },
