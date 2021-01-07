@@ -268,9 +268,10 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 								   select u.Username).FirstOrDefault();
 
 				var user = (from u in Database.Users
-							where u.Username == (username ?? emailOrUname) &&
-							u.Password == CreatePasswordHash(password, u.Id.ToString())
-							select u).FirstOrDefault();
+							where u.Username == (username ?? emailOrUname)
+							select u).AsEnumerable()
+							.Where(u => Enumerable.SequenceEqual(u.Password, CreatePasswordHash(password, u.Id.ToString())))
+							.FirstOrDefault();
 
 				// Checks if the combination exists
 				if (user is null)
