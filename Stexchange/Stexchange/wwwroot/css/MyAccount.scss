@@ -468,7 +468,7 @@ $color-red: #C51014;
         color: $color-darkgreen;
     }
 
-    input[type="button"] {
+    input[type="button"], input[type="submit"] {
         margin-left: 10%;
         margin-right: 10%;
         background-color: $color-darkgreen;

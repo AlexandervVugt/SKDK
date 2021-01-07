@@ -344,7 +344,7 @@
   transform: translate(-50%, -50%); }
   #confirmDelete h4 {
     color: #465D43; }
-  #confirmDelete input[type="button"] {
+  #confirmDelete input[type="button"], #confirmDelete input[type="submit"] {
     margin-left: 10%;
     margin-right: 10%;
     background-color: #465D43;
