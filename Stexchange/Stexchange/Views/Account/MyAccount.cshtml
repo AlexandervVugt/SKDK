@@ -5,22 +5,12 @@
 @using Stexchange.Data.Models
 <link rel="stylesheet" href="~/css/MyAccount.css" />
 
-@if (TempData["AccountControllerError"] is object || ViewBag.Messages is object)
+@if (TempData["AccountControllerError"] is object)
 {
     <form id="errorpopup">
         <div id="errorblock" onload="toggleElements()">
             <h3>ERROR</h3>
-            @if (ViewBag.Messages is object)
-            {
-                foreach (var message in ViewBag.Messages)
-                {
-                    <p>@message</p>
-                }
-            }
-            else
-            {
-                <p>@TempData["AccountControllerError"]</p>
-            }
+            <p>@TempData["AccountControllerError"]</p>
             <input type="button" value="OK" onclick="hideForm()" id="errorbutton" />
         </div>
     </form>

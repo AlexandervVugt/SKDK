@@ -273,8 +273,7 @@ namespace Stexchange.Controllers
 
                 if (errormessages.Count > 0)
                 {
-                    ViewBag.Messages = errormessages;
-                    return ViewBag.Messages[0];
+                    return errormessages;
                 }
 
                 if (!(dbUser is null))
