@@ -19,9 +19,9 @@
 <form id="confirmDelete" action="DeleteListing" method="post">
     <h4>Advertentie verwijderen</h4>
     <p>Weet je zeker dat je deze advertentie wilt verwijderen?</p>
-    <input type="number" name="listingId" hidden/>
-    <input type="submit" value="ja"/>
-    <input type="button" value="nee" onclick="closeRequestForm('confirmDelete')"/>
+    <input type="number" name="listingId" hidden />
+    <input type="submit" value="ja" />
+    <input type="button" value="nee" onclick="closeRequestForm('confirmDelete')" />
 </form>
 
 <div id="profileColumn">
@@ -70,8 +70,8 @@
                 </label>
                 <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton', '@listing.Id', '@listing.Title')" />
                 <!--TODO: linken aan controller action-->
-                <input type="button" class="modifyButton" value="WIJZIGEN"/>
-                <input type="button" class="deleteButton" value="VERWIJDEREN" onclick="confirmToDelete(@listing.Id)"/>
+                <input type="button" class="modifyButton" value="WIJZIGEN" onclick="showRequestForm('modifyAdvertismentForm')" />
+                <input type="button" class="deleteButton" value="VERWIJDEREN" onclick="confirmToDelete(@listing.Id)" />
             </div>
         </div>
     }
@@ -97,13 +97,13 @@
         <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('mySettingsColumn')" />
         <form>
             <label for="username" class="labeltext">Gebruikersnaam</label>
-            <input type="text" name="username" id="username" value="@Model.User.Username" maxlength="15" required/>
+            <input type="text" name="username" id="username" value="@Model.User.Username" maxlength="15" required />
 
             <label for="postcalcode" class="labeltext">Postcode</label>
-            <input type="text" name="postalcode" id="postalcode" value="@Model.User.Postal_Code" required/>
+            <input type="text" name="postalcode" id="postalcode" value="@Model.User.Postal_Code" required />
 
             <label for="email" class="labeltext">E-mail</label>
-            <input type="text" name="email" id="email" value="@Model.User.Email" required/>
+            <input type="text" name="email" id="email" value="@Model.User.Email" required />
 
             <label for="password" class="labeltext">Nieuw wachtwoord</label>
             <input type="text" name="password" id="password" />
@@ -112,7 +112,7 @@
             <input type="text" name="confirm_password" id="confirm_password" />
 
             <!--TODO: link to asp action-->
-            <input type="button" id="saveButton" value="Opslaan" onclick="changeSettings()"/>
+            <input type="button" id="saveButton" value="Opslaan" onclick="changeSettings()" />
         </form>
     </div>
 </div>
@@ -133,6 +133,118 @@
             </div>
         </div>
     }
+</div>
+
+<div id="modifyAdvertismentForm">
+    <h3>Advertentie wijzigen</h3>
+    <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('modifyAdvertismentForm')" />
+    <form>
+        <div id="imgContainer">
+            <img id="imgoutput" src="~/img/background.png" />
+            <div class="imageslides">
+                <a class="previous" onclick="previousImg(1)">&#10094;</a>
+                <span id="imagecounter"></span>
+                <a class="next" onclick="nextImg(1)">&#10095;</a>
+            </div>
+            <input type="file" id="imginput" name="files" onchange="loadFile(event)" accept="image/*" multiple required>
+        </div>
+        <div id="generalinformationContainer">
+            <label for="title" class="labeltext">Titel</label>
+            <input class="labelinput" name="title" type="text" maxlength="80" required />
+
+            <label for="description" class="labeltext">Beschrijving</label>
+            <textarea class="descriptionInput" name="description" maxlength="500" placeholder="Beschrijf in 10-500 karakters je buitenplantje. Bv. reden van weggave, verzorging, welke dieren deze plant aantrekt; bijvriendelijk etc." required></textarea>
+
+            <label for="name_lt" class="labeltext">Latijnse naam</label>
+            <input class="labelinput" name="name_lt" type="text" maxlength="50" />
+
+            <label for="name_nl" class="labeltext">Nederlandse naam</label>
+            <input class="labelinput" name="name_nl" type="text" maxlength="50" required />
+
+            <label for="quantity" class="labeltext">Aantal</label>
+            <input class="labelinput" name="quantity" type="number" min="1" required />
+        </div>
+        <div id="requiredFiltersContainer">
+            <label for="plant_type">Plant eigenschap</label>
+            <select name="plant_type" id="plant_type" required>
+                <option value="plant_type_null"></option>
+                <option value="plant_type_plant">Plant</option>
+                <option value="plant_type_zaad">Zaad</option>
+                <option value="plant_type_stek">Stek</option>
+                <option value="plant_type_bol">Bol</option>
+                <option value="plant_type_zaailing">Zaailing</option>
+            </select>
+
+            <label for="plant_order">Plantsoort</label>
+            <select name="plant_order" id="plant_order" required>
+                <option value="plant_order_null"></option>
+                <option value="plant_order_boom">Boom</option>
+                <option value="plant_order_struik">Struik</option>
+                <option value="plant_order_kruidachtig">Kruidachtig</option>
+                <option value="plant_order_bodembedekker">Bodembedekker</option>
+                <option value="plant_order_klimplant">Klimplant</option>
+                <option value="plant_order_waterplant">Waterplant</option>
+            </select>
+
+            <label for="light">Licht</label>
+            <select name="light" id="light">
+                <option value="light_null"></option>
+                <option value="light_volle_zon">Volle zon</option>
+                <option value="light_halfschaduw">Halfschaduw</option>
+                <option value="light_schaduw">Schaduw</option>
+            </select>
+
+            <label for="water">Vocht</label>
+            <select name="water" id="water">
+                <option value="water_null"></option>
+                <option value="water_wisselnat">Wisselnat</option>
+                <option value="water_nat">Nat</option>
+                <option value="water_normaal">Normaal</option>
+                <option value="water_droog">Droog</option>
+            </select>
+
+            <label for="with_pot">De plant is voorzien van een pot</label>
+            <select name="with_pot" id="with_pot" required>
+                <option value="with_pot_null"></option>
+                <option value="with_pot_ja">Ja</option>
+                <option value="with_pot_nee">Nee</option>
+            </select>
+
+            <label for="give_away">De plant is gratis weg te geven</label>
+            <select name="give_away" id="give_away" required>
+                <option value="give_away_null"></option>
+                <option value="give_away_ja">Ja</option>
+                <option value="give_away_nee">Ruilen</option>
+            </select>
+        </div>
+        <p>Extra filters</p>
+        <div id="extrafiltersContainer">
+            <label for="nutrients">Voeding</label>
+            <select name="nutrients" id="nutrients">
+                <option value="nutrients_null">Geen idee</option>
+                <option value="nutrients_veel">Veel</option>
+                <option value="nutrients_gemiddeld">Gemiddeld</option>
+                <option value="nutrients_weinig">Weinig</option>
+                <option value="nutrients_nooit">Nooit</option>
+            </select>
+
+            <label for="ph">Bodem</label>
+            <select name="ph" id="ph">
+                <option value="ph_null">Geen idee</option>
+                <option value="ph_zuur">Zuur</option>
+                <option value="ph_neutraal">Neutraal</option>
+                <option value="ph_kalkrijk">Kalkrijk</option>
+            </select>
+
+            <label for="indigenous">Inheems</label>
+            <select name="indigenous" id="indigenous">
+                <option value="indigenous_null">Geen idee</option>
+                <option value="indigenous_inheems">Inheems</option>
+                <option value="indigenous_niet_inheems">Niet inheems</option>
+            </select>
+        </div>
+        <button type="button" id="advertisementsubmit">Advertentie wijzigen</button>
+    </form>
 </div>
 
 <script type="text/javascript" src="~/js/MyAccount.js" asp-append-version="true"></script>

@@ -32,7 +32,8 @@ let image = document.getElementById("imgoutput");
 //let files = document.getElementById("imginput").files;
 
 /* span text*/
-let imagecounter = document.getElementById("imagecounter")
+let imagecounter = document.getElementById("imagecounter");
+imagecounter.style.display = "none";
 
 let currentImage = 0;
 function decCurrentImage(length) {
