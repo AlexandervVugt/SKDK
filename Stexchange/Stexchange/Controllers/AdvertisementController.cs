@@ -86,7 +86,7 @@ namespace Stexchange.Controllers
                         listingBuilder.SetProperty("Title", StandardMessages.CapitalizeFirst(title).Trim())
                                       .SetProperty("Description", StandardMessages.CapitalizeFirst(description).Trim())
                                       .SetProperty("NameNl", StandardMessages.CapitalizeFirst(name_nl).Trim())
-                                      .SetProperty("Quantity", quantity)
+                                      .SetProperty("Quantity", (uint) quantity)
                                       .SetProperty("Visible", true)
                                       .SetProperty("Renewed", false)
                                       .SetProperty("UserId", GetUserId()); 
