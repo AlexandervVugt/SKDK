@@ -91,6 +91,8 @@ namespace Stexchange.Controllers
                 _db.Remove((from listing in _db.Listings
                             where listing.Id == listingId && listing.UserId == GetUserId()
                             select listing).First());
+                await _db.SaveChangesAsync();
+                TempData.Remove("AccountControllerError");
             }
             catch (InvalidSessionException)
             {
@@ -102,7 +104,6 @@ namespace Stexchange.Controllers
                 TempData["AccountControllerError"] = "Aanbieding verwijderen mislukt.\n" +
                     "De aanbieding werd niet gevonden, of u bent niet gemachtigd om deze te verwijderen.";
             }
-            await _db.SaveChangesAsync();
             return RedirectToAction("MyAccount");
         }
 
@@ -181,6 +182,7 @@ namespace Stexchange.Controllers
                 }
                 _db.Update(listing);
                 await _db.SaveChangesAsync();
+                TempData.Remove("AccountControllerError");
             }
             return RedirectToAction("MyAccount");
         }
