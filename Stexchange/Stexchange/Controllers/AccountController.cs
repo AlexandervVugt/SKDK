@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
 using Stexchange.Data.Models;
+using Stexchange.Data.Validation;
 using Stexchange.Models;
+using Stexchange.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Stexchange.Controllers
@@ -16,11 +21,13 @@ namespace Stexchange.Controllers
     {
         private readonly Database _db;
 
-        public AccountController(Database db)
+        public AccountController(Database db, EmailService emailService)
         {
             _db = db;
+            EmailService = emailService;
         }
 
+        private EmailService EmailService { get; }
         /// <summary>
         /// Returns the MyAccount view, populated with data from the logged in user.
         /// </summary>
@@ -222,6 +229,117 @@ namespace Stexchange.Controllers
                 message = "Sessie bestaat niet of is verlopen.";
             }
             return message;
+        }
+
+
+        public async Task<object> ChangeAccountSettings(string username, string postalcode, string email, string password, string confirm_password)
+        {
+            try {
+                var dbUser = (from user in _db.Users
+                              where user.Id == GetUserId()
+                              select user).First();
+
+                ChangeAccountSettingsValidator registerValidator = new ChangeAccountSettingsValidator();
+                ValidationResult resultsValidator = registerValidator.Validate(new AccountSettingsModel()
+                {
+                    Username = username ?? "",
+                    Postalcode = postalcode ?? "",
+                    Email = email ?? "",
+                    Password = password ?? "",
+                    Confirm_Password = confirm_password ?? ""
+                });
+
+                List<string> errormessages = new List<string>();
+
+                if (!resultsValidator.IsValid)
+                {
+                    foreach (ValidationFailure error in resultsValidator.Errors)
+                    {
+                        errormessages.Add(error.ErrorMessage);
+                    }
+                };
+
+                // Checks if email already exists in database
+                if (_db.Users.Any(u => u.Email == email && u.Id != dbUser.Id))
+                {
+                    errormessages.Add("E-mail is al gebruikt");
+                }
+
+                // Checks if username already exists in database
+                if (_db.Users.Any(u => u.Username == username && u.Id != dbUser.Id))
+                {
+                    errormessages.Add("Gebruikersnaam is al bezet");
+                }
+
+                if (errormessages.Count > 0)
+                {
+                    ViewBag.Messages = errormessages;
+                    return ViewBag.Messages[0];
+                }
+
+                if (!(dbUser is null))
+                {
+                    if (!(string.IsNullOrWhiteSpace(username)) && dbUser.Username != username)
+                    {
+                        dbUser.Username = username;
+                    }
+                    if (!(string.IsNullOrWhiteSpace(email)) && dbUser.Email != email)
+                    {
+                        var userverification = (from code in _db.UserVerifications
+                                                where code.Id == dbUser.Id
+                                                select code).FirstOrDefault();
+
+                        var verification = userverification ?? new UserVerification() { Guid = Guid.NewGuid() };
+
+                        dbUser.Email = email;
+                        dbUser.IsVerified = false;
+                        dbUser.Verification = verification;
+
+                        string body = $@"STEXCHANGE
+Verifieer je e-mailadres door op de onderstaande link te klikken
+https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verification.Guid}";
+                        SendEmail(email, body);
+                    }
+                    if (!(string.IsNullOrWhiteSpace(postalcode)) && dbUser.Postal_Code != postalcode)
+                    {
+                        dbUser.Postal_Code = postalcode;
+                    }
+                    if (!(string.IsNullOrWhiteSpace(password)) && dbUser.Password != CreatePasswordHash(password, dbUser.Username))
+                    {
+                        dbUser.Password = CreatePasswordHash(password, (username ?? dbUser.Username));
+                    }
+                }
+                await _db.SaveChangesAsync();
+                return "Wijzigingen succesvol opgeslagen";
+            } 
+            catch (InvalidSessionException) {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return "Sessie bestaat niet of is verlopen.";
+            }
+        }
+
+        /// <summary>
+		/// Adds message to queue
+		/// </summary>
+		/// <param name="address">The mail address of the user</param>
+		/// <param name="body">The mail message</param>
+        private void SendEmail(string address, string body) => EmailService.QueueMessage(address, body);
+
+        /// <summary>
+		/// Given a password and salt, returns a salted SHA512 hash.
+		/// </summary>
+		/// <param name="password">The password</param>
+		/// <param name="salt">The salt to use (username)</param>
+		/// <returns>The new password hash</returns>
+        private byte[] CreatePasswordHash(string password, string salt)
+        {
+            if (string.IsNullOrEmpty(password))
+                throw new ArgumentException($"'{nameof(password)}' cannot be null or empty");
+            if (string.IsNullOrEmpty(salt))
+                throw new ArgumentException($"'{nameof(salt)}' cannot be null or empty");
+
+            using var sha512Hash = SHA512.Create();
+            return sha512Hash.ComputeHash(Encoding.UTF8.GetBytes($"{salt}#:#{password}"));
         }
     }
 }

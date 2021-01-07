@@ -5,12 +5,22 @@
 @using Stexchange.Data.Models
 <link rel="stylesheet" href="~/css/MyAccount.css" />
 
-@if (TempData["AccountControllerError"] is object)
+@if (TempData["AccountControllerError"] is object || ViewBag.Messages is object)
 {
     <form id="errorpopup">
         <div id="errorblock" onload="toggleElements()">
             <h3>ERROR</h3>
-            <p>@TempData["AccountControllerError"]</p>
+            @if (ViewBag.Messages is object)
+            {
+                foreach (var message in ViewBag.Messages)
+                {
+                    <p>@message</p>
+                }
+            }
+            else
+            {
+                <p>@TempData["AccountControllerError"]</p>
+            }
             <input type="button" value="OK" onclick="hideForm()" id="errorbutton" />
         </div>
     </form>
@@ -95,9 +105,9 @@
     <div id="formColumn">
         <h3>Account instellingen</h3>
         <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('mySettingsColumn')" />
-        <form action="#" method="post">
+        <form>
             <label for="username" class="labeltext">Gebruikersnaam</label>
-            <input type="text" name="username" id="username" value="@Model.User.Username" required/>
+            <input type="text" name="username" id="username" value="@Model.User.Username" maxlength="15" required/>
 
             <label for="postcalcode" class="labeltext">Postcode</label>
             <input type="text" name="postalcode" id="postalcode" value="@Model.User.Postal_Code" required/>
@@ -112,7 +122,7 @@
             <input type="text" name="confirm_password" id="confirm_password" />
 
             <!--TODO: link to asp action-->
-            <input type="button" id="saveButton" value="Opslaan" />
+            <input type="button" id="saveButton" value="Opslaan" onclick="changeSettings()"/>
         </form>
     </div>
 </div>

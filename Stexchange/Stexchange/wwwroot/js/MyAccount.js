@@ -37,6 +37,29 @@ function toggleVisible(id) {
     })
 }
 
+
+function changeSettings() {
+    username = document.querySelector("input#username").value;
+    postalcode = document.querySelector("#postalcode").value;
+    email = document.querySelector("#email").value;
+    password = document.querySelector("#password").value;
+    confirm_password = document.querySelector("#confirm_password").value;
+
+    $.ajax({
+        type: "POST",
+        //url: `/Account/ChangeAccountSettings?username=${username}&postalcode=${postalcode}&email=${email}&password=${password}&confirm_password=${confirm_password}`,
+        url: '/Account/ChangeAccountSettings/',
+        data: { username, postalcode, email, password, confirm_password },
+        success: function (data) {
+            alert(data);
+        },
+        error: function (err) {
+            alert(err.responseText);
+        }
+    })
+}
+
+
 function populateRequestForm(listingId, listingTitle) {
     document.querySelector("#myrequestForm > p").innerHTML = listingTitle;
     document.getElementById("listingId").value = listingId;

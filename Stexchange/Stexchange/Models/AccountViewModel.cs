@@ -12,4 +12,14 @@ namespace Stexchange.Models
         public List<Listing> Listings { get; set; }
         public List<RatingRequest> RatingRequests { get; set; }
     }
+
+    public class AccountSettingsModel
+    {
+        public string Username { get; set; }
+        public string Postalcode { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Confirm_Password { get; set; }
+    }
+
 }
