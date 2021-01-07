@@ -60,9 +60,19 @@ namespace Stexchange.Data.Helpers
             return $"{choice} keuze is geen geldige optie.";
         }
 
+        /// <summary>
+        /// $"De {fieldName} moet minstens 1 letter bevatten";
+        /// </summary>
+        /// <param name="fieldName"></param>
+        /// <returns></returns>
         public static string NoMatch(string fieldName)
         {
             return $"De {fieldName} moet minstens 1 letter bevatten";
+        }
+
+        public static string ValueBetween(string num1, string num2)
+        {
+            return $"De waarde moet tussen de {num1} en {num2} liggen.";
         }
     }
 }

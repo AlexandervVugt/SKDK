@@ -14,11 +14,19 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Stexchange.Data;
+using Stexchange.Data.Helpers;
+using Stexchange.Data.Models;
+using static Stexchange.Controllers.StexChangeController;
 
 namespace Stexchange.Controllers
 {
     public class AccountController : StexChangeController
     {
+
         private readonly Database _db;
 
         public AccountController(Database db, EmailService emailService)
@@ -28,6 +36,7 @@ namespace Stexchange.Controllers
         }
 
         private EmailService EmailService { get; }
+
         /// <summary>
         /// Returns the MyAccount view, populated with data from the logged in user.
         /// </summary>
@@ -340,5 +349,47 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
             using var sha512Hash = SHA512.Create();
             return sha512Hash.ComputeHash(Encoding.UTF8.GetBytes($"{salt}#:#{password}"));
         }
+
+        [HttpPost]
+        public IActionResult PostReview(int communication, int? quality)
+        {
+            if(communication <= 0 || communication > 5 || (quality is object && (quality <= 0 || quality > 5)))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return (IActionResult)Response;
+            }
+            byte communicationGrade = (byte)communication;
+            byte? qualityGrade = (byte)quality;
+
+
+
+            //if input is wrong or required and missing
+            if (communication < 1 || communication > 5 )
+            {
+                //  || (qualityGrade < 1 || qualityGrade > 5 && (GetUserId() != /*Listinid*/ && /*Listing.ruilfilter.isruilen*/))
+                TempData["message"] = StandardMessages.ValueBetween("1", "5");
+            }
+            else
+            {
+
+                Rating rating = new Rating()
+                {
+                    Communication = communicationGrade,
+                    ReviewerId = GetUserId(),
+                    RevieweeId = 9 //dit is hardcoded jordan
+
+                };
+                _db.Ratings.Add(rating);
+            }
+            
+            return View();
+        }
+
+      
+        //todo: if reviewer is the owner of the listing, then they cannot review quality
+
+
+
     }
 }
+
