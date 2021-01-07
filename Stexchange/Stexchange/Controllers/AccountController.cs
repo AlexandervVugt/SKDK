@@ -303,9 +303,9 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                     {
                         dbUser.Postal_Code = postalcode;
                     }
-                    if (!(string.IsNullOrWhiteSpace(password)) && dbUser.Password != CreatePasswordHash(password, dbUser.Username))
+                    if (!(string.IsNullOrWhiteSpace(password)) && dbUser.Password != CreatePasswordHash(password, dbUser.Id.ToString()))
                     {
-                        dbUser.Password = CreatePasswordHash(password, (username ?? dbUser.Username));
+                        dbUser.Password = CreatePasswordHash(password, dbUser.Id.ToString());
                     }
                 }
                 await _db.SaveChangesAsync();
