@@ -353,45 +353,46 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
         }
 
         [HttpPost]
-        public IActionResult PostReview(int communication, int? quality)
+        public IActionResult PostReview(int revieweeId, int communication, int? quality)
         {
             if(communication <= 0 || communication > 5 || (quality is object && (quality <= 0 || quality > 5)))
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return (IActionResult)Response;
+                SetTempDataMessage(false, "De ingevoerde waarden voldoen niet aan de eisen.");
+                return View("ReviewAdvertisement");
             }
             byte communicationGrade = (byte)communication;
-            byte? qualityGrade = (byte)quality;
+            byte? qualityGrade = (byte?)quality;
 
-
-
-            //if input is wrong or required and missing
-            if (communication < 1 || communication > 5 )
+            int userId;
+            try
             {
-                //  || (qualityGrade < 1 || qualityGrade > 5 && (GetUserId() != /*Listinid*/ && /*Listing.ruilfilter.isruilen*/))
-                TempData["message"] = StandardMessages.ValueBetween("1", "5");
-            }
-            else
+                userId = GetUserId();
+            }catch (InvalidSessionException)
             {
-
-                Rating rating = new Rating()
-                {
-                    Communication = communicationGrade,
-                    ReviewerId = GetUserId(),
-                    RevieweeId = 9 //dit is hardcoded jordan
-
-                };
-                _db.Ratings.Add(rating);
+                return RedirectToAction("Login", "Login");
             }
-            
-            return View();
+            if (revieweeId == userId)
+            {
+                SetTempDataMessage(false, "U kunt uzelf niet beoordelen.");
+                return RedirectToAction("MyAccount");
+            }
+            _db.Ratings.Add(new Rating()
+            {
+                Communication = communicationGrade,
+                Quality = qualityGrade,
+                ReviewerId = userId,
+                RevieweeId = revieweeId
+            });
+            _db.SaveChanges();
+            SetTempDataMessage(true, "Uw beoordeling is opgeslagen.");
+            return RedirectToAction("MyAccount");
         }
 
-      
-        //todo: if reviewer is the owner of the listing, then they cannot review quality
-
-
-
+        private void SetTempDataMessage(bool success, string message)
+        {
+            TempData.Remove(success ? "AccountControllerError" : "AccountControllerMsg");
+            TempData[success ? "AccountControllerMsg" : "AccountControllerError"] = message;
+        }
     }
 }
 
