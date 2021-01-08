@@ -169,12 +169,16 @@ namespace Stexchange.Controllers
                 await _db.AddAsync(new RatingRequest
                 {
                     ReviewerId = GetUserId(),
-                    RevieweeId = otherUserId ?? throw new InvalidOperationException()
+                    RevieweeId = otherUserId ?? throw new InvalidOperationException(),
+                    PlantName = listing.NameNl,
+                    RequestQuality = false
                 });
                 await _db.AddAsync(new RatingRequest
                 {
                     ReviewerId = otherUserId ?? throw new InvalidOperationException(),
-                    RevieweeId = GetUserId()
+                    RevieweeId = GetUserId(),
+                    PlantName = listing.NameNl,
+                    RequestQuality = true
                 });
                 if (listing.Quantity == 0)
                 {
