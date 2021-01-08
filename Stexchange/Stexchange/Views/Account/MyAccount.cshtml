@@ -126,10 +126,11 @@
     {
         <div class="reviewRequest">
             <div class="reviewInfo">
+                <h4>@rr.PlantName</h4>
                 <p>@rr.Reviewee.Username</p>
             </div>
             <div class="reviewOptions">
-                <input type="button" class="reviewButton" value="BEOORDELING PLAATSEN" onclick="showRequestForm('reviewAdvertisementColumn', 'ratingreviewButton');populateReviewForm('@rr.Reviewee.Username')" />
+                <input type="button" class="reviewButton" value="BEOORDELING PLAATSEN" onclick="showRequestForm('reviewAdvertisementColumn', 'ratingreviewButton'); populateReviewForm('@rr.Reviewee.Username', '@rr.PlantName', @rr.RequestQuality.ToString().ToLower())" />
             </div>
         </div>
     }
@@ -140,6 +141,7 @@
     <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('reviewAdvertisementColumn')" />
     <p>Vul de volgende gegevens in om de advertentie van ... te beoordelen.</p>
     <br>
+    <p>Naam advertentie: ...</p>
     <p>Naam adverteerder: ...</p>
     <form action="PostReview" method="post" class="reviewform">
         <div class="qualityrating">
@@ -173,7 +175,7 @@
             </div>
         </div>
         <div>
-            <input type="button" class="submit review" id="reviewsubmit" value="Beoordeling plaatsen" onclick="" />
+            <input type="button" class="submit review" id="reviewsubmit" value="Beoordeling plaatsen" />
         </div>
     </form>
 </div>
@@ -287,7 +289,7 @@
                 <option value="indigenous_niet_inheems">Niet inheems</option>
             </select>
         </div>
-        <button type="button" id="advertisementsubmit">Advertentie wijzigen</button>
+        <input type="button" id="advertisementsubmit" value="Advertentie wijzigen" />
     </form>
 </div>
 

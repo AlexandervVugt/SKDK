@@ -217,9 +217,13 @@ function confirmToDelete(id) {
     confirmMessage.style.display = "block";
 }
 
-function populateReviewForm(username) {
-    document.querySelector("#reviewAdvertisementColumn > p:nth-child(5)").innerHTML = "Naam adverteerder: " + username;
+function populateReviewForm(username, plantname, hasReviewQuality) {
+    document.querySelector("#reviewAdvertisementColumn > p:nth-child(6)").innerHTML = "Naam adverteerder: " + username;
+    document.querySelector("#reviewAdvertisementColumn > p:nth-child(5)").innerHTML = "Naam advertentie: " + plantname;
     document.querySelector("#reviewAdvertisementColumn > p:nth-child(3)").innerHTML = "Vul de volgende gegevens in om de advertentie van " + username + " te beoordelen";
+    if (hasReviewQuality == false) {
+        document.querySelector("#reviewAdvertisementColumn > form > div.qualityrating").style.display = "none";
+    }
 }
 
 // Image functions for modify advertisement
