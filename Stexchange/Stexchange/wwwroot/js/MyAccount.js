@@ -57,6 +57,7 @@ function populateModifyForm(id) {
         success: function (data) {
             console.log(data);
             alert(data);
+            data = JSON.parse(data);
             //imgoutput.value = data["Pictures"];
             title.value = data["Title"];
             description.value = data["Description"];
