@@ -55,20 +55,20 @@ function populateModifyForm(id) {
         type: "GET",
         url: `/Account/GetModifyFormData?listingId=${id}`,
         success: function (data) {
-            console.log(data);
-            alert(data);
             data = JSON.parse(data);
-            //imgoutput.value = data["Pictures"];
+            console.log(data);
+            imgoutput.value = data["Pictures"];
             title.value = data["Title"];
             description.value = data["Description"];
             nameLT.value = data["NameLatin"];
             nameNL.value = data["NameNl"];
             quantity.value = data["Quantity"];
-            for(option in document.querySelectorAll("#requiredFiltersContainer > select > option, #extrafiltersContainer > select > option")){
-                if (data["Filters"].includes(option.value)) {
-                    option.selected = true;
-                }else{
-                    option.selected = false;
+            let options = document.querySelectorAll("#requiredFiltersContainer > select > option, #extrafiltersContainer > select > option");
+            for (option in options) {
+                if (data["Filters"].includes(options[option].value)) {
+                    options[option].selected = true;
+                } else {
+                    options[option].selected = false;
                 }
             }
         },
