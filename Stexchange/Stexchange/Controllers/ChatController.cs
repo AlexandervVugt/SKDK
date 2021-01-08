@@ -197,34 +197,6 @@ namespace Stexchange.Controllers
             }
             return RedirectToAction("Chat");
         }
-        [HttpPost]
-        public IActionResult Block(int listid)
-        {
-            int userId;
-            try
-            {
-                userId = GetUserId();
-                int blockedUserId = (from l in _db.Listings
-                                   where (l.Id == listid)
-                                   select l.UserId).FirstOrDefault();
-                var newBlock = new Block
-                {
-                    BlockerId = userId,
-                    BlockedId = blockedUserId
-                };
-                _db.Blocks.Add(newBlock);
-                _db.SaveChanges();
-                return RedirectToAction("Trade", "Trade");
-            }
-            catch (InvalidSessionException)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-
-        }
-
-
-
 
     }
 }
