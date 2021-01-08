@@ -129,7 +129,7 @@
                 <p>@rr.Reviewee.Username</p>
             </div>
             <div class="reviewOptions">
-                <input type="button" class="reviewButton" value="BEOORDELING PLAATSEN" onclick="showRequestForm('reviewAdvertisementColumn', 'ratingreviewButton')" />
+                <input type="button" class="reviewButton" value="BEOORDELING PLAATSEN" onclick="showRequestForm('reviewAdvertisementColumn', 'ratingreviewButton');populateReviewForm('@rr.Reviewee.Username')" />
             </div>
         </div>
     }
@@ -140,7 +140,6 @@
     <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('reviewAdvertisementColumn')" />
     <p>Vul de volgende gegevens in om de advertentie van ... te beoordelen.</p>
     <br>
-    <p>Naam advertentie: ...</p>
     <p>Naam adverteerder: ...</p>
     <form action="PostReview" method="post" class="reviewform">
         <div class="qualityrating">

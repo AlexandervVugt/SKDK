@@ -217,6 +217,10 @@ function confirmToDelete(id) {
     confirmMessage.style.display = "block";
 }
 
+function populateReviewForm(username) {
+    document.querySelector("#reviewAdvertisementColumn > p:nth-child(5)").innerHTML = "Naam adverteerder: " + username;
+    document.querySelector("#reviewAdvertisementColumn > p:nth-child(3)").innerHTML = "Vul de volgende gegevens in om de advertentie van " + username + " te beoordelen";
+}
 
 // Image functions for modify advertisement
 
@@ -267,6 +271,8 @@ function nextImg() {
     imagecount();
 }
 
+
+
 /* inserts previous file into img field*/
 function previousImg() {
     let files = document.getElementById("imginput").files;
@@ -286,7 +292,6 @@ function filereader(files) {
         fileReader.readAsDataURL(files);
     }
 }
-
 
 /*image counter*/
 function imagecount() {
