@@ -8,16 +8,21 @@ function showRequestForm(form, buttonId, listingId, listingTitle) {
     let settingsColumn = document.getElementById("mySettingsColumn");
     let ratingColumn = document.getElementById("ratingreviewColumn");
     let modifyColumn = document.getElementById("modifyAdvertismentForm");
+    let ratingReviewColumn = document.getElementById("reviewAdvertisementColumn");
     myadvertisementColumn.style.display = "none";
     settingsColumn.style.display = "none";
     ratingColumn.style.display = "none";
     modifyColumn.style.display = "none";
+    ratingReviewColumn.style.display = "none";
     if (form == "requestForm") {
         myadvertisementColumn.style.display = "block";
         requestform.style.display = "block";
         populateRequestForm(listingId, listingTitle);
     } else if (form == "modifyAdvertismentForm") {
         myadvertisementColumn.style.display = "none";
+        requestform.style.display = "block";
+    } else if (form == "reviewAdvertisementColumn"){
+        ratingColumn.style.display = "none";
         requestform.style.display = "block";
     }
     else {
@@ -140,12 +145,16 @@ function populateRequestForm(listingId, listingTitle) {
 
 function closeRequestForm(form) {
     let myadvertisementColumn = document.getElementById("myadvertisementsColumn");
+    let ratingColumn = document.getElementById("ratingreviewColumn");
     let requestform = document.getElementById(form);
     requestform.style.display = "none";
     if (form == 'mySettingsColumn' || form == 'modifyAdvertismentForm') {
         myadvertisementColumn.style.display = "block";
+        toggleActive("accountsettingsButton");
+    } else if (form == 'reviewAdvertisementColumn') {
+        ratingColumn.style.display = "block";
+        toggleActive("ratingreviewButton");
     }
-    toggleActive("accountsettingsButton");
 }
 
 function submitForm(form, submitform) {

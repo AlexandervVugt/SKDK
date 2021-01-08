@@ -1,6 +1,8 @@
 ﻿$color-darkgreen: #465D43;
 $color-green: #679868;
 $color-red: #C51014;
+$color-lightgreen: #19ff30;
+$color-grey: #808080;
 
 #profileColumn {
     margin-left: 5%;
@@ -608,6 +610,91 @@ $color-red: #C51014;
     }
 }
 
+#reviewAdvertisementColumn {
+    display: none;
+    width: 50%;
+    float: right;
+    margin-right: 15%;
+    border: 1.5px solid $color-darkgreen;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 1.5vh;
+
+    p, h3 {
+        margin-left: 3%;
+        float: left;
+        clear: both;
+        color: $color-darkgreen;
+        font-size: 2.5vh;
+    }
+
+    p {
+        font-size: 2vh;
+    }
+
+    .stars {
+        margin-left: 5%;
+        float: left;
+        clear: both;
+    }
+
+    .qualityrating {
+        direction: rtl;
+    }
+
+    .communicationrating {
+        direction: rtl;
+    }
+
+    input[type=radio] {
+        display: none;
+    }
+
+    label {
+        font-size: 50px;
+        cursor: pointer;
+        color: $color-grey;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+    }
+
+    label:hover {
+        color: $color-lightgreen;
+    }
+
+    label:hover ~ label {
+        color: $color-lightgreen;
+    }
+
+    input[type=radio]:checked ~ label {
+        color: $color-lightgreen;
+    }
+
+    #reviewsubmit {
+        float: right;
+        clear: both;
+        border: 1.5px solid $color-darkgreen;
+        background-color: $color-darkgreen;
+        color: white;
+        font-size: 2vh;
+        width: 40%;
+        height: 5vh;
+        margin-top: 3%;
+        margin-right: 3%;
+        margin-bottom: 1%;
+        transition: 0.5s;
+    }
+
+    #cancelButton {
+        float: right;
+        width: 10%;
+        margin-top: 1%;
+        margin-right: 3%;
+        background-color: $color-darkgreen;
+        text-align: center;
+        font-size: 2vh;
+        color: white;
+    }
+}
 
 #errorpopup {
     z-index: 3;
