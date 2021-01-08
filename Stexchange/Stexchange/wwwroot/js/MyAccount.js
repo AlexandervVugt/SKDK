@@ -43,6 +43,41 @@ function toggleVisible(id) {
     })
 }
 
+function populateModifyForm(id) {
+    imgoutput = document.querySelector("#imgoutput");
+    title = document.querySelector("#generalinformationContainer > input:nth-child(2)");
+    description = document.querySelector("#generalinformationContainer > textarea");
+    nameLT = document.querySelector("#generalinformationContainer > input:nth-child(6)");
+    nameNL = document.querySelector("#generalinformationContainer > input:nth-child(8)");
+    quantity = document.querySelector("#generalinformationContainer > input:nth-child(10)");
+
+    $.ajax({
+        type: "GET",
+        url: `/Account/GetModifyFormData?listingId=${id}`,
+        success: function (data) {
+            console.log(data);
+            alert(data);
+            //imgoutput.value = data["Pictures"];
+            title.value = data["Title"];
+            description.value = data["Description"];
+            nameLT.value = data["NameLatin"];
+            nameNL.value = data["NameNl"];
+            quantity.value = data["Quantity"];
+            for(option in document.querySelectorAll("#requiredFiltersContainer > select > option, #extrafiltersContainer > select > option")){
+                if (data["Filters"].includes(option.value)) {
+                    option.selected = true;
+                }else{
+                    option.selected = false;
+                }
+            }
+        },
+        error: function (err) {
+            console.log("populateModifyForm ajax request error");
+            alert(err.responseText);
+        }
+    })
+}
+
 
 function changeSettings() {
     username = document.querySelector("input#username").value;
@@ -125,7 +160,7 @@ function toggleActive(buttonId) {
 
     for (i = 0; i < buttons.length; i++) {
         buttons[i].style.backgroundColor = "white";
-        buttons[i].style.color = "#465D43"; 
+        buttons[i].style.color = "#465D43";
     }
 
     document.getElementById(buttonId).style.backgroundColor = "#465D43";

@@ -70,7 +70,7 @@
                 </label>
                 <input type="button" class="ratingrequestButton" value="RUIL REGISTREREN" onclick="showRequestForm('requestForm', 'accountsettingsButton', '@listing.Id', '@listing.Title')" />
                 <!--TODO: linken aan controller action-->
-                <input type="button" class="modifyButton" value="WIJZIGEN" onclick="showRequestForm('modifyAdvertismentForm')" />
+                <input type="button" class="modifyButton" value="WIJZIGEN" onclick="showRequestForm('modifyAdvertismentForm', 'accountsettingsButton');populateModifyForm(@listing.Id);" />
                 <input type="button" class="deleteButton" value="VERWIJDEREN" onclick="confirmToDelete(@listing.Id)" />
             </div>
         </div>

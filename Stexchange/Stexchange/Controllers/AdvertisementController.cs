@@ -263,25 +263,6 @@ namespace Stexchange.Controllers
             return filterListings;
         }
 
-        
-        /// <summary>
-        /// returns the userId or -1
-        /// -1 is filtered away by the constraint in the ListingValidator
-        /// </summary>
-        /// <returns></returns>
-        private int GetUserId()
-        {
-            long token = Convert.ToInt64(Request.Cookies["SessionToken"]);
-
-            if (GetSessionData((long)token, out Tuple<int, string> data)) 
-            {
-                var user_id = data.Item1; 
-                return user_id;
-            }
-
-            return -1;
-        }
-
         /// <summary>
         /// validates filter values and adds these to the filterlist
         /// </summary>
