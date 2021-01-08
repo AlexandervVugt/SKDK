@@ -17,10 +17,10 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Stexchange.Data;
 using Stexchange.Data.Helpers;
-using Stexchange.Data.Models;
 using static Stexchange.Controllers.StexChangeController;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Stexchange.Controllers
 {
@@ -386,6 +386,24 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
             _db.SaveChanges();
             SetTempDataMessage(true, "Uw beoordeling is opgeslagen.");
             return RedirectToAction("MyAccount");
+        }
+
+        public string GetModifyFormData(int listingId)
+        {
+            Listing listing = (from li in _db.Listings where li.Id == listingId select li)
+                .Include("Pictures")
+                .FirstOrDefault();
+            var temp = listing.Pictures;
+            listing.Filters = (from fl in _db.FilterListings where fl.ListingId == listingId select fl.Value).ToList();
+            listing.Pictures = null;
+            List<string> imgs = new List<string>();
+            temp.ForEach(delegate (ImageData img)
+            {
+                imgs.Add(img.GetImage());
+            });
+            JObject jsonListing = JObject.Parse(JsonConvert.SerializeObject(listing));
+            jsonListing.Add("images", JToken.FromObject(imgs));
+            return JsonConvert.SerializeObject(jsonListing);
         }
 
         private void SetTempDataMessage(bool success, string message)
