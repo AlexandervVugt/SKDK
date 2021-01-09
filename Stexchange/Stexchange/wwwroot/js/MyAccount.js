@@ -78,7 +78,7 @@ function populateModifyForm(id) {
             
             imgoutput.src = data["images"];
 
-            listingId.value = data["Id"]; // <-------------------
+            listingId.value = data["Id"]; 
             title.value = data["Title"];
             description.value = data["Description"];
             nameLT.value = data["NameLatin"];
@@ -98,6 +98,13 @@ function populateModifyForm(id) {
             alert(err.responseText);
         }
     })
+}
+
+var imgcount = 1;
+function imageslider() {
+    var image = document.querySelector("#imgoutput");
+    image.src = imgList[imgcount % imgList.length];
+    imgcount++;
 }
 
 
@@ -338,6 +345,8 @@ function submitReviewForm() {
             alert(err.responseText);
         }
     })
+}
+
 function deleteImages() {
     $.ajax({
         type: "POST",
