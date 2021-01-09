@@ -34,13 +34,16 @@
         <p>gebaseerd op ... beoordelingen</p>
         @if (Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
         {
-            <form id="sendmsg" method="post" action="@Url.Action("NewChat","Chat", new {listId = Model.Listing.Id})">
+            if (Model.Listing.UserId != Model.UserId && Model.UserId != -1)
+            {
+            <form id="sendmsg" method="post" action="@Url.Action("NewChat", "Chat", new { listId = Model.Listing.Id })">
                 <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
                 <input type="submit" id="sendmessage" value="Stuur een bericht" />
             </form>
-            <form id="block" method="post" action="@Url.Action("Block","Block", new {listId = Model.Listing.Id})">
+            <form id="block" method="post" action="@Url.Action("Block", "Block", new { listId = Model.Listing.Id })">
                 <input type="submit" id="blockUser" value="Blokkeren" />
             </form>
+            }
         }
     </div>
 </div>

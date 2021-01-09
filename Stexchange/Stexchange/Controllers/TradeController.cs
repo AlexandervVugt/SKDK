@@ -87,9 +87,17 @@ namespace Stexchange.Controllers
             //TODO: move releasing the resource to this class' Dispose method
             _blocked = false; //Release the resource
             //TODO: put the listing in a model for the detail page.
+            Console.WriteLine(1);
             
+            try
+            {
+                return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters), GetUserId()));
+            }
+            catch (InvalidSessionException)
+            {
+                return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters), -1));
+            }
             
-            return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters)));
         }
 
         private Dictionary<string, string> FormatFilters(List<string> filters)
