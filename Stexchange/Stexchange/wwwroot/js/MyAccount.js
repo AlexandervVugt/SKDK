@@ -1,6 +1,8 @@
 ﻿document.getElementById("accountsettingsButton").style.backgroundColor = "#465D43";
 document.getElementById("accountsettingsButton").style.color = "white";
 
+document.querySelector("#imgoutput").src = "";
+
 function showRequestForm(form, buttonId, listingId, listingTitle) {
     let requestform = document.getElementById(form);
 
@@ -48,6 +50,7 @@ function toggleVisible(id) {
     })
 }
 
+var imageList = [];
 function populateModifyForm(id) {
     imgoutput = document.querySelector("#imgoutput");
     imginput = document.querySelector("#imginput");
@@ -65,18 +68,9 @@ function populateModifyForm(id) {
             data = JSON.parse(data);
             console.log(data);
 
-            // To create filelist
-            //let list = new DataTransfer();
-            // data["images"][0].Image to get image
-            //let file = new File(data["images"], "plant.png", { type: "image/png" });
-            //list.items.add(file);
-            //let myfilelist = list.files;
-
-            //imginput.files = myfilelist;
-
-            //console.log(file);
-            
-            imgoutput.src = data["images"];
+            imgoutput.src = data["images"][0];
+            imageList = data["images"];
+            imageslider();
 
             listingId.value = data["Id"]; 
             title.value = data["Title"];
@@ -99,14 +93,6 @@ function populateModifyForm(id) {
         }
     })
 }
-
-var imgcount = 1;
-function imageslider() {
-    var image = document.querySelector("#imgoutput");
-    image.src = imgList[imgcount % imgList.length];
-    imgcount++;
-}
-
 
 function changeSettings() {
     username = document.querySelector("input#username").value;
@@ -249,22 +235,28 @@ function populateReviewForm(reviewId, username, plantname, hasReviewQuality) {
     }
 }
 
-// Image functions for modify advertisement
-
 /* previous button*/
 let previous = document.getElementsByClassName("previous");
 
 /* next button*/
 let next = document.getElementsByClassName("next");
-previous[0].style.display = "none";
-next[0].style.display = "none";
 
 /* image field*/
 let image = document.getElementById("imgoutput");
 
 /* span text*/
 let imagecounter = document.getElementById("imagecounter");
-imagecounter.style.display = "none";
+imagecounter.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+
+// Imageslider for imagelist NOT fileslist
+var imgcount = 1;
+function imageslider() {
+    var image = document.getElementById("imgoutput");
+    image.src = imageList[imgcount % imageList.length];
+    imgcount++;
+    imagecount();
+}
+
 
 let currentImage = 0;
 function decCurrentImage(length) {
@@ -323,7 +315,11 @@ function filereader(files) {
 /*image counter*/
 function imagecount() {
     let files = document.getElementById("imginput").files;
-    imagecounter.textContent = ((currentImage % files.length) + 1) + "/" + files.length;
+    if (files.length > 0) {
+        imagecounter.textContent = ((currentImage % files.length) + 1) + "/" + files.length;
+    } else {
+        imagecounter.textContent = ((imgcount % imageList.length) + 1) + "/" + imageList.length;
+    }
 }
 
 function submitReviewForm() {
@@ -365,4 +361,11 @@ function confirmToDeleteImages() {
     listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)").value;
     deleteform = document.getElementById("confirmDeleteImages").style.display = "block";
     document.querySelector("#confirmDeleteImages > input[type=number]:nth-child(3)").value = listingId;
+}
+
+function resetImage() {
+    document.querySelector("#imgoutput").src = "";
+    imagecounter.style.display = "none";
+    previous[0].style.display = "none";
+    document.getElementsByClassName("next")[0].style.display = "none";
 }

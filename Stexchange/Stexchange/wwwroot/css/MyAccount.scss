@@ -499,6 +499,18 @@ $color-grey: #808080;
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             cursor: pointer;
+            float:left;
+        }
+
+        #removeImagesButton {
+            background-color: $color-darkgreen;
+            width: 25%;
+            border-radius: 1vh;
+            height: calc(4vh);
+            font-size: 2vh;
+            color: white;
+            cursor: pointer;
+            float:right;
         }
     }
 

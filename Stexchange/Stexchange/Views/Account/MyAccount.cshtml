@@ -185,21 +185,21 @@
     <h3>Afbeeldingen verwijderen</h3>
     <p>Weet je zeker dat je de afbeeldingen van deze advertentie permanent wilt verwijderen?</p>
     <input type="number" name="listingId" hidden />
-    <input type="button" value="ja" onclick="deleteImages();closeRequestForm('confirmDeleteImages')"/>
+    <input type="button" value="ja" onclick="deleteImages();closeRequestForm('confirmDeleteImages');resetImage()"/>
     <input type="button" value="nee" onclick="closeRequestForm('confirmDeleteImages')" />
 </form>
 
 <div id="modifyAdvertismentForm">
     <h3>Advertentie wijzigen</h3>
     <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('modifyAdvertismentForm')" />
-    <form action="ModifyAdvertisement" method="post">
+    <form action="ModifyAdvertisement" method="post" enctype="multipart/form-data">
         <input type="number" name="listingId" hidden />
         <div id="imgContainer">
-            <img id="imgoutput" src="~/img/background.png" />
+            <img id="imgoutput"/>
             <div class="imageslides">
-                <a class="previous" onclick="previousImg(1)">&#10094;</a>
+                <a class="previous" onclick="previousImg(1);imageslider()">&#10094;</a>
                 <span id="imagecounter"></span>
-                <a class="next" onclick="nextImg(1)">&#10095;</a>
+                <a class="next" onclick="nextImg(1);imageslider()">&#10095;</a>
             </div>
             <input type="file" id="imginput" name="files" onchange="loadFile(event)" accept="image/*" multiple>
             <input type="button" id="removeImagesButton" value="Afbeeldingen verwijderen" onclick="confirmToDeleteImages()"/>

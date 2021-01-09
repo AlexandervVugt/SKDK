@@ -433,6 +433,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
             TempData[success ? "AccountControllerMsg" : "AccountControllerError"] = message;
         }
 
+
         public async Task<object> ModifyAdvertisementAsync(int listingId, List<IFormFile> files, string title, string description,
             string name_nl, int quantity, string plant_type, string plant_order, string give_away, string with_pot, string light, string water, string name_lt = "",
             string ph = "", string indigenous = "", string nutrients = "")
@@ -504,6 +505,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                         if (!indigenousresult.IsValid) { indigenousresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); };
 
                         if (!nutrientsresult.IsValid) { nutrientsresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); };
+
                         // Creates new filterlisting if filter doesn't exist in 
                         List<FilterListing> existingFilters = (from filterListing in _db.FilterListings
                                                         where filterListing.ListingId == listingId
@@ -520,8 +522,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                                                        ListingId = listingId, 
                                                        Value = filter 
                                                    }).ToList();
-                        remove.ForEach(entry => _db.Remove(entry));
-                        add.ForEach(entry => _db.Add(entry));
+
 
                         await OnPostUploadAsync(files, listing, errormessages);
 
@@ -529,6 +530,9 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                         {
                             return errormessages;
                         }
+
+                        remove.ForEach(entry => _db.Remove(entry));
+                        add.ForEach(entry => _db.Add(entry));
 
                         await _db.SaveChangesAsync();
                     }
@@ -545,8 +549,6 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                     if (!lightresult.IsValid) { lightresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
 
                     if (!orderFilter.IsValid) { orderFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
-
-                    
 
                     if (errormessages.Count > 0)
                     {
@@ -591,6 +593,13 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
 
         public async Task OnPostUploadAsync(List<IFormFile> files, Listing listing, List<string> errormessages)
         {
+            var images = (from image in _db.Images
+                          where image.ListingId == listing.Id
+                          select image).FirstOrDefault();
+            if(images is null && files.Count == 0)
+            {
+                errormessages.Add("Het is verplicht om een foto te uploaden");
+            }
             if (files.Count > 6) { 
                 errormessages.Add("Het maximale aantal foto's dat geüpload mag worden is 6"); 
             } else

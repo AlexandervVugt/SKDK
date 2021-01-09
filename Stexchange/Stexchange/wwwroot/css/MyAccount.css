@@ -361,7 +361,17 @@
       font-size: 2vh;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
-      cursor: pointer; }
+      cursor: pointer;
+      float: left; }
+    #modifyAdvertismentForm #imgContainer #removeImagesButton {
+      background-color: #465D43;
+      width: 25%;
+      border-radius: 1vh;
+      height: calc(4vh);
+      font-size: 2vh;
+      color: white;
+      cursor: pointer;
+      float: right; }
   #modifyAdvertismentForm #generalinformationContainer {
     padding-left: 3%;
     padding-right: 3%;
