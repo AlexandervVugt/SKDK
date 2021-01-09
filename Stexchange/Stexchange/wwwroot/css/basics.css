@@ -28,20 +28,15 @@
           width: 100%;
           z-index: 3;
           position: fixed;
-          font-size: 2.3vh;
-          transition: 500ms ease;
+          font-size: 4vw;
           background: white;
-          border-bottom: 1px solid #26d1a4;
-          /* Change the link color to #111 (black) on hover */ }
+          border-bottom: 1px solid #26d1a4; }
           html body header .navbar-default ul {
             list-style-type: none;
             overflow: hidden; }
           html body header .navbar-default li {
             float: left;
-            margin-right: 0;
-            transition: 500ms ease; }
-          html body header .navbar-default li.login {
-            transition: 500ms ease; }
+            margin-right: 0; }
           html body header .navbar-default li a {
             width: 100%;
             padding-top: 0.3vh;
@@ -52,57 +47,76 @@
             display: block;
             color: #26d1a4;
             text-align: center;
-            text-decoration: none;
-            transition: 0.5s; }
+            text-decoration: none; }
+          html body header .navbar-default li a:hover {
+            background-color: #26d1a4;
+            color: white; }
           html body header .navbar-default .mobilenav1 {
             position: fixed;
-            width: 50%;
+            width: 51%;
             color: red;
             bottom: 0%;
             left: 0;
             background-color: white;
-            padding-top: 6%;
-            padding-bottom: 6%;
+            padding-top: 4%;
+            padding-bottom: 4%;
             margin: 0%;
             border-top: 2px solid #55ffed; }
-            html body header .navbar-default .mobilenav1 li a {
+            html body header .navbar-default .mobilenav1 i.fa.fa-plus-circle {
+              text-align: center;
               width: 100%;
-              padding-top: 0.3vh;
-              padding-bottom: 0.2vh;
-              padding-left: 0.8vh;
-              padding-right: 0.8vh;
+              color: black;
+              font-weight: bold;
+              font-size: 4vh; }
+            html body header .navbar-default .mobilenav1 i:before {
+              content: "\f055";
+              color: #303030; }
+            html body header .navbar-default .mobilenav1 a {
+              width: 100%;
               border-radius: 10px;
-              display: block;
               color: #26d1a4;
               text-align: center;
               text-decoration: none;
-              transition: 0.5s; }
+              font-size: 1.5vh;
+              color: #303030;
+              margin: 0;
+              padding: 0; }
+            html body header .navbar-default .mobilenav1 a:hover {
+              background-color: white;
+              color: #26d1a4; }
           html body header .navbar-default .mobilenav2 {
             position: fixed;
-            width: 50%;
+            width: 51%;
             color: red;
             bottom: 0%;
             left: 50%;
             background-color: white;
-            padding-top: 6%;
-            padding-bottom: 6%;
+            padding-top: 4%;
+            padding-bottom: 4%;
             margin: 0%;
             border-top: 2px solid #55ffed; }
-            html body header .navbar-default .mobilenav2 li a {
+            html body header .navbar-default .mobilenav2 i.fa.fa-envelope-o {
+              text-align: center;
               width: 100%;
-              padding-top: 0.3vh;
-              padding-bottom: 0.2vh;
-              padding-left: 0.8vh;
-              padding-right: 0.8vh;
+              color: black;
+              font-weight: bold;
+              font-size: 4vh; }
+            html body header .navbar-default .mobilenav2 i:before {
+              content: "\f003";
+              color: #303030; }
+            html body header .navbar-default .mobilenav2 a {
+              width: 100%;
               border-radius: 10px;
-              display: block;
               color: #26d1a4;
               text-align: center;
               text-decoration: none;
-              transition: 0.5s; }
-          html body header .navbar-default li a:hover {
-            background-color: #26d1a4;
-            color: white; }
+              font-size: 1.5vh;
+              color: #303030;
+              margin: 0;
+              padding: 0; }
+            html body header .navbar-default .mobilenav2 a:hover {
+              background-color: white;
+              color: #26d1a4; }
           html body header .navbar-default .active {
             background-color: #26d1a4;
             color: white; }
@@ -174,15 +188,12 @@
               padding-top: 1vh;
               padding-bottom: 1vh;
               text-transform: uppercase;
-              border-radius: 100vh;
-              transition: all 0.3s ease 0s; }
+              border-radius: 100vh; }
             html body main article .buttonfix button:hover {
               color: #367a57;
-              background-color: #eefecc;
-              transition: all 0.3s ease 0s; }
+              background-color: #eefecc; }
         html body main .about {
-          width: 90%;
-          padding: 1%;
+          width: 89%;
           position: relative;
           float: left;
           font-size: 2.3vh;
@@ -193,7 +204,7 @@
           border-radius: 1vh;
           box-shadow: 5px 10px rgba(0, 0, 0, 0.1); }
           html body main .about img {
-            width: 100%; }
+            width: 98%; }
           html body main .about .titleleft {
             font-size: 7vh;
             font-weight: 100;
@@ -254,12 +265,10 @@
               padding-top: 1vh;
               padding-bottom: 1vh;
               text-transform: uppercase;
-              border-radius: 100vh;
-              transition: all 0.3s ease 0s; }
+              border-radius: 100vh; }
             html body main .about .buttonfix button:hover {
               color: #367a57;
-              background-color: #eefecc;
-              transition: all 0.3s ease 0s; }
+              background-color: #eefecc; }
         html body main .logincontainer {
           font-size: 2.3vh;
           display: block;
@@ -338,7 +347,6 @@
                 text-overflow: ellipsis;
                 font-size: 1.9vh;
                 border-radius: 0.5vh;
-                transition: 0.3s;
                 margin-top: 8%;
                 margin-bottom: 15%; }
               html body main .logincontainer .item2 form .submit:hover {
@@ -389,7 +397,6 @@
                 text-overflow: ellipsis;
                 font-size: 1.9vh;
                 border-radius: 0.5vh;
-                transition: 0.3s;
                 margin-top: 8%;
                 margin-bottom: 15%; }
               html body main .logincontainer .item3 form .submit:hover {
@@ -434,18 +441,22 @@
           z-index: 3;
           position: fixed;
           font-size: 2.3vh;
-          transition: 500ms ease;
           background: transparent;
           /* Change the link color to #111 (black) on hover */ }
+          html body header .navbar-default .mobilenav1 i.fa.fa-plus-circle {
+            display: none; }
+          html body header .navbar-default .mobilenav1 i:before {
+            display: none; }
+          html body header .navbar-default .mobilenav2 i.fa.fa-envelope-o {
+            display: none; }
+          html body header .navbar-default .mobilenav2 i:before {
+            display: none; }
           html body header .navbar-default ul {
             list-style-type: none;
             overflow: hidden; }
           html body header .navbar-default li {
             float: left;
-            margin-right: 3%;
-            transition: 500ms ease; }
-          html body header .navbar-default li.login {
-            transition: 500ms ease; }
+            margin-right: 3%; }
           html body header .navbar-default li a {
             width: 100%;
             padding-top: 0.3vh;
@@ -456,8 +467,7 @@
             display: block;
             color: #26d1a4;
             text-align: center;
-            text-decoration: none;
-            transition: 0.5s; }
+            text-decoration: none; }
           html body header .navbar-default li a:hover {
             background-color: #26d1a4;
             color: white; }
@@ -476,7 +486,6 @@
           z-index: 3;
           position: fixed;
           font-size: 2.3vh;
-          transition: 500ms ease;
           background: white;
           border-bottom-style: solid;
           border-color: #b2e8d4;
@@ -486,10 +495,8 @@
             overflow: hidden; }
           html body header .navbar-default.scrolled li {
             float: left;
-            margin-right: 3%;
-            transition: 500ms ease; }
+            margin-right: 3%; }
           html body header .navbar-default.scrolled li.login {
-            transition: 500ms ease;
             float: right;
             margin-right: 8%; }
           html body header .navbar-default.scrolled li a {
@@ -503,8 +510,7 @@
             display: block;
             color: #26d1a4;
             text-align: center;
-            text-decoration: none;
-            transition: 0.5s; }
+            text-decoration: none; }
           html body header .navbar-default.scrolled li a.login {
             font-size: 2vh;
             width: 100%;
@@ -516,8 +522,7 @@
             display: block;
             color: #26d1a4;
             text-align: center;
-            text-decoration: none;
-            transition: 0.5s; }
+            text-decoration: none; }
           html body header .navbar-default.scrolled li a:hover {
             background-color: #26d1a4;
             color: white; }
@@ -578,12 +583,10 @@
               padding-top: 1vh;
               padding-bottom: 1vh;
               text-transform: uppercase;
-              border-radius: 100vh;
-              transition: all 0.3s ease 0s; }
+              border-radius: 100vh; }
             html body main article .buttonfix button:hover {
               color: #367a57;
-              background-color: #eefecc;
-              transition: all 0.3s ease 0s; }
+              background-color: #eefecc; }
         html body main .about {
           padding: 1%;
           position: relative;
@@ -596,7 +599,10 @@
           border-radius: 1vh;
           box-shadow: 5px 10px rgba(0, 0, 0, 0.1); }
           html body main .about img {
-            padding-left: 5%; }
+            margin-left: 2%;
+            width: 38%;
+            float: left;
+            margin-top: 4%; }
           html body main .about .titleleft {
             font-size: 7vh;
             font-weight: 100;
@@ -628,7 +634,7 @@
             line-height: 3vh;
             margin-top: 2%;
             font-size: 2.5vh;
-            width: 50%;
+            width: 60%;
             position: relative;
             float: left;
             color: #367a57; }
@@ -675,12 +681,10 @@
               padding-top: 1vh;
               padding-bottom: 1vh;
               text-transform: uppercase;
-              border-radius: 100vh;
-              transition: all 0.3s ease 0s; }
+              border-radius: 100vh; }
             html body main .about .buttonfix button:hover {
               color: #367a57;
-              background-color: #eefecc;
-              transition: all 0.3s ease 0s; }
+              background-color: #eefecc; }
         html body main .logincontainer {
           font-size: 2.3vh;
           display: flex;
@@ -761,7 +765,6 @@
                 text-overflow: ellipsis;
                 font-size: 1.9vh;
                 border-radius: 0.5vh;
-                transition: 0.3s;
                 margin-top: 8%;
                 margin-bottom: 25%; }
               html body main .logincontainer .item2 form .submit:hover {
@@ -812,7 +815,6 @@
                 text-overflow: ellipsis;
                 font-size: 1.9vh;
                 border-radius: 0.5vh;
-                transition: 0.3s;
                 margin-top: 8%;
                 margin-bottom: 25%; }
               html body main .logincontainer .item3 form .submit:hover {
