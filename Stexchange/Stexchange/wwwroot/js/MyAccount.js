@@ -217,10 +217,11 @@ function confirmToDelete(id) {
     confirmMessage.style.display = "block";
 }
 
-function populateReviewForm(username, plantname, hasReviewQuality) {
-    document.querySelector("#reviewAdvertisementColumn > p:nth-child(6)").innerHTML = "Naam adverteerder: " + username;
-    document.querySelector("#reviewAdvertisementColumn > p:nth-child(5)").innerHTML = "Naam advertentie: " + plantname;
+function populateReviewForm(reviewId, username, plantname, hasReviewQuality) {
+    document.querySelector("#reviewAdvertisementColumn > p:nth-child(6)").innerHTML = "Naam gebruiker: " + username;
+    document.querySelector("#reviewAdvertisementColumn > p:nth-child(5)").innerHTML = "Naam plant: " + plantname;
     document.querySelector("#reviewAdvertisementColumn > p:nth-child(3)").innerHTML = "Vul de volgende gegevens in om de advertentie van " + username + " te beoordelen";
+    document.querySelector("#reviewAdvertisementColumn > form > input[name='reviewId']").value = reviewId;
     if (hasReviewQuality == false) {
         document.querySelector("#reviewAdvertisementColumn > form > div.qualityrating").style.display = "none";
     }
@@ -301,4 +302,25 @@ function filereader(files) {
 function imagecount() {
     let files = document.getElementById("imginput").files;
     imagecounter.textContent = ((currentImage % files.length) + 1) + "/" + files.length;
+}
+
+function submitReviewForm() {
+    let rrId = document.querySelector("#reviewAdvertisementColumn > form > input[name='reviewId']").value;
+    let communication = document.querySelector("div.communicationrating > div > input:checked").value;
+    let quality = (document.querySelector("div.qualityrating").style.display == "none") ?
+        null : document.querySelector("div.qualityrating > div > input:checked").value;
+    $.ajax({
+        type: "POST",
+        url: `/Account/PostReview?ratingRequestId=${rrId}&communication=${communication}&quality=${quality}`,
+        success: function (data) {
+            alert(data);
+            window.location.href = "/Account/MyAccount";
+        },
+        error: function (err) {
+            if (err.statusCode == 302) {
+                window.location = err.getResponseHeader("RedirectUrl");
+            }
+            alert(err.responseText);
+        }
+    })
 }

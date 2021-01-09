@@ -21,6 +21,7 @@ using Stexchange.Data.Helpers;
 using static Stexchange.Controllers.StexChangeController;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Stexchange.Controllers
 {
@@ -357,12 +358,21 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
         }
 
         [HttpPost]
-        public IActionResult PostReview(int revieweeId, int communication, int? quality)
+        public string PostReview(int ratingRequestId, int communication, int? quality)
         {
-            if(communication <= 0 || communication > 5 || (quality is object && (quality <= 0 || quality > 5)))
+            RatingRequest ratingRequest = (from rr in _db.RatingRequests
+                                           where rr.Id == ratingRequestId
+                                           select rr).FirstOrDefault();
+            if(ratingRequest is null)
             {
-                SetTempDataMessage(false, "De ingevoerde waarden voldoen niet aan de eisen.");
-                return View("ReviewAdvertisement");
+                Response.StatusCode = 500;
+                return "The server encountered an invalid data state while processing your request.";
+            }
+            if(communication <= 0 || communication > 5 || (!ratingRequest.RequestQuality && quality is object)
+                || (ratingRequest.RequestQuality && (quality is null || quality <= 0 || quality > 5)))
+            {
+                Response.StatusCode = 400;
+                return "De ingevoerde waarden voldoen niet aan de eisen.";
             }
             byte communicationGrade = (byte)communication;
             byte? qualityGrade = (byte?)quality;
@@ -373,23 +383,31 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                 userId = GetUserId();
             }catch (InvalidSessionException)
             {
-                return RedirectToAction("Login", "Login");
+                Response.StatusCode = 302;
+                UrlHelper redirect = new UrlHelper(ControllerContext);
+                Response.Headers.Add("RedirectURL", redirect.Action("Login", "Login"));
+                return "Not allowed: you are not logged in";
             }
-            if (revieweeId == userId)
+            if (ratingRequest.RevieweeId == userId)
             {
-                SetTempDataMessage(false, "U kunt uzelf niet beoordelen.");
-                return RedirectToAction("MyAccount");
+                Response.StatusCode = 400;
+                return "U kunt uzelf niet beoordelen.";
+            }
+            if(ratingRequest.ReviewerId != userId)
+            {
+                Response.StatusCode = 401;
+                return "U bent niet gemachtigd voor deze beoordeling.";
             }
             _db.Ratings.Add(new Rating()
             {
                 Communication = communicationGrade,
                 Quality = qualityGrade,
                 ReviewerId = userId,
-                RevieweeId = revieweeId
+                RevieweeId = ratingRequest.RevieweeId
             });
+            _db.Remove(ratingRequest);
             _db.SaveChanges();
-            SetTempDataMessage(true, "Uw beoordeling is opgeslagen.");
-            return RedirectToAction("MyAccount");
+            return "Uw beoordeling is opgeslagen.";
         }
 
         public string GetModifyFormData(int listingId)

@@ -130,7 +130,7 @@
                 <p>@rr.Reviewee.Username</p>
             </div>
             <div class="reviewOptions">
-                <input type="button" class="reviewButton" value="BEOORDELING PLAATSEN" onclick="showRequestForm('reviewAdvertisementColumn', 'ratingreviewButton'); populateReviewForm('@rr.Reviewee.Username', '@rr.PlantName', @rr.RequestQuality.ToString().ToLower())" />
+                <input type="button" class="reviewButton" value="BEOORDELING PLAATSEN" onclick="showRequestForm('reviewAdvertisementColumn', 'ratingreviewButton'); populateReviewForm(@rr.Id, '@rr.Reviewee.Username', '@rr.PlantName', @rr.RequestQuality.ToString().ToLower())" />
             </div>
         </div>
     }
@@ -144,38 +144,39 @@
     <p>Naam advertentie: ...</p>
     <p>Naam adverteerder: ...</p>
     <form action="PostReview" method="post" class="reviewform">
+        <input name="reviewId" type="number" hidden/>
         <div class="qualityrating">
             <p>Kwaliteit</p>
             <div class="stars">
-                <input id="quality1" name="quality" type="radio" value="1" />
+                <input id="quality1" name="quality" type="radio" value="5" />
                 <label class="labelinput" for="quality1">&#9733;</label>
-                <input id="quality2" name="quality" type="radio" value="2" />
+                <input id="quality2" name="quality" type="radio" value="4" />
                 <label class="labelinput" for="quality2">&#9733;</label>
                 <input id="quality3" name="quality" type="radio" value="3" />
                 <label class="labelinput" for="quality3">&#9733;</label>
-                <input id="quality4" name="quality" type="radio" value="4" />
+                <input id="quality4" name="quality" type="radio" value="2" />
                 <label class="labelinput" for="quality4">&#9733;</label>
-                <input id="quality5" name="quality" type="radio" value="5" />
+                <input id="quality5" name="quality" type="radio" value="1" />
                 <label class="labelinput" for="quality5">&#9733;</label>
             </div>
         </div>
         <div class="communicationrating">
             <p>Communicatie</p>
             <div class="stars">
-                <input id="communication1" name="communication" type="radio" value="1" />
+                <input id="communication1" name="communication" type="radio" value="5" />
                 <label class="labelinput" for="communication1">&#9733;</label>
-                <input id="communication2" name="communication" type="radio" value="2" />
+                <input id="communication2" name="communication" type="radio" value="4" />
                 <label class="labelinput" for="communication2">&#9733;</label>
                 <input id="communication3" name="communication" type="radio" value="3" />
                 <label class="labelinput" for="communication3">&#9733;</label>
-                <input id="communication4" name="communication" type="radio" value="4" />
+                <input id="communication4" name="communication" type="radio" value="2" />
                 <label class="labelinput" for="communication4">&#9733;</label>
-                <input id="communication5" name="communication" type="radio" value="5" />
+                <input id="communication5" name="communication" type="radio" value="1" />
                 <label class="labelinput" for="communication5">&#9733;</label>
             </div>
         </div>
         <div>
-            <input type="button" class="submit review" id="reviewsubmit" value="Beoordeling plaatsen" />
+            <input type="button" class="submit review" id="reviewsubmit" value="Beoordeling plaatsen" onclick="submitReviewForm()"/>
         </div>
     </form>
 </div>
