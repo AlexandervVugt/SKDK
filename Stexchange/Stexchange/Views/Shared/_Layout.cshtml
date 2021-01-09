@@ -40,7 +40,7 @@
                 }
                 else
                 {
-                    <li class="nav-item">
+                    <li class="nav-item mobilenav1">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="PostAdvertisement">ADVERTENTIE PLAATSEN</a>
                     </li>
                     <li class="nav-item">
@@ -49,7 +49,7 @@
                 }
                 @if (Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
                 {
-                    <li class="nav-item">
+                    <li class="nav-item mobilenav2">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Chat">CHAT</a>
                     </li>
                 }

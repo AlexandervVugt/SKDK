@@ -73,6 +73,60 @@ $darkshadowwhite: rgba(255,255,255,0.8);
 						text-decoration: none;
 						transition: 0.5s;
 					}
+
+					.mobilenav1 {
+						position: fixed;
+						width: 50%;
+						color: red;
+						bottom: 0%;
+						left: 0;
+						background-color: white;
+						padding-top: 6%;
+						padding-bottom: 6%;
+						margin: 0%;
+						border-top: 2px solid #55ffed;
+
+						li a {
+							width: 100%;
+							padding-top: 0.3vh;
+							padding-bottom: 0.2vh;
+							padding-left: 0.8vh;
+							padding-right: 0.8vh;
+							border-radius: 10px;
+							display: block;
+							color: $green;
+							text-align: center;
+							text-decoration: none;
+							transition: 0.5s;
+						}
+					}
+
+					.mobilenav2 {
+						position: fixed;
+						width: 50%;
+						color: red;
+						bottom: 0%;
+						left: 50%;
+						background-color: white;
+						padding-top: 6%;
+						padding-bottom: 6%;
+						margin: 0%;
+						border-top: 2px solid #55ffed;
+
+						li a {
+							width: 100%;
+							padding-top: 0.3vh;
+							padding-bottom: 0.2vh;
+							padding-left: 0.8vh;
+							padding-right: 0.8vh;
+							border-radius: 10px;
+							display: block;
+							color: $green;
+							text-align: center;
+							text-decoration: none;
+							transition: 0.5s;
+						}
+					}
 					/* Change the link color to #111 (black) on hover */
 					li a:hover {
 						background-color: $green;
