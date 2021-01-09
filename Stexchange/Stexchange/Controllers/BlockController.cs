@@ -40,5 +40,19 @@ namespace Stexchange.Controllers
             }
 
         }
+        [HttpPost]
+        public IActionResult Unblock(int blockedId)
+        {
+            var block = (from b in _db.Blocks
+                             where (b.BlockedId == blockedId && b.BlockerId == GetUserId())
+                             select b);
+            if (block != null)
+            {
+                _db.Remove(block);
+                _db.SaveChanges();
+            }
+            return View();
+
+        }
     }
 }
