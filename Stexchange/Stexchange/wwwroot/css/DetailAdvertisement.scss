@@ -24,7 +24,7 @@ body {
             margin-top: 3%;
             width: 50%;
             height: 4vh;
-            margin-left:25%;
+            margin-left: 25%;
         }
 
         input[type=button]:hover {
@@ -32,6 +32,7 @@ body {
         }
 
         .section-img {
+            position: relative;
             width: 65%;
 
             #imgoutput {
@@ -42,9 +43,24 @@ body {
                 height: calc(65vh);
                 object-fit: cover;
             }
+
+            a {
+                position: absolute;
+                right: 1%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                background-color: $color-darkgreen;
+                color: white;
+                font-size: 16px;
+                width: 6vh;
+                border: none;
+                cursor: pointer;
+                text-align: center;
+            }
         }
 
         h4 {
+            color: $color-darkgreen;
             font-size: 30px;
             margin-left: 10%;
         }
@@ -129,8 +145,6 @@ body {
                     padding: 2%;
                     font-size: 2vh;
                 }
-
-
             }
         }
     }

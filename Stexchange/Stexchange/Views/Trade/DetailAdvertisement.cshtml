@@ -10,9 +10,8 @@
 
 <div class="section">
     <div class="section-img">
-        <a onclick="imageslider()">
-            <img id="imgoutput" src="@Model.Listing.Pictures.First().GetImage()" />
-        </a>
+        <img id="imgoutput" src="@Model.Listing.Pictures.First().GetImage()" />
+        <a class="next" onclick="imageslider()">&#10095;</a>
     </div>
     <div class="user_information">
         <p>gebruikersnaam: @Model.Listing.OwningUserName</p>

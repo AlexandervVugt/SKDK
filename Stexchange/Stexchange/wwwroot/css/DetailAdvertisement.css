@@ -21,6 +21,7 @@
     body main input[type=button]:hover {
       background-color: #3eaf91; }
     body main .section-img {
+      position: relative;
       width: 65%; }
       body main .section-img #imgoutput {
         border: 0.5px solid #3eaf91;
@@ -29,7 +30,20 @@
         width: 100%;
         height: calc(65vh);
         object-fit: cover; }
+      body main .section-img a {
+        position: absolute;
+        right: 1%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color: #005709;
+        color: white;
+        font-size: 16px;
+        width: 6vh;
+        border: none;
+        cursor: pointer;
+        text-align: center; }
     body main h4 {
+      color: #005709;
       font-size: 30px;
       margin-left: 10%; }
     body main .section {
