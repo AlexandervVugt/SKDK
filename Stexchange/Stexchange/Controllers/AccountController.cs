@@ -14,13 +14,12 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Stexchange.Data.Helpers;
-using static Stexchange.Controllers.StexChangeController;
+using static Stexchange.Controllers.AdvertisementController;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Stexchange.Controllers
@@ -432,6 +431,195 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
         {
             TempData.Remove(success ? "AccountControllerError" : "AccountControllerMsg");
             TempData[success ? "AccountControllerMsg" : "AccountControllerError"] = message;
+        }
+
+        public async Task<object> ModifyAdvertisementAsync(int listingId, List<IFormFile> files, string title, string description,
+            string name_nl, int quantity, string plant_type, string plant_order, string give_away, string with_pot, string light, string water, string name_lt = "",
+            string ph = "", string indigenous = "", string nutrients = "")
+        {
+            try {
+                if (ModelState.IsValid)
+                {
+                    var dbUser = (from user in _db.Users
+                                  where user.Id == GetUserId()
+                                  select user).First();
+
+                    // Retrieves correct listing from database Listings
+                    var listing = (from li in _db.Listings
+                                   where li.Id == listingId
+                                   select li).First();
+
+                    // Retrieves correct filters from database Filters
+                    var filters = (from filter in _db.FilterListings
+                                   where filter.ListingId == listingId
+                                   select filter).ToList();
+
+                    List<string> errormessages = new List<string>();
+
+                    // Validators for required fields
+                    ListingValidator listingVal = new ListingValidator();
+                    WithPotFilterValidator potVal = new WithPotFilterValidator();
+                    GiveAwayFilterValidator giveVal = new GiveAwayFilterValidator();
+                    PlantTypeFilterValidator typeVal = new PlantTypeFilterValidator();
+                    OrderFilterValidator orderVal = new OrderFilterValidator();
+                    WaterFilterValidator waterVal = new WaterFilterValidator();
+                    LightFilterValidator lightVal = new LightFilterValidator();
+
+                    // Validators for optional fields
+                    PhFilterValidator phVal = new PhFilterValidator();
+                    IndigenousFilterValidator indiVal = new IndigenousFilterValidator();
+                    NutrientsFilterValidator nutrientsVal = new NutrientsFilterValidator();
+
+                    // Validationresults of required fields
+                    ValidationResult hasTypeFilter = typeVal.Validate(new Filter { Value = plant_type });
+                    ValidationResult hasPotFilter = potVal.Validate(new Filter { Value = with_pot });
+                    ValidationResult hasGiveFilter = giveVal.Validate(new Filter { Value = give_away });
+                    ValidationResult waterresult = waterVal.Validate(new Filter { Value = water });
+                    ValidationResult lightresult = lightVal.Validate(new Filter { Value = light });
+                    ValidationResult orderFilter = orderVal.Validate(new Filter { Value = plant_order });
+                    ValidationResult hasValProps = listingVal.Validate(new Listing
+                    {
+                        // If value will be empty string if it's null
+                        Description = description ?? "",
+                        Title = title ?? "",
+                        NameNl = name_nl ?? "",
+                        Quantity = quantity > 0 ? (uint)quantity : 0
+                    });
+
+                    // Validationresults of optional fields
+                    ValidationResult phresult = phVal.Validate(new Filter { Value = ph });
+                    ValidationResult indigenousresult = indiVal.Validate(new Filter { Value = indigenous });
+                    ValidationResult nutrientsresult = nutrientsVal.Validate(new Filter { Value = nutrients });
+
+                    if (hasValProps.IsValid && hasPotFilter.IsValid && hasGiveFilter.IsValid && hasTypeFilter.IsValid && waterresult.IsValid && lightresult.IsValid && orderFilter.IsValid)
+                    {
+                        if (!(string.IsNullOrWhiteSpace(title)) && listing.Title != title) listing.Title = StandardMessages.CapitalizeFirst(title).Trim();
+                        if (!(string.IsNullOrWhiteSpace(description)) && listing.Description != description) listing.Description = StandardMessages.CapitalizeFirst(description).Trim();
+                        if (!(string.IsNullOrWhiteSpace(name_nl)) && listing.NameNl != name_nl) listing.NameNl = StandardMessages.CapitalizeFirst(name_nl).Trim();
+                        if (!(string.IsNullOrWhiteSpace(name_lt)) && listing.NameLatin != name_lt && name_lt.Length <= 50) listing.NameLatin = StandardMessages.CapitalizeFirst(name_lt).Trim();
+                        if (quantity > 0 && listing.Quantity != quantity) listing.Quantity = (uint)quantity;
+
+                        if (!phresult.IsValid) { phresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); };
+
+                        if (!indigenousresult.IsValid) { indigenousresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); };
+
+                        if (!nutrientsresult.IsValid) { nutrientsresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); };
+                        // Creates new filterlisting if filter doesn't exist in 
+                        List<FilterListing> existingFilters = (from filterListing in _db.FilterListings
+                                                        where filterListing.ListingId == listingId
+                                                        select filterListing).ToList();
+                        List<string> existingFilterValues = (from entry in existingFilters select entry.Value).ToList();
+                        List<string> selectedFilters = new List<string> { light, water, plant_type, nutrients, ph, indigenous, with_pot, give_away, plant_order };
+                        List<FilterListing> remove = (from filterListing in existingFilters
+                                                      where existingFilterValues.Except(selectedFilters).Contains(filterListing.Value)
+                                                      select filterListing)
+                                                      .ToList();
+                        List<FilterListing> add = (from filter in selectedFilters
+                                                   where selectedFilters.Except(existingFilterValues).Contains(filter)
+                                                   select new FilterListing() { 
+                                                       ListingId = listingId, 
+                                                       Value = filter 
+                                                   }).ToList();
+                        remove.ForEach(entry => _db.Remove(entry));
+                        add.ForEach(entry => _db.Add(entry));
+
+                        await OnPostUploadAsync(files, listing, errormessages);
+
+                        if (errormessages.Count > 0)
+                        {
+                            return errormessages;
+                        }
+
+                        await _db.SaveChangesAsync();
+                    }
+                    if (!hasPotFilter.IsValid) { hasPotFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
+
+                    if (!hasGiveFilter.IsValid) { hasGiveFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
+
+                    if (!hasValProps.IsValid) { hasValProps.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
+
+                    if (!hasTypeFilter.IsValid) { hasTypeFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
+
+                    if (!waterresult.IsValid) { waterresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
+
+                    if (!lightresult.IsValid) { lightresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
+
+                    if (!orderFilter.IsValid) { orderFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
+
+                    
+
+                    if (errormessages.Count > 0)
+                    {
+                        return errormessages;
+                    }
+
+                    return "Wijzigingen succesvol opgeslagen";
+                }
+                else
+                {
+                    return "Zorg ervoor dat alle verplichte velden correct zijn ingevuld";
+                }
+            }
+            catch (InvalidSessionException) {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return "Sessie bestaat niet of is verlopen.";
+            }
+        }
+
+        /// <summary>
+        /// Removes images from database
+        /// </summary>
+        /// <param name="listingId"></param>
+        /// <returns></returns>
+        public async Task<string> DeleteListingImages(int listingId)
+        {
+            try
+            {
+                var images = (from image in _db.Images
+                            where image.ListingId == listingId
+                            select image).ToList();
+                images.ForEach(x => _db.Remove(x));
+                await _db.SaveChangesAsync();
+                return "Afbeeldingen succesvol verwijderd";
+            }
+            catch (InvalidSessionException)
+            {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return "Sessie bestaat niet of is verlopen.";
+            }
+        }
+
+        public async Task OnPostUploadAsync(List<IFormFile> files, Listing listing, List<string> errormessages)
+        {
+            if (files.Count > 6) { 
+                errormessages.Add("Het maximale aantal foto's dat geüpload mag worden is 6"); 
+            } else
+            {
+                foreach (IFormFile file in files)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(memoryStream);
+
+                        // Upload the file if less than 5 MB
+                        if (memoryStream.Length < 5000000)
+                        {
+                            var imagefile = new ImageData()
+                            {
+                                Image = memoryStream.ToArray(),
+                                Listing = listing,
+                            };
+
+                            _db.Add(imagefile);
+                            await _db.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            errormessages.Add("De maximale bestandsgrootte van een foto is 5MB");
+                        }
+                    }
+                }
+            }
         }
     }
 }

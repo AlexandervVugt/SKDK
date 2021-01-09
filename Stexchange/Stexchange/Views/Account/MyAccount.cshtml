@@ -181,11 +181,19 @@
     </form>
 </div>
 
+<form id="confirmDeleteImages">
+    <h3>Afbeeldingen verwijderen</h3>
+    <p>Weet je zeker dat je de afbeeldingen van deze advertentie permanent wilt verwijderen?</p>
+    <input type="number" name="listingId" hidden />
+    <input type="button" value="ja" onclick="deleteImages();closeRequestForm('confirmDeleteImages')"/>
+    <input type="button" value="nee" onclick="closeRequestForm('confirmDeleteImages')" />
+</form>
 
 <div id="modifyAdvertismentForm">
     <h3>Advertentie wijzigen</h3>
     <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('modifyAdvertismentForm')" />
-    <form>
+    <form action="ModifyAdvertisement" method="post">
+        <input type="number" name="listingId" hidden />
         <div id="imgContainer">
             <img id="imgoutput" src="~/img/background.png" />
             <div class="imageslides">
@@ -193,7 +201,8 @@
                 <span id="imagecounter"></span>
                 <a class="next" onclick="nextImg(1)">&#10095;</a>
             </div>
-            <input type="file" id="imginput" name="files" onchange="loadFile(event)" accept="image/*" multiple required>
+            <input type="file" id="imginput" name="files" onchange="loadFile(event)" accept="image/*" multiple>
+            <input type="button" id="removeImagesButton" value="Afbeeldingen verwijderen" onclick="confirmToDeleteImages()"/>
         </div>
         <div id="generalinformationContainer">
             <label for="title" class="labeltext">Titel</label>
@@ -290,7 +299,7 @@
                 <option value="indigenous_niet_inheems">Niet inheems</option>
             </select>
         </div>
-        <input type="button" id="advertisementsubmit" value="Advertentie wijzigen" />
+        <input type="submit" id="advertisementsubmit" value="Advertentie wijzigen" />
     </form>
 </div>
 

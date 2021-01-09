@@ -50,11 +50,13 @@ function toggleVisible(id) {
 
 function populateModifyForm(id) {
     imgoutput = document.querySelector("#imgoutput");
+    imginput = document.querySelector("#imginput");
     title = document.querySelector("#generalinformationContainer > input:nth-child(2)");
     description = document.querySelector("#generalinformationContainer > textarea");
     nameLT = document.querySelector("#generalinformationContainer > input:nth-child(6)");
     nameNL = document.querySelector("#generalinformationContainer > input:nth-child(8)");
     quantity = document.querySelector("#generalinformationContainer > input:nth-child(10)");
+    listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)");
 
     $.ajax({
         type: "GET",
@@ -62,7 +64,21 @@ function populateModifyForm(id) {
         success: function (data) {
             data = JSON.parse(data);
             console.log(data);
-            imgoutput.value = data["Pictures"];
+
+            // To create filelist
+            //let list = new DataTransfer();
+            // data["images"][0].Image to get image
+            //let file = new File(data["images"], "plant.png", { type: "image/png" });
+            //list.items.add(file);
+            //let myfilelist = list.files;
+
+            //imginput.files = myfilelist;
+
+            //console.log(file);
+            
+            imgoutput.src = data["images"];
+
+            listingId.value = data["Id"]; // <-------------------
             title.value = data["Title"];
             description.value = data["Description"];
             nameLT.value = data["NameLatin"];
@@ -94,7 +110,6 @@ function changeSettings() {
 
     $.ajax({
         type: "POST",
-        //url: `/Account/ChangeAccountSettings?username=${username}&postalcode=${postalcode}&email=${email}&password=${password}&confirm_password=${confirm_password}`,
         url: '/Account/ChangeAccountSettings/',
         data: { username, postalcode, email, password, confirm_password },
         success: function (data) {
@@ -109,7 +124,7 @@ function changeSettings() {
 
 
 function populateRequestForm(listingId, listingTitle) {
-    document.querySelector("#myrequestForm > p").innerHTML = listingTitle;
+    document.querySelector("#myrequestForm > p").innerHTML = "Naam advertentie: " + listingTitle;
     document.getElementById("listingId").value = listingId;
     let select = document.getElementById("username");
     $.ajax({
@@ -323,4 +338,22 @@ function submitReviewForm() {
             alert(err.responseText);
         }
     })
+function deleteImages() {
+    $.ajax({
+        type: "POST",
+        url: '/Account/DeleteListingImages/',
+        data: { listingId },
+        success: function (data) {
+            alert(data);
+        },
+        error: function (err) {
+            alert(err.responseText);
+        }
+    })
+}
+
+function confirmToDeleteImages() {
+    listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)").value;
+    deleteform = document.getElementById("confirmDeleteImages").style.display = "block";
+    document.querySelector("#confirmDeleteImages > input[type=number]:nth-child(3)").value = listingId;
 }

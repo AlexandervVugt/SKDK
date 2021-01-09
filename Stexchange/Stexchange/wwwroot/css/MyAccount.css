@@ -568,6 +568,34 @@
     margin-top: 1%;
     cursor: pointer; }
 
+#confirmDeleteImages {
+  display: none;
+  z-index: 3;
+  border: 2.5px solid #465D43;
+  margin: auto;
+  width: 60vh;
+  padding: 1%;
+  border-radius: 1vh;
+  text-align: center;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  #confirmDeleteImages h3 {
+    color: #465D43; }
+  #confirmDeleteImages input[type="button"] {
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: #465D43;
+    width: 20%;
+    border-radius: 1vh;
+    height: calc(4vh);
+    font-size: 2vh;
+    color: white;
+    margin-top: 1%;
+    cursor: pointer; }
+
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #465D43;
