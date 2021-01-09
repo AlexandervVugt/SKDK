@@ -15,7 +15,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Stexchange.Data.Helpers;
-using static Stexchange.Controllers.AdvertisementController;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
@@ -555,7 +554,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                         return errormessages;
                     }
 
-                    return "Wijzigingen succesvol opgeslagen";
+                    return "Wijzigingen succesvol opgeslagen. Het kan enkele minuten duren voordat je de nieuwe wijzigingen kunt bekijken";
                 }
                 else
                 {
