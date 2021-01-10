@@ -2,6 +2,9 @@
     ViewData["Title"] = "Mijn Account";
 }
 @model AccountViewModel
+@{ 
+    var totalStars = 5;
+}
 @using Stexchange.Data.Models
 <link rel="stylesheet" href="~/css/MyAccount.css" />
 
@@ -30,6 +33,10 @@
     <p id="communication">
         Communicatie
         <span id="communicationReviews">(@Model.User.Rating.CommunicationCount)</span>
+        @for (int i = totalStars - (int)Math.Round(Model.User.Rating.CommunicationAvg); i > 0; i--)
+        {
+            <label class="stars communicationrating" for="communication">&#9734;</label>
+        }
         @for (int i = (int)Math.Round(Model.User.Rating.CommunicationAvg); i > 0; i--)
         {
             <label class="stars communicationrating" for="communication">&#9733;</label>
@@ -38,6 +45,10 @@
     <p id="quality">
         Kwaliteit
         <span id="qualityReviews">(@Model.User.Rating.QualityCount)</span>
+        @for (int i = totalStars - (int)Math.Round(Model.User.Rating.QualityAvg); i > 0; i--)
+        {
+            <label class="stars qualityrating" for="quality">&#9734;</label>
+        }
         @for (int i = (int)Math.Round(Model.User.Rating.QualityAvg); i > 0; i--)
         {
             <label class="stars qualityrating" for="quality" id="quality">&#9733;</label>

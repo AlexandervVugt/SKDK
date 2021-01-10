@@ -45,7 +45,7 @@ namespace Stexchange.Data.Models
                 }
                 else
                 {
-                    QualityAvg = 5;
+                    QualityAvg = 0;
                 }
                 CommunicationCount = (uint) ratings.Count();
                 if (CommunicationCount > 0)
@@ -54,7 +54,7 @@ namespace Stexchange.Data.Models
                 }
                 else
                 {
-                    CommunicationAvg = 5;
+                    CommunicationAvg = 0;
                 }
             }
         }

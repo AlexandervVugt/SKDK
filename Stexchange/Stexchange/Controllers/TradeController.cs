@@ -67,9 +67,11 @@ namespace Stexchange.Controllers
 
             //TODO: move releasing the resource to this class' Dispose method
             _blocked = false; //Release the resource
-            //TODO: put the listing in a model for the detail page.
-            
-            
+                              //TODO: put the listing in a model for the detail page.
+            listing.Owner.Rating = new User.RatingAggregation(
+                                        from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating);
+
+
             return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters)));
         }
 
@@ -180,7 +182,6 @@ namespace Stexchange.Controllers
                 //TODO: remove catch block
             }
             listing.OwningUserName = listing.Owner.Username;
-            listing.Owner = null;
         }
 
 
