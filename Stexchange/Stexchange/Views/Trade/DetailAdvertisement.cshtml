@@ -17,11 +17,11 @@
         <a class="next" onclick="imageslider()">&#10095;</a>
     </div>
     <div class="user_information">
-        <p>gebruikersnaam: @Model.Listing.OwningUserName</p>
+        <p>Gebruikersnaam: @Model.Listing.OwningUserName</p>
         @if (!(Model.Listing.Distance == -1))
         {
             <p class="distance">afstand: <code>@Model.Listing.Distance</code> km</p>}
-        <p>gemiddelde beoordeling op communicatie</p>
+        <p>Gemiddelde beoordeling op communicatie</p>
         @for (int i = (int)Math.Round(Model.Listing.Owner.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars communicationrating" for="communication">&#9733;</label>
@@ -31,7 +31,7 @@
             <label class="stars communicationrating" for="communication">&#9734;</label>
         }
         <span id="communicationReviews">(@Model.Listing.Owner.Rating.CommunicationCount)</span>
-        <p>gemiddelde beoordeling op kwaliteit</p>
+        <p>Gemiddelde beoordeling op kwaliteit</p>
         @for (int i = (int)Math.Round(Model.Listing.Owner.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars qualityrating" for="quality" id="quality">&#9733;</label>
@@ -58,11 +58,11 @@
 
 <div class="plant_information">
     <div class="basic_information infoblock">
-        <p>nederlandse naam: @Model.Listing.NameNl</p>
-        <p>latijnse naam: @Model.Listing.NameLatin</p>
-        <p>hoeveelheid: @Model.Listing.Quantity</p>
-        <p>beschrijving: @Model.Listing.Description</p>
-        <p>geplaatst op @Model.Listing.CreatedAt</p>
+        <p>Nederlandse naam: @Model.Listing.NameNl</p>
+        <p>Latijnse naam: @Model.Listing.NameLatin</p>
+        <p>Hoeveelheid: @Model.Listing.Quantity</p>
+        <p>Beschrijving: @Model.Listing.Description</p>
+        <p>Geplaatst op @Model.Listing.CreatedAt</p>
     </div>
     <div class="filters_information infoblock">
         <p>Standplaats: @(Model.Filterlist.TryGetValue("light", out string display) && display != "null" ? display : @nietVanToepassing)</p>
