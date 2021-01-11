@@ -51,6 +51,7 @@ body {
             }
 
             a {
+                display: none;
                 position: absolute;
                 top: 50%;
                 right: 1%;
@@ -59,7 +60,7 @@ body {
                 color: white;
                 width: 5%;
                 border-radius: 10%;
-                opacity: 70%;
+                opacity: 0.7;
             }
         }
 
