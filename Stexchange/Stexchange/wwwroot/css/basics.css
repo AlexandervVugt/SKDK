@@ -411,7 +411,8 @@
                 line-height: 1.8vh; }
       html body footer {
         z-index: 3;
-        bottom: 0%; } }
+        bottom: 0%;
+        opacity: 0; } }
 
 @media screen and (min-width: 600px) {
   html {
