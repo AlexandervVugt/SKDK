@@ -334,10 +334,7 @@
                             <label class="stars qualityrating" for="quality">&#9734;</label>
                         }
                     }
-                    @{ 
-                        var sumRatings = listing.Owner.Rating.QualityCount + listing.Owner.Rating.CommunicationCount;
-                    }
-                    <span>(@sumRatings)</span>
+                    <span>(@listing.Owner.Rating.CommunicationCount)</span>
                 </div>
 
                 <div class="filters">
