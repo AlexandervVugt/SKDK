@@ -57,7 +57,7 @@ Object.keys(sessionStorage).forEach((key) => {
         }
     } else if (key == "distance_amount" || key == "recent_amount" || key == "rating_amount") {
         // Adds and shows text between tags if checkbox is checked
-        if (document.getElementById(key.replace("_amount", "_toggle")).checked == true) {
+        if (sessionStorage.getItem(key.replace("_amount", "_toggle")) == "true") {
             document.getElementById(key).innerHTML = sessionStorage.getItem(key);
             document.getElementById(key).hidden = false;
         }

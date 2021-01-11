@@ -170,6 +170,15 @@ html {
           margin-left: 2%;
           width: 80%;
           color: white; }
+        html body #listings .Advertisement .starsrating {
+          margin-left: 2%;
+          display: block;
+          color: white;
+          clear: both;
+          font-size: 2.5vh;
+          line-height: 2.5vh; }
+          html body #listings .Advertisement .starsrating p {
+            font-size: 1.5vh; }
         html body #listings .Advertisement .filters {
           display: inline-block; }
           html body #listings .Advertisement .filters .filter_tag {

@@ -369,3 +369,36 @@ function resetImage() {
     previous[0].style.display = "none";
     document.getElementsByClassName("next")[0].style.display = "none";
 }
+
+function modifyAd() {
+    listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)").value;
+    files = document.querySelector("#imginput").value; // to files
+    title = document.querySelector("#generalinformationContainer > input:nth-child(2)").value;
+    description = document.querySelector("#generalinformationContainer > textarea").value;
+    name_lt = document.querySelector("#generalinformationContainer > input:nth-child(6)").value;
+    name_nl = document.querySelector("#generalinformationContainer > input:nth-child(8)").value;
+    quantity = document.querySelector("#generalinformationContainer > input:nth-child(10)").value;
+    plant_type = document.querySelector("#plant_type").value;
+    plant_order = document.querySelector("#plant_order").value;
+    light = document.querySelector("#light").value;
+    water = document.querySelector("#water").value;
+    with_pot = document.querySelector("#with_pot").value;
+    give_away = document.querySelector("#give_away").value;
+    nutrients = document.querySelector("#nutrients").value;
+    ph = document.querySelector("#ph").value;
+    indigenous = document.querySelector("#indigenous").value;
+
+    $.ajax({
+        type: "POST",
+        url: '/Account/ModifyAdvertisement/',
+        data: { listingId, files, title, description, name_lt, name_nl, quantity, plant_type, plant_order, light, water, with_pot, give_away, nutrients, ph, indigenous },
+        enctype: 'multipart/form-data',
+        processData: false, // it prevent jQuery form transforming the data into a query string
+        success: function (data) {
+            alert(data);
+        },
+        error: function (err) {
+            alert(err.responseText);
+        }
+    })
+}

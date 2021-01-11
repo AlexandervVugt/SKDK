@@ -2,7 +2,7 @@
     ViewData["Title"] = "Mijn Account";
 }
 @model AccountViewModel
-@{ 
+@{
     var totalStars = 5;
 }
 @using Stexchange.Data.Models
@@ -33,11 +33,11 @@
     <p id="communication">
         Communicatie
         <span id="communicationReviews">(@Model.User.Rating.CommunicationCount)</span>
-        @for (int i = totalStars - (int)Math.Round(Model.User.Rating.CommunicationAvg); i > 0; i--)
+        @for (int i = totalStars - (int)Math.Round(Model.User.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars communicationrating" for="communication">&#9734;</label>
         }
-        @for (int i = (int)Math.Round(Model.User.Rating.CommunicationAvg); i > 0; i--)
+        @for (int i = (int)Math.Round(Model.User.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars communicationrating" for="communication">&#9733;</label>
         }
@@ -45,11 +45,11 @@
     <p id="quality">
         Kwaliteit
         <span id="qualityReviews">(@Model.User.Rating.QualityCount)</span>
-        @for (int i = totalStars - (int)Math.Round(Model.User.Rating.QualityAvg); i > 0; i--)
+        @for (int i = totalStars - (int)Math.Round(Model.User.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars qualityrating" for="quality">&#9734;</label>
         }
-        @for (int i = (int)Math.Round(Model.User.Rating.QualityAvg); i > 0; i--)
+        @for (int i = (int)Math.Round(Model.User.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars qualityrating" for="quality" id="quality">&#9733;</label>
         }
@@ -155,7 +155,7 @@
     <p>Naam advertentie: ...</p>
     <p>Naam adverteerder: ...</p>
     <form action="PostReview" method="post" class="reviewform">
-        <input name="reviewId" type="number" hidden/>
+        <input name="reviewId" type="number" hidden />
         <div class="qualityrating">
             <p>Kwaliteit</p>
             <div class="stars">
@@ -187,7 +187,7 @@
             </div>
         </div>
         <div>
-            <input type="button" class="submit review" id="reviewsubmit" value="Beoordeling plaatsen" onclick="submitReviewForm()"/>
+            <input type="button" class="submit review" id="reviewsubmit" value="Beoordeling plaatsen" onclick="submitReviewForm()" />
         </div>
     </form>
 </div>
@@ -196,24 +196,24 @@
     <h3>Afbeeldingen verwijderen</h3>
     <p>Weet je zeker dat je de afbeeldingen van deze advertentie permanent wilt verwijderen?</p>
     <input type="number" name="listingId" hidden />
-    <input type="button" value="ja" onclick="deleteImages();closeRequestForm('confirmDeleteImages');resetImage()"/>
+    <input type="button" value="ja" onclick="deleteImages();closeRequestForm('confirmDeleteImages');resetImage()" />
     <input type="button" value="nee" onclick="closeRequestForm('confirmDeleteImages')" />
 </form>
 
 <div id="modifyAdvertismentForm">
     <h3>Advertentie wijzigen</h3>
     <input type="button" id="cancelButton" value="X" onclick="closeRequestForm('modifyAdvertismentForm')" />
-    <form action="ModifyAdvertisement" method="post" enctype="multipart/form-data">
+    <form enctype="multipart/form-data" id="modifyadvertisementForm">
         <input type="number" name="listingId" hidden />
         <div id="imgContainer">
-            <img id="imgoutput"/>
+            <img id="imgoutput" />
             <div class="imageslides">
                 <a class="previous" onclick="previousImg(1);imageslider()">&#10094;</a>
                 <span id="imagecounter"></span>
                 <a class="next" onclick="nextImg(1);imageslider()">&#10095;</a>
             </div>
             <input type="file" id="imginput" name="files" onchange="loadFile(event)" accept="image/*" multiple>
-            <input type="button" id="removeImagesButton" value="Afbeeldingen verwijderen" onclick="confirmToDeleteImages()"/>
+            <input type="button" id="removeImagesButton" value="Afbeeldingen verwijderen" onclick="confirmToDeleteImages()" />
         </div>
         <div id="generalinformationContainer">
             <label for="title" class="labeltext">Titel</label>
@@ -310,7 +310,7 @@
                 <option value="indigenous_niet_inheems">Niet inheems</option>
             </select>
         </div>
-        <input type="submit" id="advertisementsubmit" value="Advertentie wijzigen" />
+        <input type="button" id="advertisementsubmit" value="Advertentie wijzigen" onclick="modifyAd()"/>
     </form>
 </div>
 

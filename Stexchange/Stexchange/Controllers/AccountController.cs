@@ -437,7 +437,8 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
             string name_nl, int quantity, string plant_type, string plant_order, string give_away, string with_pot, string light, string water, string name_lt = "",
             string ph = "", string indigenous = "", string nutrients = "")
         {
-            try {
+            try
+            {
                 if (ModelState.IsValid)
                 {
                     var dbUser = (from user in _db.Users
@@ -507,8 +508,8 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
 
                         // Creates new filterlisting if filter doesn't exist in 
                         List<FilterListing> existingFilters = (from filterListing in _db.FilterListings
-                                                        where filterListing.ListingId == listingId
-                                                        select filterListing).ToList();
+                                                               where filterListing.ListingId == listingId
+                                                               select filterListing).ToList();
                         List<string> existingFilterValues = (from entry in existingFilters select entry.Value).ToList();
                         List<string> selectedFilters = new List<string> { light, water, plant_type, nutrients, ph, indigenous, with_pot, give_away, plant_order };
                         List<FilterListing> remove = (from filterListing in existingFilters
@@ -517,9 +518,10 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                                                       .ToList();
                         List<FilterListing> add = (from filter in selectedFilters
                                                    where selectedFilters.Except(existingFilterValues).Contains(filter)
-                                                   select new FilterListing() { 
-                                                       ListingId = listingId, 
-                                                       Value = filter 
+                                                   select new FilterListing()
+                                                   {
+                                                       ListingId = listingId,
+                                                       Value = filter
                                                    }).ToList();
 
 
@@ -561,7 +563,8 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                     return "Zorg ervoor dat alle verplichte velden correct zijn ingevuld";
                 }
             }
-            catch (InvalidSessionException) {
+            catch (InvalidSessionException)
+            {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 return "Sessie bestaat niet of is verlopen.";
             }

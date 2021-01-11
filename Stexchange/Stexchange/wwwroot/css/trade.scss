@@ -244,6 +244,19 @@ html {
                     color: white;
                 }
 
+                .starsrating {
+                    margin-left: 2%;
+                    display: block;
+                    color: white;
+                    clear: both;
+                    font-size: 2.5vh;
+                    line-height: 2.5vh;
+
+                    p{
+                        font-size: 1.5vh;
+                    }
+                }
+
                 .filters {
                     display: inline-block;
 

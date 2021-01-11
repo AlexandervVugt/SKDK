@@ -22,21 +22,21 @@
         {
             <p class="distance">afstand: <code>@Model.Listing.Distance</code> km</p>}
         <p>gemiddelde beoordeling op communicatie</p>
-        @for (int i = (int)Math.Round(Model.Listing.Owner.Rating.CommunicationAvg); i > 0; i--)
+        @for (int i = (int)Math.Round(Model.Listing.Owner.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars communicationrating" for="communication">&#9733;</label>
         }
-        @for (int i = totalStars - (int)Math.Round(Model.Listing.Owner.Rating.CommunicationAvg); i > 0; i--)
+        @for (int i = totalStars - (int)Math.Round(Model.Listing.Owner.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars communicationrating" for="communication">&#9734;</label>
         }
         <span id="communicationReviews">(@Model.Listing.Owner.Rating.CommunicationCount)</span>
         <p>gemiddelde beoordeling op kwaliteit</p>
-        @for (int i = (int)Math.Round(Model.Listing.Owner.Rating.QualityAvg); i > 0; i--)
+        @for (int i = (int)Math.Round(Model.Listing.Owner.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars qualityrating" for="quality" id="quality">&#9733;</label>
         }
-        @for (int i = totalStars - (int)Math.Round(Model.Listing.Owner.Rating.QualityAvg); i > 0; i--)
+        @for (int i = totalStars - (int)Math.Round(Model.Listing.Owner.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
         {
             <label class="stars qualityrating" for="quality">&#9734;</label>
         }
