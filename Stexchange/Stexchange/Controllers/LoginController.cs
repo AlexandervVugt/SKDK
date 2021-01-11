@@ -292,7 +292,6 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 		}
 		private void AddCookie(int Id, string Postal_Code)
 		{
-			ClearSessions(Id);
 			long sessionToken = CreateSession(new Tuple<int, string>(Id, Postal_Code));
 			var cookieOptions = new CookieOptions
 			{

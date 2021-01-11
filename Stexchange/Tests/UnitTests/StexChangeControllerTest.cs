@@ -1,6 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Stexchange.Controllers;
 using System;
+using Moq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Stexchange.Controllers.Exceptions;
 
 namespace Tests
 {
@@ -65,6 +69,149 @@ namespace Tests
         public void TerminateSession_False()
         {
             Assert.IsFalse(StexChangeController.TerminateSession(98));
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "user tuple was null and inappropriately allowed")]
+        public void CreateSession_TupleNull()
+        {
+            StexChangeController.CreateSession(null);
+        }
+        [TestMethod]
+        public void CreateSession_DuplicateId()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(89, "5736TG");
+            long existingSession = StexChangeController.CreateSession(user);
+            //Act
+            long createdSession = StexChangeController.CreateSession(user);
+            //Assert
+            Assert.IsFalse(StexChangeController.SessionExists(existingSession));
+            Assert.IsTrue(StexChangeController.GetSessionData(createdSession, out Tuple<int, string> sessionData));
+            Assert.AreEqual(user, sessionData);
+        }
+        [TestMethod]
+        public void CreateSession_Normal()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(145, "9973RB");
+            //Act
+            long createdSession = StexChangeController.CreateSession(user);
+            //Assert
+            Assert.IsTrue(StexChangeController.GetSessionData(createdSession, out Tuple<int, string> sessionData));
+            Assert.AreEqual(user, sessionData);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+            "Tuple that contains a null value was inappropriately allowed")]
+        public void CreateSession_PostalCodeNull()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(586, null);
+            //Act
+            StexChangeController.CreateSession(user);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Postal code that was too short was inapporpriately allowed")]
+        public void CreateSession_PostalCodeInvalid_TooShort()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(934, "NT");
+            //Act
+            StexChangeController.CreateSession(user);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Postal code that was too short was inapporpriately allowed")]
+        public void CreateSession_PostalCodeInvalid_TooLong()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(934, "12345AB");
+            //Act
+            StexChangeController.CreateSession(user);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Postal code that was too short was inapporpriately allowed")]
+        public void CreateSession_PostalCodeInvalid_Format()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(934, "123ABC");
+            //Act
+            StexChangeController.CreateSession(user);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "UserId that was invalid was inapporpriately allowed")]
+        public void CreateSession_UserIdInvalid()
+        {
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(-1, "7384UY");
+            //Act
+            StexChangeController.CreateSession(user);
+        }
+        [TestMethod]
+        public void GetUserId_Normal()
+        {
+            //Arrange
+            int expected = 47;
+            Tuple<int, string> user = new Tuple<int, string>(expected, "4329TU");
+            var mockedController = new HomeController()
+            {
+                ControllerContext = ControllerContextFactory
+                    .CreateControllerContext(StexChangeController.CreateSession(user).ToString())
+            };
+            //Act
+            int actual = mockedController.GetUserId();
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void GetUserId_Mismatch()
+        {
+            string message = "Session token should be invalid, but was found to be valid";
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(34, "7684IO");
+            var mockedController = new HomeController()
+            {
+                ControllerContext = ControllerContextFactory.CreateControllerContext("12345")
+            };
+            //Act
+            try
+            {
+                int actual = mockedController.GetUserId();
+                Assert.Fail(message);
+            } catch (InvalidSessionException except)
+            {
+                if (except.Message != "Session does not exist")
+                {
+                    Assert.Fail(message);
+                }
+            }
+        }
+        [TestMethod]
+        public void GetUserId_NoCookie()
+        {
+            string message = "Session token should be invalid, but was found to be valid";
+            //Arrange
+            Tuple<int, string> user = new Tuple<int, string>(908, "3342PE");
+            var mockedController = new HomeController()
+            {
+                ControllerContext = ControllerContextFactory.CreateControllerContext(null, false)
+            };
+            //Act
+            try
+            {
+                mockedController.GetUserId();
+                Assert.Fail(message);
+            } catch (InvalidSessionException except)
+            {
+                if(except.Message != "Cookie does not exist")
+                {
+                    Assert.Fail(message);
+                }
+            }
         }
     }
 }
