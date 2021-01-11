@@ -329,11 +329,15 @@
                         {
                             <label class="stars qualityrating" for="quality" id="quality">&#9733;</label>
                         }
-                        @for (int i = totalStars - (int)Math.Round(((listing.Owner.Rating.QualityAvg) + (listing.Owner.Rating.CommunicationAvg)) / 2, 0, MidpointRounding.AwayFromZero) ; i > 0; i--)
+                        @for (int i = totalStars - (int)Math.Round(((listing.Owner.Rating.QualityAvg) + (listing.Owner.Rating.CommunicationAvg)) / 2, 0, MidpointRounding.AwayFromZero); i > 0; i--)
                         {
                             <label class="stars qualityrating" for="quality">&#9734;</label>
                         }
                     }
+                    @{ 
+                        var sumRatings = listing.Owner.Rating.QualityCount + listing.Owner.Rating.CommunicationCount;
+                    }
+                    <span>(@sumRatings)</span>
                 </div>
 
                 <div class="filters">
