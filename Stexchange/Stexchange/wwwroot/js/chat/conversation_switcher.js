@@ -34,3 +34,8 @@ function displayConvo(chatId) {
     chatDiv.scrollTop = chatDiv.scrollHeight;
 }
 
+function setBlockInputs() {
+    let activechat = document.querySelector(".conversation_entry.active").id.substring(1);
+    console.log("active set to: " + activechat);
+    document.querySelector("#blockchat > input[name='id']").value = activechat;
+}

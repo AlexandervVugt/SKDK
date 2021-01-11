@@ -1,5 +1,13 @@
 ﻿html body main {
   line-height: 2vh; }
+  html body main #blockUser {
+    background: #a9a9a9;
+    position: absolute;
+    width: 7%;
+    height: 3%;
+    margin-left: 85%;
+    margin-top: .5%;
+    color: white; }
   html body main #chatcontainer {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: grid;
@@ -51,95 +59,95 @@
       padding-right: 1%;
       padding-top: 1%;
       padding-left: 3vh; }
-    html body main #chatcontainer #messagelist {
-      background: rgba(255, 255, 255, 0.8);
-      grid-area: messagelist;
-      overflow-y: scroll;
-      padding-bottom: 3vh; }
-      html body main #chatcontainer #messagelist .message_container {
-        margin-bottom: 2vh;
-        margin-top: 1vh; }
-        html body main #chatcontainer #messagelist .message_container .message_info {
-          font-size: 1.3vh;
-          color: rgba(0, 0, 0, 0.8);
-          display: block;
-          line-height: 2vh; }
-      html body main #chatcontainer #messagelist .message_right_align {
+  html body main #messagelist {
+    background: rgba(255, 255, 255, 0.8);
+    grid-area: messagelist;
+    overflow-y: scroll;
+    padding-bottom: 3vh; }
+    html body main #messagelist .message_container {
+      margin-bottom: 2vh;
+      margin-top: 1vh; }
+      html body main #messagelist .message_container .message_info {
+        font-size: 1.3vh;
+        color: rgba(0, 0, 0, 0.8);
         display: block;
+        line-height: 2vh; }
+    html body main #messagelist .message_right_align {
+      display: block;
+      float: right;
+      clear: both;
+      margin-right: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 0vh;
+      width: 94%; }
+      html body main #messagelist .message_right_align span {
         float: right;
-        clear: both;
-        margin-right: 3vh;
-        margin-left: 3vh;
-        margin-bottom: 0vh;
-        width: 94%; }
-        html body main #chatcontainer #messagelist .message_right_align span {
-          float: right;
-          display: block;
-          clear: both; }
-        html body main #chatcontainer #messagelist .message_right_align .message_content {
-          background-color: rgba(0, 0, 0, 0.8);
-          font-size: 27px;
-          color: white;
-          border-radius: 0.2vh;
-          padding-left: 1%;
-          text-align: right;
-          padding-right: 1%;
-          min-width: 10%;
-          max-width: 84%;
-          float: right;
-          display: block;
-          clear: both;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          line-height: 3.5vh;
-          font-size: 2vh; }
-      html body main #chatcontainer #messagelist .message_left_align {
         display: block;
-        float: left;
-        clear: both;
-        margin-left: 3vh;
-        width: 94%;
-        margin-right: 3vh;
-        margin-bottom: 0vh; }
-        html body main #chatcontainer #messagelist .message_left_align span {
-          float: left;
-          display: block;
-          clear: both; }
-        html body main #chatcontainer #messagelist .message_left_align .message_content {
-          border: 0.1vh solid rgba(0, 0, 0, 0.8);
-          background-color: white;
-          font-size: 27px;
-          color: rgba(0, 0, 0, 0.8);
-          border-radius: 0.2vh;
-          padding-left: 1%;
-          padding-right: 1%;
-          min-width: 10%;
-          max-width: 84%;
-          float: left;
-          display: block;
-          clear: both;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          line-height: 3.5vh;
-          font-size: 2vh; }
-    html body main #chatcontainer #chatform {
-      display: grid;
-      grid-area: chatform;
-      grid-template-rows: 10% 80% 10%;
-      grid-template-columns: 1% 87% 1% 10% 1%;
-      grid-template-areas: ". . . . ." ". typemessage . sendmessage ." ". . . . .";
-      border-radius: 0 0vh 0.2vh 0;
-      background: rgba(255, 255, 255, 0.8);
-      border-top: 0.1vh solid rgba(0, 0, 0, 0.8); }
-      html body main #chatcontainer #chatform #typemessage {
-        grid-area: typemessage;
-        font-size: 1.8vh;
-        border-radius: 0.2vh;
-        padding-left: 1vh; }
-      html body main #chatcontainer #chatform #sendmessage {
-        grid-area: sendmessage;
-        border-radius: 0.2vh;
-        background: rgba(0, 0, 0, 0.8);
+        clear: both; }
+      html body main #messagelist .message_right_align .message_content {
+        background-color: rgba(0, 0, 0, 0.8);
+        font-size: 27px;
         color: white;
-        font-size: 1.8vh;
-        text-transform: capitalize; }
+        border-radius: 0.2vh;
+        padding-left: 1%;
+        text-align: right;
+        padding-right: 1%;
+        min-width: 10%;
+        max-width: 84%;
+        float: right;
+        display: block;
+        clear: both;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 3.5vh;
+        font-size: 2vh; }
+    html body main #messagelist .message_left_align {
+      display: block;
+      float: left;
+      clear: both;
+      margin-left: 3vh;
+      width: 94%;
+      margin-right: 3vh;
+      margin-bottom: 0vh; }
+      html body main #messagelist .message_left_align span {
+        float: left;
+        display: block;
+        clear: both; }
+      html body main #messagelist .message_left_align .message_content {
+        border: 0.1vh solid rgba(0, 0, 0, 0.8);
+        background-color: white;
+        font-size: 27px;
+        color: rgba(0, 0, 0, 0.8);
+        border-radius: 0.2vh;
+        padding-left: 1%;
+        padding-right: 1%;
+        min-width: 10%;
+        max-width: 84%;
+        float: left;
+        display: block;
+        clear: both;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 3.5vh;
+        font-size: 2vh; }
+  html body main #chatform {
+    display: grid;
+    grid-area: chatform;
+    grid-template-rows: 10% 80% 10%;
+    grid-template-columns: 1% 87% 1% 10% 1%;
+    grid-template-areas: ". . . . ." ". typemessage . sendmessage ." ". . . . .";
+    border-radius: 0 0vh 0.2vh 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-top: 0.1vh solid rgba(0, 0, 0, 0.8); }
+    html body main #chatform #typemessage {
+      grid-area: typemessage;
+      font-size: 1.8vh;
+      border-radius: 0.2vh;
+      padding-left: 1vh; }
+    html body main #chatform #sendmessage {
+      grid-area: sendmessage;
+      border-radius: 0.2vh;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      font-size: 1.8vh;
+      text-transform: capitalize; }

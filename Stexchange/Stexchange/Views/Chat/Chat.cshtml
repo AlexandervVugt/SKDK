@@ -7,7 +7,11 @@
 @using Stexchange.Data.Models
 
 <link rel="stylesheet" href="~/css/chat.css" />
-
+<form id="blockchat" method="post" action="@Url.Action("Block", "Block")">
+    <input type="number" name="id" hidden />
+    <input type="text" name="block" value="chat" hidden />
+    <input type="submit" id="blockUser" value="Blokkeren" onclick="setBlockInputs()" />
+</form>
 <div id="chatcontainer">
     <div id="conversationslist">
         <p id="chatinboxtitle">
@@ -21,7 +25,6 @@
         }
     </div>
     <div id="chattitle">
-        <!--Name of reciever-->
     </div>
     <div id="messagelist">
     </div>
@@ -33,7 +36,8 @@
 
 </div>
 
-}
+
+
 <script type="text/javascript">
     var temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ChatInbox));
     var userId = @Model.UserId;
@@ -43,7 +47,7 @@
     });
     window.onload = () => {
         let activeChat = @(TempData["Active"] ?? -1);
-        if (activeChat != -1) {
+        if (activeChat != -1 ) {
             displayConvo(activeChat);
         }
     };

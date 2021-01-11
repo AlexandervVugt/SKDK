@@ -66,12 +66,19 @@ namespace Stexchange.Controllers
                                     where listing.Id == chat.AdId
                                     select listing).First())
                                 .Complete()).ToList();
+            List<int> blockedUsers = (from b in _db.Blocks
+                                      where b.BlockerId == userId
+                                      select b.BlockedId).ToList();
+            List<int> blockedAds = (from a in _db.Listings
+                                      where (blockedUsers.Contains(a.UserId))
+                                      select a.Id).ToList();
+
             chats = (from chat in chats
-                     where chat.Messages.Any()
-                     orderby chat.Messages[0].Timestamp descending
+                     where chat.Messages.Any() && !(blockedAds.Contains(chat.AdId))
+                     orderby chat.Messages[0].Timestamp descending 
                      select chat).ToList();
             
-      
+            
             try
             {
                 int recentChat = chats[0].Id;
@@ -83,6 +90,7 @@ namespace Stexchange.Controllers
                     {
                       RecentTimestamp = ch.Messages.Last().Timestamp;
                       recentChat = ch.Id;
+                      TempData["Active"] = recentChat;
                     }
                     
                 }

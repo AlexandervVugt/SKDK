@@ -16,23 +16,37 @@ namespace Stexchange.Controllers
             _db = db;
         }
         [HttpPost]
-        public IActionResult Block(int listid)
+        public IActionResult Block(int id , string block)
         {
             int userId;
             try
             {
                 userId = GetUserId();
-                int blockedUserId = (from l in _db.Listings
-                                     where (l.Id == listid)
-                                     select l.UserId).FirstOrDefault();
-                var newBlock = new Block
+                int blockedUserId;
+                if (block == "list")
                 {
-                    BlockerId = userId,
-                    BlockedId = blockedUserId
-                };
-                _db.Blocks.Add(newBlock);
-                _db.SaveChanges();
-                return RedirectToAction("Trade", "Trade");
+                     blockedUserId = (from l in _db.Listings
+                                         where (l.Id == id)
+                                         select l.UserId).FirstOrDefault();
+                    UpdateDB(userId, blockedUserId);
+                    return RedirectToAction("Trade", "Trade");
+                }
+                else if (block == "chat")
+                {
+                    int AdId = (from c in _db.Chats
+                                     where (c.Id == id)
+                                     select c.AdId).FirstOrDefault();
+                    blockedUserId = (from l in _db.Listings
+                                     where (l.Id == AdId)
+                                     select l.UserId).FirstOrDefault();
+                    UpdateDB(userId, blockedUserId);
+                    return RedirectToAction("Chat", "Chat");
+                }
+                else
+                {
+                    return View();
+                }
+
             }
             catch (InvalidSessionException)
             {
@@ -53,6 +67,17 @@ namespace Stexchange.Controllers
             }
             return View();
 
+        }
+        public async void UpdateDB (int userId, int blockedUserId)
+        {
+            var newBlock = new Block
+            {
+                BlockerId = userId,
+                BlockedId = blockedUserId
+            };
+            await _db.Blocks.AddAsync(newBlock);
+            await _db.SaveChangesAsync();
+            
         }
     }
 }
