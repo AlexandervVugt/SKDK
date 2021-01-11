@@ -56,7 +56,6 @@ namespace Stexchange.Controllers
 
             var tradeModel = new TradeViewModel(listings);
  
-            //TODO: move releasing the resource to this class' Dispose method
             _blocked = false; //Release the resource
             return View(model: tradeModel);
         }
@@ -68,12 +67,10 @@ namespace Stexchange.Controllers
             var listing = _listingCache[listingId];
             PrepareListing(ref listing);
 
-            //TODO: move releasing the resource to this class' Dispose method
-            _blocked = false; //Release the resource
-                              //TODO: put the listing in a model for the detail page.
             listing.Owner.Rating = new User.RatingAggregation(
-                                        from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating);
+                            from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating);
 
+            _blocked = false; //Release the resource
 
             return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters)));
         }
@@ -341,8 +338,6 @@ namespace Stexchange.Controllers
         //[HttpGet]
         public List<Listing> FilterSearch(List<Listing> advertisements, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] plant_order, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance, bool rating_toggle, int rating)
         {
-            // TODO: Rating filter
-
             // List of advertisements that contains selected filter values and search input
             List<Listing> searchList = new List<Listing>();
 

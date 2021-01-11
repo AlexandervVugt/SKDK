@@ -596,12 +596,12 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
         {
             var images = (from image in _db.Images
                           where image.ListingId == listing.Id
-                          select image).FirstOrDefault();
+                          select image).ToList();
             if(images is null && files.Count == 0)
             {
                 errormessages.Add("Het is verplicht om een foto te uploaden");
             }
-            if (files.Count > 6) { 
+            if (files.Count > 6 || (images.Count + files.Count) > 6) { 
                 errormessages.Add("Het maximale aantal foto's dat geüpload mag worden is 6"); 
             } else
             {
