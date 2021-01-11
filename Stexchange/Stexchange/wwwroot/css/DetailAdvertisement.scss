@@ -33,7 +33,13 @@ body {
 
         .section-img {
             position: relative;
+            text-align: center;
             width: 65%;
+            height: calc(65vh);
+            margin: 0;
+            padding: 0;
+            float: left;
+            cursor: pointer;
 
             #imgoutput {
                 border: 0.5px solid #3eaf91;
@@ -46,16 +52,14 @@ body {
 
             a {
                 position: absolute;
+                top: 50%;
                 right: 1%;
                 transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
-                background-color: $color-darkgreen;
+                background-color: black;
                 color: white;
-                font-size: 16px;
-                width: 6vh;
-                border: none;
-                cursor: pointer;
-                text-align: center;
+                width: 5%;
+                border-radius: 10%;
+                opacity: 70%;
             }
         }
 
