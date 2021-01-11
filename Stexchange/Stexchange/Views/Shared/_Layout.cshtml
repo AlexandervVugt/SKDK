@@ -18,8 +18,8 @@
 
 </head>
 <body>
-	<header>
-		<nav class="navbar-default">
+    <header>
+        <nav class="navbar-default">
             <ul>
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
@@ -42,7 +42,7 @@
                 else
                 {
                     <li class="nav-item mobilenav1">
-                        
+
                         <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="PostAdvertisement"><i class="fa fa-plus-circle"></i>ADVERTENTIE PLAATSEN</a>
                     </li>
                     <li class="nav-item">
@@ -51,17 +51,17 @@
                 }
                 @if (Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
                 {
-            <li class="nav-item mobilenav2">
-                
-                <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Chat"><i class="fa fa-envelope-o"></i>CHAT</a>
-            </li>
+                    <li class="nav-item mobilenav2">
+
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Chat"><i class="fa fa-envelope-o"></i>CHAT</a>
+                    </li>
                 }
             </ul>
-		</nav>
-	</header>
-	<main role="main" class="pb-3" id="startchange">
-		@RenderBody()
-	</main>
+        </nav>
+    </header>
+    <main role="main" class="pb-3" id="startchange">
+        @RenderBody()
+    </main>
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -69,14 +69,20 @@
         </main>
     </div>
 
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	<script>
-		$(window).scroll(function () {
-			$('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
-		});
-	</script>
-	@RenderSection("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(window).scroll(function () {
+            $('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+
+    <footer>
+        <p>
+            &copy; HR<br>
+        </p>
+    </footer>
 </body>
 </html>

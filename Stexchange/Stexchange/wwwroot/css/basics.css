@@ -200,7 +200,7 @@
           font-weight: 30;
           background-color: rgba(255, 255, 255, 0.8);
           margin-top: 2%;
-          margin-bottom: 3%;
+          margin-bottom: 20%;
           border-radius: 1vh;
           box-shadow: 5px 10px rgba(0, 0, 0, 0.1); }
           html body main .about img {
@@ -410,9 +410,7 @@
                 text-align: center;
                 line-height: 1.8vh; }
       html body footer {
-        opacity: 0;
         z-index: 3;
-        position: fixed;
         bottom: 0%; } }
 
 @media screen and (min-width: 600px) {
@@ -830,7 +828,6 @@
       html body footer {
         opacity: 0;
         z-index: 3;
-        position: fixed;
         bottom: 0%; } }
 
 /* width */
@@ -839,7 +836,8 @@
 
 ::-webkit-scrollbar {
   opacity: 0;
-  width: 0.5vh; }
+  width: 0.5vh;
+  height: 0.5vh; }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;

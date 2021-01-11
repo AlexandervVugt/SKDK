@@ -129,7 +129,8 @@
           color: #005709; }
       html body #listings {
         float: left;
-        width: 60%; }
+        width: 60%;
+        margin-bottom: 20%; }
         html body #listings .Advertisement {
           float: left;
           width: 100%;

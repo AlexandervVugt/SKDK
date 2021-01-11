@@ -3,10 +3,11 @@
     width: 100%;
     /* Add a background color to the button if it is clicked on and when you move the mouse over it (hover) */
     /* Style the accordion panel. Hidden by default */ }
-    body select#indigenous {
-      margin-bottom: 20vh; }
+    body button#advertisementsubmit {
+      margin-bottom: 20%; }
     body .accordion {
       background-color: #015e54;
+      float: left;
       color: white;
       cursor: pointer;
       text-align: left;
@@ -107,7 +108,10 @@
     body input[type=file] {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
-      padding: 2px 1.5px; }
+      padding: 2px 1.5px;
+      width: 100%;
+      height: calc(7vh);
+      font-size: 2vh; }
     body input {
       height: calc(5vh);
       font-size: 25px; }
@@ -124,12 +128,12 @@
       margin-right: 10%; }
     body button {
       background-color: #015e54;
-      width: 15%;
+      width: 100%;
       height: calc(7vh);
       font-size: 2vh;
       color: white;
-      float: right;
-      margin-top: 1%; }
+      margin-top: 1%;
+      margin-bottom: 20%; }
     body .advertisementform p {
       width: 80%;
       margin-left: 10%; }
@@ -178,6 +182,7 @@
     /* Style the accordion panel. Hidden by default */ }
     body .accordion {
       background-color: #015e54;
+      float: left;
       color: white;
       cursor: pointer;
       text-align: left;
@@ -317,8 +322,8 @@
       height: calc(7vh);
       font-size: 2vh;
       color: white;
-      float: right;
-      margin-top: 1%; }
+      margin-top: 1%;
+      margin-bottom: 10%; }
     body .advertisementform .imageslides .previous {
       background-color: #015e54;
       padding: 2%;

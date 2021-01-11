@@ -6,12 +6,13 @@ $color-lightgreen: #3eaf91;
     body {
         width: 100%;
 
-        select#indigenous {
-            margin-bottom: 20vh;
+        button#advertisementsubmit {
+            margin-bottom: 20%;
         }
 
         .accordion {
             background-color: $color-darkgreen;
+            float: left;
             color: white;
             cursor: pointer;
             text-align: left;
@@ -146,10 +147,16 @@ $color-lightgreen: #3eaf91;
             justify-content: center;
         }
 
+        .imginput {
+        }
+
         input[type=file] {
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             padding: 2px 1.5px;
+            width: 100%;
+            height: calc(7vh);
+            font-size: 2vh;
         }
 
         input {
@@ -177,12 +184,12 @@ $color-lightgreen: #3eaf91;
 
         button {
             background-color: #015e54;
-            width: 15%;
+            width: 100%;
             height: calc(7vh);
             font-size: 2vh;
             color: white;
-            float: right;
             margin-top: 1%;
+            margin-bottom: 20%;
         }
 
         .advertisementform {
@@ -251,6 +258,7 @@ $color-lightgreen: #3eaf91;
 
         .accordion {
             background-color: $color-darkgreen;
+            float: left;
             color: white;
             cursor: pointer;
             text-align: left;
@@ -439,8 +447,8 @@ $color-lightgreen: #3eaf91;
             height: calc(7vh);
             font-size: 2vh;
             color: white;
-            float: right;
             margin-top: 1%;
+            margin-bottom: 10%;
         }
 
         .advertisementform {
