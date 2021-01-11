@@ -432,7 +432,6 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
             TempData[success ? "AccountControllerMsg" : "AccountControllerError"] = message;
         }
 
-
         public async Task<object> ModifyAdvertisementAsync(int listingId, List<IFormFile> files, string title, string description,
             string name_nl, int quantity, string plant_type, string plant_order, string give_away, string with_pot, string light, string water, string name_lt = "",
             string ph = "", string indigenous = "", string nutrients = "")
@@ -555,7 +554,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                     {
                         return errormessages;
                     }
-
+                    
                     return "Wijzigingen succesvol opgeslagen. Het kan enkele minuten duren voordat je de nieuwe wijzigingen kunt bekijken";
                 }
                 else

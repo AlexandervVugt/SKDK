@@ -372,7 +372,7 @@ function resetImage() {
 
 function modifyAd() {
     listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)").value;
-    files = document.querySelector("#imginput").value; // to files
+    files = document.querySelector("#imginput").files; // to files
     title = document.querySelector("#generalinformationContainer > input:nth-child(2)").value;
     description = document.querySelector("#generalinformationContainer > textarea").value;
     name_lt = document.querySelector("#generalinformationContainer > input:nth-child(6)").value;
@@ -388,12 +388,36 @@ function modifyAd() {
     ph = document.querySelector("#ph").value;
     indigenous = document.querySelector("#indigenous").value;
 
+    var formData = new FormData();
+    var totalFiles = files.length;
+
+    formData.append("listingId", listingId);
+    for (var i = 0; i < totalFiles; i++) {
+        var file = files[i];
+
+        formData.append("files", file);
+    }
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("name_lt", name_lt);
+    formData.append("name_nl", name_nl);
+    formData.append("quantity", quantity);
+    formData.append("plant_type", plant_type);
+    formData.append("plant_order", plant_order);
+    formData.append("light", light);
+    formData.append("water", water);
+    formData.append("with_pot", with_pot);
+    formData.append("give_away", give_away);
+    formData.append("nutrients", nutrients);
+    formData.append("ph", ph);
+    formData.append("indigenous", indigenous);
+
     $.ajax({
         type: "POST",
         url: '/Account/ModifyAdvertisement/',
-        data: { listingId, files, title, description, name_lt, name_nl, quantity, plant_type, plant_order, light, water, with_pot, give_away, nutrients, ph, indigenous },
-        enctype: 'multipart/form-data',
-        processData: false, // it prevent jQuery form transforming the data into a query string
+        data: formData,
+        contentType: false,
+        processData: false,
         success: function (data) {
             alert(data);
         },
