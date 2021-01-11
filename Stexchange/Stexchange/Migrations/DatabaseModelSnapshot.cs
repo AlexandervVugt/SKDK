@@ -250,6 +250,14 @@ namespace Stexchange.Migrations
                         .HasColumnName("created_at")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("PlantName")
+                        .HasColumnName("plant_name")
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<bool>("RequestQuality")
+                        .HasColumnName("request_quality")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<long>("RevieweeId")
                         .HasColumnName("reviewee")
                         .HasColumnType("bigint(20) unsigned");
@@ -307,9 +315,11 @@ namespace Stexchange.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Email");
+                    b.HasIndex("Email")
+                        .IsUnique();
 
-                    b.HasAlternateKey("Username");
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

@@ -17,6 +17,12 @@ namespace Stexchange.Data.Models
         [Column("reviewee", TypeName = "bigint(20) unsigned")]
         public int RevieweeId { get; set; }
 
+        [Column("request_quality", TypeName = "tinyint(1)")]
+        public bool RequestQuality { get; set; }
+
+        [Column("plant_name", TypeName = "varchar(30)")]
+        public string PlantName { get; set; }
+
         [Column("created_at", TypeName = "datetime"), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedAt { get; set; }
 

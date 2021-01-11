@@ -3,6 +3,7 @@
 @using System.Globalization;
 @{
     ViewData["Title"] = "Ruiloverzicht";
+    var totalStars = 5;
 }
 @functions{
     public static string TimeSpanDisplay(DateTime since)
@@ -297,6 +298,45 @@
                     <code>@(TimeSpanDisplay(listing.CreatedAt))</code>
                 </span>
 
+                <div class="starsrating">
+                    <p>Gemiddelde gebruikersbeoordeling</p>
+                    @if ((int)Math.Round(listing.Owner.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero) == 0)
+                    {
+                        @for (int i = (int)Math.Round(listing.Owner.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
+                        {
+                            <label class="stars communicationrating" for="communication">&#9733;</label>
+                        }
+                        @for (int i = totalStars - (int)Math.Round(listing.Owner.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
+                        {
+                            <label class="stars communicationrating" for="communication">&#9734;</label>
+                        }
+                    }
+                    else if ((int)Math.Round(listing.Owner.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero) == 0)
+                    {
+                        @for (int i = (int)Math.Round(listing.Owner.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
+                        {
+                            <label class="stars qualityrating" for="quality" id="quality">&#9733;</label>
+                        }
+                        @for (int i = totalStars - (int)Math.Round(listing.Owner.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero); i > 0; i--)
+                        {
+                            <label class="stars qualityrating" for="quality">&#9734;</label>
+                        }
+                    }
+                    else
+                    {
+
+                        @for (int i = (int)Math.Round(((listing.Owner.Rating.QualityAvg) + (listing.Owner.Rating.CommunicationAvg)) / 2, 0, MidpointRounding.AwayFromZero); i > 0; i--)
+                        {
+                            <label class="stars qualityrating" for="quality" id="quality">&#9733;</label>
+                        }
+                        @for (int i = totalStars - (int)Math.Round(((listing.Owner.Rating.QualityAvg) + (listing.Owner.Rating.CommunicationAvg)) / 2, 0, MidpointRounding.AwayFromZero); i > 0; i--)
+                        {
+                            <label class="stars qualityrating" for="quality">&#9734;</label>
+                        }
+                    }
+                    <span>(@listing.Owner.Rating.CommunicationCount)</span>
+                </div>
+
                 <div class="filters">
                     @if (listing.Filters is object)
                     {
@@ -304,7 +344,7 @@
                         {
                             if (!filter.Contains("null") && !filter.Contains("with_pot_nee"))
                             {
-                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "").Replace("nutrients", "voeding").Replace("ph", "bodem").Replace("plant order ","").Replace("give away nee", "ruilen").Replace("give away ", "gratis")</code>
+                                <code class="filter_tag">@filter.Replace("_", " ").Replace("with", "met").Replace("ja", "").Replace("light ", "").Replace("plant type ", "").Replace("indigenous ", "").Replace("nutrients", "voeding").Replace("ph", "bodem").Replace("plant order ", "").Replace("give away nee", "ruilen").Replace("give away ", "gratis")</code>
                             }
                         }
                     }

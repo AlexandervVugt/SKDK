@@ -1,0 +1,69 @@
+﻿$color-darkgreen: #015e54;
+$color-lightgreen: #19ff30;
+$color-grey: #808080;
+
+body {
+    p, h3, h2 {
+        margin-left: 5%;
+        float: left;
+        clear: both;
+    }
+
+    h2 {
+        color: $color-darkgreen;
+    }
+
+    p {
+        font-size: 2vh;
+    }
+
+    .stars {
+        margin-left: 5%;
+        float: left;
+        clear: both;
+    }
+
+    .qualityrating {
+        direction: rtl;
+    }
+
+    .communicationrating {
+        direction: rtl;
+    }
+
+    input[type=radio] {
+        display: none;
+    }
+
+    label {
+        font-size: 50px;
+        cursor: pointer;
+        color: $color-grey;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+    }
+
+    label:hover {
+        color: $color-lightgreen;
+    }
+
+    label:hover ~ label {
+        color: $color-lightgreen;
+    }
+
+    input[type=radio]:checked ~ label {
+        color: $color-lightgreen;
+    }
+
+    button {
+        clear: both;
+        float: left;
+        margin-left: 5%;
+        background-color: $color-darkgreen;
+        width: 15%;
+        height: calc(7vh);
+        font-size: 2vh;
+        color: white;
+        margin-top: 1%;
+    }
+}

@@ -123,6 +123,7 @@
         html body #forms input[type=range] {
           width: 100%;
           float: left;
+<<<<<<< HEAD
           color: #005709;
           background: #19ff30; }
         html body #forms .sort-range-display {
@@ -139,6 +140,25 @@
           margin-bottom: 3%;
           background-color: rgba(0, 0, 0, 0.5); }
           html body #listings .Advertisement .distance {
+=======
+          margin-left: 2%;
+          width: 80%;
+          color: white; }
+        html body #listings .Advertisement .starsrating {
+          margin-left: 2%;
+          display: block;
+          color: white;
+          clear: both;
+          font-size: 2vh;
+          line-height: 2.5vh; }
+          html body #listings .Advertisement .starsrating p {
+            font-size: 1.5vh; }
+        html body #listings .Advertisement .filters {
+          display: inline-block; }
+          html body #listings .Advertisement .filters .filter_tag {
+            font-size: 1.5vh;
+            line-height: 1.5vh;
+>>>>>>> MyAccount
             float: left;
             line-height: 1.5vh;
             text-transform: uppercase;

@@ -22,6 +22,11 @@ function switchtab(infosection, tabname) {
     tabs[0].style.color = "white";
 }
 
+window.onload = function () {
+    if (imgList.length > 1) {
+        document.querySelector("#startchange > div.section > div.section-img > a").style.display = "block";
+    }
+}
 var imgcount = 1;
 function imageslider() {
     var image = document.getElementById("imgoutput");

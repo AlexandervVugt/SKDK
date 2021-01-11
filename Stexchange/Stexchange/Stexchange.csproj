@@ -38,6 +38,8 @@
     <Compile Remove="Migrations\20201119114021_mutable_guid.Designer.cs" />
     <Compile Remove="Migrations\20201206114741_fix_foreign_keys.cs" />
     <Compile Remove="Migrations\20201206114741_fix_foreign_keys.Designer.cs" />
+    <Compile Remove="Migrations\20210108142247_rating_request_info.cs" />
+    <Compile Remove="Migrations\20210108142247_rating_request_info.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +84,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="compilerconfig.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\ReviewAdvertisement.css" />
     <_ContentIncludedByDefault Remove="wwwroot\css\VerificationVerify.css" />
   </ItemGroup>
 

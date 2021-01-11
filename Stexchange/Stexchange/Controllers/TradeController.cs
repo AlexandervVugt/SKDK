@@ -50,10 +50,12 @@ namespace Stexchange.Controllers
             //Shallow copy, this was accounted for in the design of this method.
             var listings = _listingCache.Values.ToList();
             listings.ForEach(listing => PrepareListing(ref listing));
+            listings.ForEach(listing => listing.Owner.Rating = new User.RatingAggregation(
+                                        from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating));
             listings = (from listing in listings orderby listing.CreatedAt descending select listing).ToList();
-            var tradeModel = new TradeViewModel(listings);
 
-            //TODO: move releasing the resource to this class' Dispose method
+            var tradeModel = new TradeViewModel(listings);
+ 
             _blocked = false; //Release the resource
             return View(model: tradeModel);
         }
@@ -65,11 +67,11 @@ namespace Stexchange.Controllers
             var listing = _listingCache[listingId];
             PrepareListing(ref listing);
 
-            //TODO: move releasing the resource to this class' Dispose method
+            listing.Owner.Rating = new User.RatingAggregation(
+                            from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating);
+
             _blocked = false; //Release the resource
-            //TODO: put the listing in a model for the detail page.
-            
-            
+
             return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters)));
         }
 
@@ -180,7 +182,6 @@ namespace Stexchange.Controllers
                 //TODO: remove catch block
             }
             listing.OwningUserName = listing.Owner.Username;
-            listing.Owner = null;
         }
 
 
@@ -335,10 +336,8 @@ namespace Stexchange.Controllers
         /// <param name="distance"></param>
         /// <returns> A new trademodel with filtered advertisements to view </returns>
         //[HttpGet]
-        public List<Listing> FilterSearch(List<Listing> advertisements, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] plant_order, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance)
+        public List<Listing> FilterSearch(List<Listing> advertisements, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] plant_order, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance, bool rating_toggle, int rating)
         {
-            // TODO: Rating filter
-
             // List of advertisements that contains selected filter values and search input
             List<Listing> searchList = new List<Listing>();
 
@@ -357,7 +356,7 @@ namespace Stexchange.Controllers
 
             // All toggle filters
             // Adds selected toggle filters which are true to a new list
-            List<bool> extraFilters = new List<bool>() { recent_toggle, distance_toggle };
+            List<bool> extraFilters = new List<bool>() { recent_toggle, distance_toggle, rating_toggle };
             List<bool> selectedExtraFilters = new List<bool>();
             foreach (var filter in extraFilters)
             {
@@ -393,6 +392,15 @@ namespace Stexchange.Controllers
                 {
                     check++;
                 }
+
+                // Checks if the average of communication or quantity is average. If yes it will only get the average which is not equal to 0
+                // If they both contain an average > 0 it will divide the sum of both averages by 2
+                int advertisementRating = advertisement.Owner.Rating.QualityAvg > 0 ? advertisement.Owner.Rating.CommunicationAvg > 0 ? (int)Math.Round(((advertisement.Owner.Rating.QualityAvg) + (advertisement.Owner.Rating.CommunicationAvg)) / 2, 0, MidpointRounding.AwayFromZero) : (int)Math.Round(advertisement.Owner.Rating.QualityAvg, 0, MidpointRounding.AwayFromZero) : (int)Math.Round(advertisement.Owner.Rating.CommunicationAvg, 0, MidpointRounding.AwayFromZero);
+                if (rating_toggle == true && advertisementRating == rating)
+                {
+                    check++;
+                }
+
 
                 // Checks if check count equals selected filters count
                 if ((check == selectedFilters.Count + selectedExtraFilters.Count))
@@ -444,10 +452,10 @@ namespace Stexchange.Controllers
         /// <param name="sort_time"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Search(string searchbar, bool search_description, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] plant_order, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance, bool sort_distance, bool sort_time)
+        public IActionResult Search(string searchbar, bool search_description, string[] light, string[] indigenous, string[] ph, string[] nutrients, string[] water, string[] plant_type, string[] plant_order, string[] give_away, string[] with_pot, bool recent_toggle, int recent, bool distance_toggle, int distance, bool rating_toggle, int rating, bool sort_distance, bool sort_time)
         {
             ICollection<Listing> advertisements = _listingCache.Values;
-            List<Listing> searchList = FilterSearch(Searchbar(advertisements, searchbar, search_description), light, indigenous, ph, nutrients, water, plant_type, plant_order, give_away, with_pot, recent_toggle, recent, distance_toggle, distance);
+            List<Listing> searchList = FilterSearch(Searchbar(advertisements, searchbar, search_description), light, indigenous, ph, nutrients, water, plant_type, plant_order, give_away, with_pot, recent_toggle, recent, distance_toggle, distance, rating_toggle, rating);
 
             if (sort_distance == true || sort_time == true)
             {

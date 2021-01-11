@@ -49,10 +49,12 @@ namespace Stexchange.Data
 			modelBuilder.Entity<User>(entity =>
 			{
 				// Put a unique constraint on the Email column
-				entity.HasAlternateKey(u => u.Email);
+				entity.HasIndex(u => u.Email).IsUnique();
 				// Put a unique constraint on the Username column
-				entity.HasAlternateKey(u => u.Username);
+				entity.HasIndex(u => u.Username).IsUnique();
 
+				entity.Property(u => u.Username).IsRequired();
+				entity.Property(u => u.Email).IsRequired();
 				entity.Property(u => u.Postal_Code).IsRequired();
 				entity.Property(u => u.Password).IsRequired();
 				entity.Property(u => u.IsVerified).HasDefaultValue(0);

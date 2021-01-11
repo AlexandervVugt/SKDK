@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Stexchange.Data.Validation;
 using FluentValidation.Results;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Stexchange.Controllers
 {
@@ -179,12 +180,16 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{user.Ve
 						Email = email,
 						Username = username,
 						Postal_Code = postalcode.ToUpper(),
-						Password = CreatePasswordHash(password, username),
+						Password = CreatePasswordHash(password, "qwerty"), //insert placeholder password
 						Created_At = DateTime.Now,
 						Verification = verification
 					};
 
 					await Database.AddAsync(new_User);
+					await Database.SaveChangesAsync();
+					User updateEntity = (from user in Database.Users where user.Username == username select user).First();
+					updateEntity.Password = CreatePasswordHash(password, updateEntity.Id.ToString());
+					Database.Update(updateEntity);
 					await Database.SaveChangesAsync();
 
 					//sends an email to verify the new account and return view("verify") page
@@ -263,9 +268,10 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 								   select u.Username).FirstOrDefault();
 
 				var user = (from u in Database.Users
-							where u.Username == (username ?? emailOrUname) &&
-							u.Password == CreatePasswordHash(password, username ?? emailOrUname)
-							select u).FirstOrDefault();
+							where u.Username == (username ?? emailOrUname)
+							select u).AsEnumerable()
+							.Where(u => Enumerable.SequenceEqual(u.Password, CreatePasswordHash(password, u.Id.ToString())))
+							.FirstOrDefault();
 
 				// Checks if the combination exists
 				if (user is null)

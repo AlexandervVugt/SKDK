@@ -516,10 +516,21 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                     background: $green;
                 }
 
-                .sort-range-display {
-                    color: $darkgreen;
+                .starsrating {
+                    margin-left: 2%;
+                    display: block;
+                    color: white;
+                    clear: both;
+                    font-size: 2vh;
+                    line-height: 2.5vh;
+
+                    p{
+                        font-size: 1.5vh;
+                    }
                 }
-            }
+
+                .filters {
+                    display: inline-block;
 
             #listings {
                 float: left;
