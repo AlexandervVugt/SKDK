@@ -597,7 +597,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
             var images = (from image in _db.Images
                           where image.ListingId == listing.Id
                           select image).ToList();
-            if(images is null && files.Count == 0)
+            if(images.Count == 0 && files.Count == 0)
             {
                 errormessages.Add("Het is verplicht om een foto te uploaden");
             }
