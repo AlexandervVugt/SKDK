@@ -358,20 +358,25 @@ function deleteImages() {
 }
 
 function confirmToDeleteImages() {
-    listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)").value;
-    deleteform = document.getElementById("confirmDeleteImages").style.display = "block";
-    document.querySelector("#confirmDeleteImages > input[type=number]:nth-child(3)").value = listingId;
+    checkbox = document.querySelector("#removeImagesCheckbox").checked;
+    if (checkbox == true) {
+        deleteform = document.getElementById("confirmDeleteImages").style.display = "block";
+    } else {
+        checkbox = !checkbox;
+    }
 }
 
-function resetImage() {
-    document.querySelector("#imgoutput").src = "";
-    imagecounter.style.display = "none";
-    previous[0].style.display = "none";
-    document.getElementsByClassName("next")[0].style.display = "none";
+function declineDelete() {
+    document.querySelector("#removeImagesCheckbox").checked = false;
+}
+
+function acceptDelete() {
+    document.querySelector("#removeImagesCheckbox").checked = true;
 }
 
 function modifyAd() {
     listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)").value;
+    deleteImages = document.querySelector("#removeImagesCheckbox").value;
     files = document.querySelector("#imginput").files; // to files
     title = document.querySelector("#generalinformationContainer > input:nth-child(2)").value;
     description = document.querySelector("#generalinformationContainer > textarea").value;
@@ -392,6 +397,7 @@ function modifyAd() {
     var totalFiles = files.length;
 
     formData.append("listingId", listingId);
+    formData.append("deleteImages", deleteImages);
     for (var i = 0; i < totalFiles; i++) {
         var file = files[i];
 

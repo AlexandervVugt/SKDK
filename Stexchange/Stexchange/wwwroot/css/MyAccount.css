@@ -360,16 +360,24 @@
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       cursor: pointer;
-      float: left; }
-    #modifyAdvertismentForm #imgContainer #removeImagesButton {
-      background-color: #367a57;
-      width: 25%;
-      border-radius: 1vh;
-      height: calc(4vh);
+      float: left;
+      margin-top: 1%; }
+    #modifyAdvertismentForm #imgContainer label {
       font-size: 2vh;
-      color: white;
-      cursor: pointer;
+      color: black;
+      width: 41%;
+      text-align: center;
       float: right; }
+      #modifyAdvertismentForm #imgContainer label #removeImagesCheckbox {
+        background-color: #367a57;
+        width: 8%;
+        margin-right: 2%;
+        border-radius: 1vh;
+        height: calc(4vh);
+        font-size: 2vh;
+        color: white;
+        cursor: pointer;
+        float: left; }
   #modifyAdvertismentForm #generalinformationContainer {
     padding-left: 3%;
     padding-right: 3%;

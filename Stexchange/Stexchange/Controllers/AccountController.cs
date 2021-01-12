@@ -432,7 +432,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
             TempData[success ? "AccountControllerMsg" : "AccountControllerError"] = message;
         }
 
-        public async Task<object> ModifyAdvertisementAsync(int listingId, List<IFormFile> files, string title, string description,
+        public async Task<object> ModifyAdvertisementAsync(int listingId, bool deleteImages, List<IFormFile> files, string title, string description,
             string name_nl, int quantity, string plant_type, string plant_order, string give_away, string with_pot, string light, string water, string name_lt = "",
             string ph = "", string indigenous = "", string nutrients = "")
         {
@@ -524,7 +524,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                                                    }).ToList();
 
 
-                        await OnPostUploadAsync(files, listing, errormessages);
+                        await OnPostUploadAsync(deleteImages, files, listing, errormessages);
 
                         if (errormessages.Count > 0)
                         {
@@ -569,42 +569,22 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
             }
         }
 
-        /// <summary>
-        /// Removes images from database
-        /// </summary>
-        /// <param name="listingId"></param>
-        /// <returns></returns>
-        public async Task<string> DeleteListingImages(int listingId)
-        {
-            try
-            {
-                var images = (from image in _db.Images
-                            where image.ListingId == listingId
-                            select image).ToList();
-                images.ForEach(x => _db.Remove(x));
-                await _db.SaveChangesAsync();
-                return "Afbeeldingen succesvol verwijderd";
-            }
-            catch (InvalidSessionException)
-            {
-                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                return "Sessie bestaat niet of is verlopen.";
-            }
-        }
-
-        public async Task OnPostUploadAsync(List<IFormFile> files, Listing listing, List<string> errormessages)
+        public async Task OnPostUploadAsync(bool deleteImages, List<IFormFile> files, Listing listing, List<string> errormessages)
         {
             var images = (from image in _db.Images
                           where image.ListingId == listing.Id
                           select image).ToList();
-            if(images.Count == 0 && files.Count == 0)
+
+            if(deleteImages == true && files.Count == 0)
             {
                 errormessages.Add("Je advertentie moet minstens 1 foto bevatten");
             }
             if (files.Count > 6 || (images.Count + files.Count) > 6) { 
-                errormessages.Add("Het maximale aantal foto's dat geüpload mag worden is 6"); 
+                errormessages.Add("Je advertentie mag maar maximaal 6 foto's bevatten"); 
             } else
             {
+                if (deleteImages == true) images.ForEach(x => _db.Remove(x));
+
                 foreach (IFormFile file in files)
                 {
                     using (var memoryStream = new MemoryStream())

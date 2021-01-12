@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Mijn Account";
 }
 @model AccountViewModel
@@ -195,9 +196,8 @@
 <form id="confirmDeleteImages">
     <h3>Afbeeldingen verwijderen</h3>
     <p>Weet je zeker dat je de afbeeldingen van deze advertentie permanent wilt verwijderen?</p>
-    <input type="number" name="listingId" hidden />
-    <input type="button" value="ja" onclick="deleteImages();closeRequestForm('confirmDeleteImages');resetImage()" />
-    <input type="button" value="nee" onclick="closeRequestForm('confirmDeleteImages')" />
+    <input type="button" value="ja" onclick="closeRequestForm('confirmDeleteImages');acceptDelete()" />
+    <input type="button" value="nee" onclick="closeRequestForm('confirmDeleteImages');declineDelete()" />
 </form>
 
 <div id="modifyAdvertismentForm">
@@ -213,7 +213,7 @@
                 <a class="next" onclick="nextImg(1);imageslider()">&#10095;</a>
             </div>
             <input type="file" id="imginput" name="files" onchange="loadFile(event)" accept="image/*" multiple>
-            <input type="button" id="removeImagesButton" value="Afbeeldingen verwijderen" onclick="confirmToDeleteImages()" />
+            <label>Afbeeldingen van advertentie verwijderen<input type="checkbox" id="removeImagesCheckbox" name="deleteImages" value="true" onclick="confirmToDeleteImages()" /></label>
         </div>
         <div id="generalinformationContainer">
             <label for="title" class="labeltext">Titel</label>
