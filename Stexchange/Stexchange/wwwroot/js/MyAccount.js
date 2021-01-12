@@ -1,4 +1,4 @@
-﻿document.getElementById("accountsettingsButton").style.backgroundColor = "#465D43";
+﻿document.getElementById("accountsettingsButton").style.backgroundColor = "#367a57";
 document.getElementById("accountsettingsButton").style.color = "white";
 
 document.querySelector("#imgoutput").src = "";
@@ -178,10 +178,10 @@ function toggleActive(buttonId) {
 
     for (i = 0; i < buttons.length; i++) {
         buttons[i].style.backgroundColor = "white";
-        buttons[i].style.color = "#465D43";
+        buttons[i].style.color = "#367a57";
     }
 
-    document.getElementById(buttonId).style.backgroundColor = "#465D43";
+    document.getElementById(buttonId).style.backgroundColor = "#367a57";
     document.getElementById(buttonId).style.color = "white";
 }
 
