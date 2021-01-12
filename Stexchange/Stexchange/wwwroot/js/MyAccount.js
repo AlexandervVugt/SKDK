@@ -375,6 +375,8 @@ function acceptDelete() {
 }
 
 function modifyAd() {
+    document.body.style.cursor = "wait";
+
     listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)").value;
     deleteImages = document.querySelector("#removeImagesCheckbox").checked;
     files = document.querySelector("#imginput").files; // to files
@@ -417,7 +419,6 @@ function modifyAd() {
     formData.append("nutrients", nutrients);
     formData.append("ph", ph);
     formData.append("indigenous", indigenous);
-
     $.ajax({
         type: "POST",
         url: '/Account/ModifyAdvertisement/',
@@ -426,9 +427,11 @@ function modifyAd() {
         processData: false,
         success: function (data) {
             alert(data);
+            document.body.style.cursor = "default";
         },
         error: function (err) {
             alert(err.responseText);
+            document.body.style.cursor = "default";
         }
     })
 }
