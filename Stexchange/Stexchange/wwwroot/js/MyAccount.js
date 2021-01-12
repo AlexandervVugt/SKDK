@@ -376,7 +376,7 @@ function acceptDelete() {
 
 function modifyAd() {
     listingId = document.querySelector("#modifyAdvertismentForm > form > input[type=number]:nth-child(1)").value;
-    deleteImages = document.querySelector("#removeImagesCheckbox").value;
+    deleteImages = document.querySelector("#removeImagesCheckbox").checked;
     files = document.querySelector("#imginput").files; // to files
     title = document.querySelector("#generalinformationContainer > input:nth-child(2)").value;
     description = document.querySelector("#generalinformationContainer > textarea").value;
