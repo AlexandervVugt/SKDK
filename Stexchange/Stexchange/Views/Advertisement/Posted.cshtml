@@ -7,9 +7,6 @@
 <div>
     <p>Je advertentie "@TempData["Title"]" is succesvol geplaatst.</p>
 </div>
-<form>
-    <button href="@Url.Action("PostAdvertisement", "Advertisement")">
-        Maak nog een advertentie
-    </button>
-</form>
+<button type="button" onclick="location.href='@Url.Action("PostAdvertisement", "Advertisement")'">Maak nog een advertentie</button>
+
 
