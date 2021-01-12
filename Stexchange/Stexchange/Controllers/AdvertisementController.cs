@@ -116,9 +116,6 @@ namespace Stexchange.Controllers
 
                         List<FilterListing> filterListings = MakeFilterListing(validatedFilters, finishedListing);
 
-                        // ensures that the listing is inserted before the tables who need this FK
-                        await _database.AddAsync(finishedListing);
-
                         List<Task> tasks = new List<Task>();
                         // Insert byte[] image into database
                         await OnPostUploadAsync(files, finishedListing, errormessages);
@@ -127,6 +124,9 @@ namespace Stexchange.Controllers
                             ViewBag.Messages = errormessages;
                             return View();
                         }
+                        // ensures that the listing is inserted before the tables who need this FK
+                        await _database.AddAsync(finishedListing);
+
                         // loops through filterlist to add each advertisementfilter
                         await _database.AddRangeAsync(filterListings);
 
@@ -138,67 +138,28 @@ namespace Stexchange.Controllers
                         return RedirectToAction("Posted");
                     }
 
-                    if (!hasPotFilter.IsValid)
-                    { 
-                        foreach (ValidationFailure error in hasPotFilter.Errors)
-                        {
-                            errormessages.Add(error.ErrorMessage);
-                        }
-                    }
+                    if (!hasPotFilter.IsValid) { hasPotFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
 
-                    if (!hasGiveFilter.IsValid)
-                    {
-                        foreach (ValidationFailure error in hasGiveFilter.Errors)
-                        {
-                            errormessages.Add(error.ErrorMessage);
-                        }
-                    }
+                    if (!hasGiveFilter.IsValid) { hasGiveFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
 
-                    if (!hasValProps.IsValid)
-                    {
-                        foreach (ValidationFailure error in hasValProps.Errors)
-                        {
-                            errormessages.Add(error.ErrorMessage);
-                        }
-                    }
+                    if (!hasValProps.IsValid) { hasValProps.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
 
-                    if (!hasTypeFilter.IsValid)
-                    {
-                        foreach (ValidationFailure error in hasTypeFilter.Errors)
-                        {
-                            errormessages.Add(error.ErrorMessage);
-                        }
-                    }
+                    if (!hasTypeFilter.IsValid) { hasTypeFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
 
-                    if (!waterresult.IsValid) 
-                    { 
-                        foreach (ValidationFailure error in waterresult.Errors) 
-                        { 
-                            errormessages.Add(error.ErrorMessage); 
-                        }
-                    };
+                    if (!waterresult.IsValid) { waterresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
 
-                    if (!lightresult.IsValid)
-                    {   foreach (ValidationFailure error in lightresult.Errors) 
-                        { 
-                            errormessages.Add(error.ErrorMessage); 
-                        } 
-                    };
+                    if (!lightresult.IsValid) { lightresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
 
-                    if (!orderFilter.IsValid)
-                    {
-                        foreach (ValidationFailure error in orderFilter.Errors)
-                        {
-                            errormessages.Add(error.ErrorMessage);
-                        }
-                    };
+                    if (!orderFilter.IsValid) { orderFilter.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); }
 
                     ViewBag.Messages = errormessages;
+                    return View();
                 }
                 else
                 {
                     errormessages.Add("Zorg ervoor dat alle verplichte velden correct zijn ingevuld");
                     ViewBag.Messages = errormessages;
+                    return View();
                 }
             }
             catch (Exception ex)
@@ -219,28 +180,37 @@ namespace Stexchange.Controllers
         public async Task OnPostUploadAsync(List<IFormFile> files, Listing finishedListing, List<string> errormessages)
         {
             //creates memorystream for each image
-            foreach (IFormFile file in files)
+            if (files.Count == 0)
             {
-                using (var memoryStream = new MemoryStream())
+                errormessages.Add("Je advertentie moet minstens 1 foto bevatten");
+            }
+            if (files.Count > 6)
+            {
+                errormessages.Add("Het maximale aantal foto's dat geüpload mag worden is 6");
+            }
+            else
+            {
+                foreach (IFormFile file in files)
                 {
-                    await file.CopyToAsync(memoryStream);
-
-                    // Upload the file if less than 5 MB
-                    Console.WriteLine(memoryStream.Length);
-                    if (memoryStream.Length < 5000000)
+                    using (var memoryStream = new MemoryStream())
                     {
-                        var imagefile = new ImageData()
+                        await file.CopyToAsync(memoryStream);
+
+                        // Upload the file if less than 5 MB
+                        if (memoryStream.Length < 5000000)
                         {
-                            Image = memoryStream.ToArray(),
-                            Listing = finishedListing,
-                        };
+                            var imagefile = new ImageData()
+                            {
+                                Image = memoryStream.ToArray(),
+                                Listing = finishedListing,
+                            };
 
-                        _database.Add(imagefile);
-                        await _database.SaveChangesAsync();
-                    }
-                    else
-                    {
-                        errormessages.Add("De maximale bestandsgrootte van een foto is 5MB");
+                            await _database.AddAsync(imagefile);
+                        }
+                        else
+                        {
+                            errormessages.Add("De maximale bestandsgrootte van een foto is 5MB");
+                        }
                     }
                 }
             }
