@@ -250,6 +250,19 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                         color: white;
                     }
 
+                    .starsrating {
+                        margin-left: 2%;
+                        display: block;
+                        color: white;
+                        clear: both;
+                        font-size: 2vh;
+                        line-height: 2.5vh;
+
+                        p {
+                            font-size: 1.5vh;
+                        }
+                    }
+
                     .filters {
                         display: inline-block;
 
@@ -516,21 +529,10 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                     background: $green;
                 }
 
-                .starsrating {
-                    margin-left: 2%;
-                    display: block;
-                    color: white;
-                    clear: both;
-                    font-size: 2vh;
-                    line-height: 2.5vh;
-
-                    p{
-                        font-size: 1.5vh;
-                    }
+                .sort-range-display {
+                    color: $darkgreen;
                 }
-
-                .filters {
-                    display: inline-block;
+            }
 
             #listings {
                 float: left;
@@ -588,6 +590,19 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                         margin-left: 2%;
                         width: 80%;
                         color: white;
+                    }
+
+                    .starsrating {
+                        margin-left: 2%;
+                        display: block;
+                        color: white;
+                        clear: both;
+                        font-size: 2vh;
+                        line-height: 2.5vh;
+
+                        p {
+                            font-size: 1.5vh;
+                        }
                     }
 
                     .filters {
