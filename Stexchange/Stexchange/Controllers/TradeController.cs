@@ -55,8 +55,11 @@ namespace Stexchange.Controllers
                 List<int> blockedUsers = (from b in _db.Blocks
                                           where b.BlockerId == userId
                                           select b.BlockedId).ToList();
+                List<int> blockerUsers = (from b in _db.Blocks
+                                          where b.BlockedId == userId
+                                          select b.BlockerId).ToList();
                 listings = (from listing in listings
-                            where !(blockedUsers.Contains(listing.UserId))
+                            where !(blockedUsers.Contains(listing.UserId)) && !(blockerUsers.Contains(listing.UserId))
                             orderby listing.CreatedAt 
                             descending
                             select listing).ToList();
@@ -87,7 +90,6 @@ namespace Stexchange.Controllers
             //TODO: move releasing the resource to this class' Dispose method
             _blocked = false; //Release the resource
             //TODO: put the listing in a model for the detail page.
-            Console.WriteLine(1);
             
             try
             {
@@ -484,6 +486,17 @@ namespace Stexchange.Controllers
             {
                 if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
                 searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
+            }
+            if (Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
+            {
+                List<int> blockedUsers = (from b in _db.Blocks
+                                          where b.BlockerId == GetUserId()
+                                          select b.BlockedId).ToList();
+                List<int> blockerUsers = (from b in _db.Blocks
+                                          where b.BlockedId == GetUserId()
+                                          select b.BlockerId).ToList();
+                searchList.RemoveAll(l => blockedUsers.Contains(l.UserId) || blockerUsers.Contains(l.UserId));
+
             }
 
             TempData["SearchResults"] = searchList.Count;

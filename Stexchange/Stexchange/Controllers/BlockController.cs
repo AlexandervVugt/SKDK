@@ -32,6 +32,7 @@ namespace Stexchange.Controllers
                     return RedirectToAction("Trade", "Trade");
                 }
                 else if (block == "chat")
+
                 {
                     int AdId = (from c in _db.Chats
                                      where (c.Id == id)
@@ -39,6 +40,12 @@ namespace Stexchange.Controllers
                     blockedUserId = (from l in _db.Listings
                                      where (l.Id == AdId)
                                      select l.UserId).FirstOrDefault();
+                    if (blockedUserId == GetUserId())
+                    {
+                        blockedUserId = (from c in _db.Chats
+                                        where (c.Id == id)
+                                        select c.ResponderId).FirstOrDefault();
+                    }
                     UpdateDB(userId, blockedUserId);
                     return RedirectToAction("Chat", "Chat");
                 }
@@ -54,7 +61,7 @@ namespace Stexchange.Controllers
             }
 
         }
-        [HttpPost]
+/*        [HttpPost]
         public IActionResult Unblock(int blockedId)
         {
             var block = (from b in _db.Blocks
@@ -67,7 +74,7 @@ namespace Stexchange.Controllers
             }
             return View();
 
-        }
+        }*/
         public async void UpdateDB (int userId, int blockedUserId)
         {
             var newBlock = new Block

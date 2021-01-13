@@ -7,11 +7,15 @@
 @using Stexchange.Data.Models
 
 <link rel="stylesheet" href="~/css/chat.css" />
-<form id="blockchat" method="post" action="@Url.Action("Block", "Block")">
-    <input type="number" name="id" hidden />
-    <input type="text" name="block" value="chat" hidden />
-    <input type="submit" id="blockUser" value="Blokkeren" onclick="setBlockInputs()" />
-</form>
+@if (Model.ChatInbox.Any())
+{
+    <form id="blockchat" method="post" action="@Url.Action("Block", "Block")">
+        <input type="number" name="id" hidden />
+        <input type="text" name="block" value="chat" hidden />
+        <input type="submit" id="blockUser" value="Blokkeren" onclick="setBlockInputs()" />
+    </form>
+}
+
 <div id="chatcontainer">
     <div id="conversationslist">
         <p id="chatinboxtitle">

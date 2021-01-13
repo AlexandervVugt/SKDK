@@ -40,7 +40,7 @@
                 <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
                 <input type="submit" id="sendmessage" value="Stuur een bericht" />
             </form>
-            <form id="block" method="post" action="@Url.Action("Block", "Block", new { listId = Model.Listing.Id })">
+            <form id="block" method="post" action="@Url.Action("Block", "Block", new { id = Model.Listing.Id,block = "list" })">
                 <input type="submit" id="blockUser" value="Blokkeren" />
             </form>
             }

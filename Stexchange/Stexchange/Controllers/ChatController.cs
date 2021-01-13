@@ -31,7 +31,7 @@ namespace Stexchange.Controllers
         /// 
         public IActionResult Chat()
         {
-            
+
             int userId;
             try
             {
@@ -69,12 +69,19 @@ namespace Stexchange.Controllers
             List<int> blockedUsers = (from b in _db.Blocks
                                       where b.BlockerId == userId
                                       select b.BlockedId).ToList();
+            List<int> blockerUsers = (from b in _db.Blocks
+                                      where b.BlockedId == userId
+                                      select b.BlockerId).ToList();
             List<int> blockedAds = (from a in _db.Listings
-                                      where (blockedUsers.Contains(a.UserId))
-                                      select a.Id).ToList();
+                                    where (blockedUsers.Contains(a.UserId))
+                                    select a.Id).ToList();
+            List<int> blockerAds = (from a in _db.Listings
+                                    where (blockerUsers.Contains(a.UserId))
+                                    select a.Id).ToList();
 
             chats = (from chat in chats
-                     where chat.Messages.Any() && !(blockedAds.Contains(chat.AdId))
+                     where chat.Messages.Any() && !(blockedAds.Contains(chat.AdId) || blockedUsers.Contains(chat.ResponderId))
+                                               && !(blockerAds.Contains(chat.AdId) || blockerUsers.Contains(chat.ResponderId))
                      orderby chat.Messages[0].Timestamp descending 
                      select chat).ToList();
             
