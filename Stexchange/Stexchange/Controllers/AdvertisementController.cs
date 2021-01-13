@@ -111,6 +111,7 @@ namespace Stexchange.Controllers
                         List<Filter> validatedFilters = filtersWithFlag.Item2;
 
                         if (!IsNullOrEmpty(name_lt)) listingBuilder.SetProperty("NameLatin", StandardMessages.CapitalizeFirst(name_lt).Trim());
+                        if (!IsNullOrEmpty(name_lt) && name_lt.Length > 50) errormessages.Add("De hoeveelheid karakters in de latijnse naam veld is onjuist");
 
                         finishedListing = listingBuilder.Complete();
 

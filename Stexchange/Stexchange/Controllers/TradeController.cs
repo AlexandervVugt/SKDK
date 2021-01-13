@@ -422,7 +422,11 @@ namespace Stexchange.Controllers
         /// <returns></returns>
         public List<Listing> SortSearch(List<Listing> searchList, bool sort_distance, bool sort_time)
         {
-            if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
+            if (searchList.Count > 0) {
+                searchList.ForEach(listing => PrepareListing(ref listing));
+                searchList.ForEach(listing => listing.Owner.Rating = new User.RatingAggregation(
+                        from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating));
+            }
 
             if (sort_time == true) { searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList(); }
             else if (sort_distance == true) { searchList = (from advertisement in searchList orderby advertisement.Distance, advertisement.CreatedAt ascending select advertisement).ToList(); }
@@ -463,7 +467,11 @@ namespace Stexchange.Controllers
             }
             else
             {
-                if (searchList.Count > 0) searchList.ForEach(listing => PrepareListing(ref listing));
+                if (searchList.Count > 0) {
+                    searchList.ForEach(listing => PrepareListing(ref listing));
+                    searchList.ForEach(listing => listing.Owner.Rating = new User.RatingAggregation(
+                                        from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating));
+                } 
                 searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
             }
 
