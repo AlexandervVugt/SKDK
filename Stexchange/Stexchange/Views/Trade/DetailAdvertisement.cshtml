@@ -8,7 +8,13 @@
 
 <h4>@Model.Listing.Title</h4>
 
-<div class="section">
+<form id="confirmBlock" action="@Url.Action("Block")" method="post">
+    <h4>Blokkeer @Model.Listing.OwningUserName</h4>
+    <p>Weet je het zeker?</p>
+    <input type="number" name="listingId" hidden />
+    <input type="submit" value="ja" />
+    <input type="button" value="nee" onclick="closeBlock('confirmBlock')" />
+</form>
     <div class="section-img">
         <a onclick="imageslider()">
             <img id="imgoutput" src="@Model.Listing.Pictures.First().GetImage()" />
@@ -36,13 +42,11 @@
         {
             if (Model.Listing.UserId != Model.UserId && Model.UserId != -1)
             {
-            <form id="sendmsg" method="post" action="@Url.Action("NewChat", "Chat", new { listId = Model.Listing.Id })">
-                <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
-                <input type="submit" id="sendmessage" value="Stuur een bericht" />
-            </form>
-            <form id="block" method="post" action="@Url.Action("Block", "Block", new { id = Model.Listing.Id,block = "list" })">
-                <input type="submit" id="blockUser" value="Blokkeren" />
-            </form>
+                <form id="sendmsg" method="post" action="@Url.Action("NewChat", "Chat", new { listId = Model.Listing.Id })">
+                    <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
+                    <input type="submit" id="sendmessage" value="Stuur een bericht" />
+                </form>
+                <input type="button" id="blockUser" value="Blokkeren" onclick="confirmToBlock(@Model.Listing.Id)" />
             }
         }
     </div>

@@ -6,10 +6,43 @@ $color-lightgreen: #80ff8d;
 body {
     width: 100%;
 
+    #confirmBlock {
+        display: none;
+        z-index: 3;
+        border: 2.5px solid $color-darkgreen;
+        margin: auto;
+        width: 60vh;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h4 {
+            color: $color-darkgreen;
+        }
+
+        input[type="button"], input[type="submit"] {
+            margin-left: 5%;
+            margin-right: 10%;
+            background-color: $color-darkgreen;
+            width: 20%;
+            border-radius: 1vh;
+            height: calc(4vh);
+            font-size: 2vh;
+            color: white;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+    }
+
     main {
         width: 100%;
 
-        input[type=submit] {
+        #blockUser, #sendmessage {
             background-color: #015e54;
             border: solid;
             border-radius: 30px;
@@ -24,7 +57,7 @@ body {
             margin-top: 3%;
             width: 50%;
             height: 4vh;
-            margin-left:25%;
+            margin-left: 25%;
         }
 
         input[type=button]:hover {
@@ -117,10 +150,11 @@ body {
             float: right;
             width: 30%;
             font-size: 2vh;
-            height: calc(56vh);
+            height: calc(58vh);
 
             #sendmsg {
                 margin-top: 10%;
+
                 #typemessage {
                     display: block;
                     height: 2vh;
@@ -128,8 +162,6 @@ body {
                     padding: 2%;
                     font-size: 2vh;
                 }
-
-
             }
         }
     }

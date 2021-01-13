@@ -29,3 +29,18 @@ function imageslider() {
     imgcount++;
 }
 
+
+function confirmToBlock(id) {
+    let confirmMessage = document.getElementById("confirmBlock");
+    document.querySelector("#confirmBlock > [name='listingId']").value = id;
+    confirmMessage.style.display = "block";
+}
+
+
+function closeBlock(form) {
+    let blockForm = document.getElementById(form);
+    blockForm.style.display = "none";
+}
+
+
+

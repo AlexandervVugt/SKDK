@@ -36,7 +36,8 @@ namespace Stexchange.Controllers
             try
             {
                 userId = GetUserId();
-            } catch (InvalidSessionException)
+            }
+            catch (InvalidSessionException)
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -82,7 +83,7 @@ namespace Stexchange.Controllers
             chats = (from chat in chats
                      where chat.Messages.Any() && !(blockedAds.Contains(chat.AdId) || blockedUsers.Contains(chat.ResponderId))
                                                && !(blockerAds.Contains(chat.AdId) || blockerUsers.Contains(chat.ResponderId))
-                     orderby chat.Messages[0].Timestamp descending 
+                     orderby chat.Messages[0].Timestamp descending
                      select chat).ToList();
             
             
@@ -212,6 +213,39 @@ namespace Stexchange.Controllers
             }
             return RedirectToAction("Chat");
         }
+        public IActionResult Block(int chatId)
+        {
+            try
+            {
+                int userId = GetUserId();
+                int AdId = (from c in _db.Chats
+                            where (c.Id == chatId)
+                            select c.AdId).FirstOrDefault();
+                int blockedUserId = (from l in _db.Listings
+                                     where (l.Id == AdId)
+                                     select l.UserId).FirstOrDefault();
+                if (blockedUserId == userId)
+                {
+                    blockedUserId = (from c in _db.Chats
+                                     where (c.Id == chatId)
+                                     select c.ResponderId).FirstOrDefault();
+                }
+                var newBlock = new Block
+                {
+                    BlockerId = userId,
+                    BlockedId = blockedUserId
+                };
+                _db.Blocks.Add(newBlock);
+                _db.SaveChanges();
+                return RedirectToAction("Chat", "Chat");
 
+
+            }
+            catch (InvalidSessionException)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+        }
     }
 }

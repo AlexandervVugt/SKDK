@@ -7,13 +7,18 @@
 @using Stexchange.Data.Models
 
 <link rel="stylesheet" href="~/css/chat.css" />
+<form id="confirmBlock" method="post" action="@Url.Action("Block")">
+    <p>Weet je het zeker?</p>
+    <input type="number" name="chatId" hidden />
+    <input type="text" name="block" value="chat" hidden />
+    <input type="submit" id="blockUser" value="ja" onclick="setBlockInputs()" />
+    <input type="button" value="nee" onclick="closeBlock('confirmBlock')" />
+</form>
+
+
 @if (Model.ChatInbox.Any())
 {
-    <form id="blockchat" method="post" action="@Url.Action("Block", "Block")">
-        <input type="number" name="id" hidden />
-        <input type="text" name="block" value="chat" hidden />
-        <input type="submit" id="blockUser" value="Blokkeren" onclick="setBlockInputs()" />
-    </form>
+    <input type="button" id="blockchat" value="Blokkeren" onclick="confirmToBlock()" />
 }
 
 <div id="chatcontainer">

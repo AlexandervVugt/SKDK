@@ -1,6 +1,33 @@
 ﻿html body main {
   line-height: 2vh; }
-  html body main #blockUser {
+  html body main #confirmBlock {
+    display: none;
+    z-index: 3;
+    border: 2.5px solid #005709;
+    margin: auto;
+    width: 60vh;
+    padding: 1%;
+    border-radius: 1vh;
+    text-align: center;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    html body main #confirmBlock h4 {
+      color: #005709; }
+    html body main #confirmBlock input[type="button"], html body main #confirmBlock input[type="submit"] {
+      margin-left: 5%;
+      margin-right: 10%;
+      background-color: #005709;
+      width: 20%;
+      border-radius: 1vh;
+      height: calc(4vh);
+      font-size: 2vh;
+      color: white;
+      margin-top: 1%;
+      cursor: pointer; }
+  html body main #blockchat {
     background: #a9a9a9;
     position: absolute;
     width: 7%;

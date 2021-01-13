@@ -503,5 +503,29 @@ namespace Stexchange.Controllers
 
             return View("trade", new TradeViewModel(searchList));
         }
+        public IActionResult Block(int listingId)
+        {
+          try
+           {
+                int blockedUserId = (from l in _db.Listings
+                                     where (l.Id == listingId)
+                                     select l.UserId).FirstOrDefault();
+                    var newBlock = new Block
+                    {
+                        BlockerId = GetUserId(),
+                        BlockedId = blockedUserId
+                    };
+                     _db.Blocks.Add(newBlock);
+                     _db.SaveChanges();
+                    return RedirectToAction("Trade", "Trade");
+                
+
+            }
+            catch (InvalidSessionException)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+        }
     }
 }

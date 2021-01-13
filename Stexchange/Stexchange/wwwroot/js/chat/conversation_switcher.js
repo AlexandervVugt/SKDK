@@ -37,5 +37,16 @@ function displayConvo(chatId) {
 function setBlockInputs() {
     let activechat = document.querySelector(".conversation_entry.active").id.substring(1);
     console.log("active set to: " + activechat);
-    document.querySelector("#blockchat > input[name='id']").value = activechat;
+    document.querySelector("#confirmBlock > input[name='chatId']").value = activechat;
+}
+
+function confirmToBlock() {
+    let confirmMessage = document.getElementById("confirmBlock");
+    confirmMessage.style.display = "block";
+}
+
+
+function closeBlock(form) {
+    let blockForm = document.getElementById(form);
+    blockForm.style.display = "none";
 }

@@ -15,8 +15,40 @@ html {
         main {
             line-height: 2vh;
 
+            #confirmBlock {
+                display: none;
+                z-index: 3;
+                border: 2.5px solid $darkgreen;
+                margin: auto;
+                width: 60vh;
+                padding: 1%;
+                border-radius: 1vh;
+                text-align: center;
+                background-color: white;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
 
-            #blockUser {
+                h4 {
+                    color: $darkgreen;
+                }
+
+                input[type="button"], input[type="submit"] {
+                    margin-left: 5%;
+                    margin-right: 10%;
+                    background-color: $darkgreen;
+                    width: 20%;
+                    border-radius: 1vh;
+                    height: calc(4vh);
+                    font-size: 2vh;
+                    color: white;
+                    margin-top: 1%;
+                    cursor: pointer;
+                }
+            }
+
+            #blockchat {
                 background: #a9a9a9;
                 position: absolute;
                 width: 7%;

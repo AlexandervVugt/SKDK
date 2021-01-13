@@ -1,8 +1,35 @@
 ﻿body {
   width: 100%; }
+  body #confirmBlock {
+    display: none;
+    z-index: 3;
+    border: 2.5px solid #005709;
+    margin: auto;
+    width: 60vh;
+    padding: 1%;
+    border-radius: 1vh;
+    text-align: center;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    body #confirmBlock h4 {
+      color: #005709; }
+    body #confirmBlock input[type="button"], body #confirmBlock input[type="submit"] {
+      margin-left: 5%;
+      margin-right: 10%;
+      background-color: #005709;
+      width: 20%;
+      border-radius: 1vh;
+      height: calc(4vh);
+      font-size: 2vh;
+      color: white;
+      margin-top: 1%;
+      cursor: pointer; }
   body main {
     width: 100%; }
-    body main input[type=submit] {
+    body main #blockUser, body main #sendmessage {
       background-color: #015e54;
       border: solid;
       border-radius: 30px;
@@ -88,7 +115,7 @@
       float: right;
       width: 30%;
       font-size: 2vh;
-      height: calc(56vh); }
+      height: calc(58vh); }
       body main .user_information #sendmsg {
         margin-top: 10%; }
         body main .user_information #sendmsg #typemessage {
