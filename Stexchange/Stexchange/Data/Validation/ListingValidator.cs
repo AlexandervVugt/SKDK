@@ -21,7 +21,7 @@ namespace Stexchange.Data.Validation
             RuleFor(x => x.Title.Trim()).Matches(@"[\w]+").WithMessage(StandardMessages.NoMatch("titel")).When(x => x.Title.Length > 0);
 
             RuleFor(x => x.Quantity).NotEmpty().WithMessage(StandardMessages.RequiredField("Hoeveelheid"));
-            RuleFor(x => x.Quantity).GreaterThanOrEqualTo(MinQuantitySize).WithMessage(StandardMessages.AmountOfCharacters("hoeveelheid")).When(x => x.Quantity > 0);
+            RuleFor(x => x.Quantity).GreaterThanOrEqualTo(MinQuantitySize).WithMessage(StandardMessages.AmountOfCharacters("hoeveelheid")).When(x => x.Quantity >= 0);
 
             RuleFor(x => x.UserId).NotNull();
             RuleFor(x => x.UserId).NotEqual(-1).WithMessage(StandardMessages.SomethingWW("gebruikersID"));

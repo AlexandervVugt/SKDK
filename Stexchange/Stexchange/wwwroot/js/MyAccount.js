@@ -86,6 +86,7 @@ function populateModifyForm(id) {
                     options[option].selected = false;
                 }
             }
+            document.getElementById("imginput").value = '';
         },
         error: function (err) {
             console.log("populateModifyForm ajax request error");
@@ -266,19 +267,24 @@ function decCurrentImage(length) {
 /* inserts first image in list into img field*/
 let loadFile = function (event) {
     let files = document.getElementById("imginput").files[0];
-    if (files) {
-        filereader(files); /*display first image*/
-        imagecount();
-        previous[0].style.display = "inline";
-        imagecounter.style.display = "inline";
-        imagecounter.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-        next[0].style.display = "inline";
-        image.style.display = "block";
+    if (document.getElementById("imginput").files.length == 0) {
+        imgcount = 1;
+        image.src = imageList[0];
     } else {
-        imagecounter.style.display = "none";
-        previous[0].style.display = "none";
-        next[0].style.display = "none";
-        image.style.display = "none";
+        if (files) {
+            filereader(files); /*display first image*/
+            imagecount();
+            previous[0].style.display = "inline";
+            imagecounter.style.display = "inline";
+            imagecounter.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+            next[0].style.display = "inline";
+            image.style.display = "block";
+        } else {
+            imagecounter.style.display = "none";
+            previous[0].style.display = "none";
+            next[0].style.display = "none";
+            image.style.display = "none";
+        }
     }
 };
 

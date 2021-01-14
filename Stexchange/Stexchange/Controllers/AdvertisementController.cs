@@ -105,7 +105,7 @@ namespace Stexchange.Controllers
                         if(filtersWithFlag.Item1 == false)
                         {
                             ViewBag.Messages = filtersWithFlag.Item3;
-                            return RedirectToAction("PostAdvertisement");
+                            return View();
                         }
 
                         List<Filter> validatedFilters = filtersWithFlag.Item2;
