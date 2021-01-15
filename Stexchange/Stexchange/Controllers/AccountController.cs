@@ -498,6 +498,9 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{verific
                         if (!(string.IsNullOrWhiteSpace(name_nl)) && listing.NameNl != name_nl) listing.NameNl = StandardMessages.CapitalizeFirst(name_nl).Trim();
                         if (!(string.IsNullOrWhiteSpace(name_lt)) && listing.NameLatin != name_lt && name_lt.Length <= 50) listing.NameLatin = StandardMessages.CapitalizeFirst(name_lt).Trim();
                         if (!(string.IsNullOrWhiteSpace(name_lt)) && name_lt.Length > 50) errormessages.Add("De hoeveelheid karakters in de latijnse naam veld is onjuist");
+                        string badword;
+                        if (!(string.IsNullOrWhiteSpace(name_lt)) && StandardMessages.ContainsProfanity(name_lt, out badword)) errormessages.Add(StandardMessages.IsNotAccepted("een scheldwoord in de Latijnse naam"));
+
                         if (quantity > 0 && listing.Quantity != quantity) listing.Quantity = (uint)quantity;
 
                         if (!phresult.IsValid) { phresult.Errors.ToList().ForEach(x => errormessages.Add(x.ErrorMessage)); };
