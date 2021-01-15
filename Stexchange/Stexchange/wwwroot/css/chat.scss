@@ -15,6 +15,42 @@ $greenshadow: rgba(25, 255, 48, 0.5);
             main {
                 line-height: 2vh;
 
+                #errorpopup {
+                    z-index: 3;
+                    border: 2.5px solid $darkgreen;
+                    margin: auto;
+                    width: 60vh;
+                    padding: 1%;
+                    border-radius: 1vh;
+                    text-align: center;
+                    background-color: white;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+
+                    h3 {
+                        color: $darkgreen;
+                    }
+
+                    p {
+                        line-height: 3.5vh;
+                    }
+
+                    #errorbutton {
+                        margin-left: 10%;
+                        margin-right: 10%;
+                        background-color: $darkgreen;
+                        width: 25%;
+                        border-radius: 1vh;
+                        height: calc(4vh);
+                        font-size: 2vh;
+                        color: white;
+                        margin-top: 1%;
+                        cursor: pointer;
+                    }
+                }
+
                 #chatcontainer {
                     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                     display: grid;
@@ -204,38 +240,6 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                     }
                 }
             }
-
-            #errorpopup {
-                z-index: 3;
-                border: 2.5px solid $darkgreen;
-                margin: auto;
-                width: 60vh;
-                padding: 1%;
-                border-radius: 1vh;
-                text-align: center;
-                background-color: white;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-
-                h3 {
-                    color: $darkgreen;
-                }
-
-                #errorbutton {
-                    margin-left: 10%;
-                    margin-right: 10%;
-                    background-color: $darkgreen;
-                    width: 25%;
-                    border-radius: 1vh;
-                    height: calc(4vh);
-                    font-size: 2vh;
-                    color: white;
-                    margin-top: 1%;
-                    cursor: pointer;
-                }
-            }
         }
     }
 }
@@ -244,6 +248,42 @@ $greenshadow: rgba(25, 255, 48, 0.5);
         body {
             main {
                 line-height: 2vh;
+
+                #errorpopup {
+                    z-index: 3;
+                    border: 2.5px solid $darkgreen;
+                    margin: auto;
+                    width: 60vh;
+                    padding: 1%;
+                    border-radius: 1vh;
+                    text-align: center;
+                    background-color: white;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+
+                    h3 {
+                        color: $darkgreen;
+                    }
+
+                    p {
+                        line-height: 3.5vh;
+                    }
+
+                    #errorbutton {
+                        margin-left: 10%;
+                        margin-right: 10%;
+                        background-color: $darkgreen;
+                        width: 25%;
+                        border-radius: 1vh;
+                        height: calc(4vh);
+                        font-size: 2vh;
+                        color: white;
+                        margin-top: 1%;
+                        cursor: pointer;
+                    }
+                }
 
                 #chatcontainer {
                     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -431,38 +471,6 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                             font-size: 1.8vh;
                             text-transform: capitalize;
                         }
-                    }
-                }
-
-                #errorpopup {
-                    z-index: 3;
-                    border: 2.5px solid $darkgreen;
-                    margin: auto;
-                    width: 60vh;
-                    padding: 1%;
-                    border-radius: 1vh;
-                    text-align: center;
-                    background-color: white;
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-
-                    h3 {
-                        color: $darkgreen;
-                    }
-
-                    #errorbutton {
-                        margin-left: 10%;
-                        margin-right: 10%;
-                        background-color: $darkgreen;
-                        width: 25%;
-                        border-radius: 1vh;
-                        height: calc(4vh);
-                        font-size: 2vh;
-                        color: white;
-                        margin-top: 1%;
-                        cursor: pointer;
                     }
                 }
             }
