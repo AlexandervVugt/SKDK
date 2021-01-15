@@ -112,6 +112,8 @@ namespace Stexchange.Controllers
 
                         if (!IsNullOrEmpty(name_lt)) listingBuilder.SetProperty("NameLatin", StandardMessages.CapitalizeFirst(name_lt).Trim());
                         if (!IsNullOrEmpty(name_lt) && name_lt.Length > 50) errormessages.Add("De hoeveelheid karakters in de latijnse naam veld is onjuist");
+                        string badword;
+                        if(!IsNullOrEmpty(name_lt) && StandardMessages.ContainsProfanity(name_lt, out badword)) errormessages.Add(StandardMessages.IsNotAccepted("een scheldwoord in de Latijnse naam"));
 
                         finishedListing = listingBuilder.Complete();
 

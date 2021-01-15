@@ -14,11 +14,14 @@ namespace Stexchange.Data.Validation
 
         public ListingValidator()
         {
-            //todo make constants for static fields listing
+            string badword;
 
             RuleFor(x => x.Title.Trim()).NotEmpty().WithMessage(StandardMessages.RequiredField("Titel"));
             RuleFor(x => x.Title.Trim().Length).LessThanOrEqualTo(MaxTitleSize).WithMessage(StandardMessages.AmountOfCharacters("titel")).When(x => x.Title.Length > 0);
             RuleFor(x => x.Title.Trim()).Matches(@"[\w]+").WithMessage(StandardMessages.NoMatch("titel")).When(x => x.Title.Length > 0);
+            RuleFor(x => x.Title).Must( x => StandardMessages.ContainsProfanity(x.Trim(), out badword).Equals(false)).WithMessage(StandardMessages.IsNotAccepted("een scheldwoord in de titel")).When(x => x.Title.Length >0);
+
+
 
             RuleFor(x => x.Quantity).NotEmpty().WithMessage(StandardMessages.RequiredField("Hoeveelheid"));
             RuleFor(x => x.Quantity).GreaterThanOrEqualTo(MinQuantitySize).WithMessage(StandardMessages.AmountOfCharacters("hoeveelheid")).When(x => x.Quantity >= 0);
@@ -30,11 +33,13 @@ namespace Stexchange.Data.Validation
             RuleFor(x => x.Description.Trim().Length).LessThanOrEqualTo(MaxDescriptionSize).WithMessage(StandardMessages.AmountOfCharacters("beschrijving")).When(x => x.Description.Length > 0);
             RuleFor(x => x.Description.Trim().Length).GreaterThanOrEqualTo(MinDescriptionSize).WithMessage(StandardMessages.AmountOfCharacters("beschrijving")).When(x => x.Description.Length > 0);
             RuleFor(x => x.Description.Trim()).Matches(@"[\w\s]+").WithMessage(StandardMessages.NoMatch("beschrijving")).When(x => x.Description.Length > 0);
+            RuleFor(x => x.Description).Must(x => StandardMessages.ContainsProfanity(x.Trim(), out badword).Equals(false)).WithMessage(StandardMessages.IsNotAccepted("een scheldwoord in de omschrijving")).When(x => x.Title.Length > 0);
 
             RuleFor(x => x.NameNl.Trim()).NotEmpty().WithMessage(StandardMessages.RequiredField("Nederlandse naam")); 
             RuleFor(x => x.NameNl.Trim().Length).LessThanOrEqualTo(MaxNlNameLength).WithMessage(StandardMessages.AmountOfCharacters("nederlandse naam")).When(x => x.NameNl.Length > 0);
             RuleFor(x => x.NameNl.Trim()).Matches(@"[\w]+").WithMessage(StandardMessages.NoMatch("nederlandse naam")).When(x => x.NameNl.Length > 0);
+            RuleFor(x => x.NameNl).Must(x => StandardMessages.ContainsProfanity(x.Trim(), out badword).Equals(false)).WithMessage(StandardMessages.IsNotAccepted("een scheldwoord in de Nederlandse naam")).When(x => x.Title.Length > 0);
         }
-        
+
     }
 }
