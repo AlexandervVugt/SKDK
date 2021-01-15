@@ -233,6 +233,7 @@ function populateReviewForm(reviewId, username, plantname, hasReviewQuality) {
     document.querySelector("#reviewAdvertisementColumn > form > input[name='reviewId']").value = reviewId;
     if (hasReviewQuality == false) {
         document.querySelector("#reviewAdvertisementColumn > form > div.qualityrating").style.display = "none";
+        document.querySelector("#reviewAdvertisementColumn > p:nth-child(3)").innerHTML = "Vul de volgende gegevens in om je communicatie met " + username + " te beoordelen";
     }
 }
 
