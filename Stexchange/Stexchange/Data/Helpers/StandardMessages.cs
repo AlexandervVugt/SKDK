@@ -61,6 +61,16 @@ namespace Stexchange.Data.Helpers
         }
 
         /// <summary>
+        /// can be implemented in the future together with containsprofanity
+        /// </summary>
+        /// <param name="badword"></param>
+        /// <returns></returns>
+        public static string IsNotAccepted(string badword)
+        {
+            return $"\'{StandardMessages.CapitalizeFirst(badword)}\' wordt niet geaccepteerd.";
+        }
+
+        /// <summary>
         /// $"De {fieldName} moet minstens 1 letter bevatten";
         /// </summary>
         /// <param name="fieldName"></param>
@@ -74,5 +84,25 @@ namespace Stexchange.Data.Helpers
         {
             return $"De waarde moet tussen de {num1} en {num2} liggen.";
         }
+
+        public static bool ContainsProfanity(string text, out string badword)
+        {
+            string readProfanity = System.IO.File.ReadAllText(@"Data\Helpers\Profanity.txt");
+            List<string> profanity = readProfanity.ToLower().Trim().Split(',').ToList();
+            badword = "";
+
+            foreach (string word in profanity)
+            {
+                if (text.Contains(word))
+                {
+                    badword = word;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
     }
 }

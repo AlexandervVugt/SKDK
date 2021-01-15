@@ -34,3 +34,9 @@ function displayConvo(chatId) {
     chatDiv.scrollTop = chatDiv.scrollHeight;
 }
 
+function hideForm() {
+    let errorElement = document.getElementById("errorpopup");
+    errorElement.style.display = "none";
+    
+}
+

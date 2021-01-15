@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
+using Stexchange.Data.Helpers;
 using Stexchange.Data.Models;
 using Stexchange.Models;
 
@@ -99,9 +100,9 @@ namespace Stexchange.Controllers
         /// User must be logged in.
         /// If the pre-condition is not met,
         /// the client will be redirected to the Login view.
-        /// If a chat between the sender and receipient does not exist,
+        /// If a chat between the sender and recipient does not exist,
         /// it will be created.
-        /// If sender or receipient blocked either,
+        /// If sender or recipient blocked either,
         /// or if the message does not pass the explicit content filter,
         /// the message will not be send and the client
         /// will be notified to display an error message.
@@ -133,18 +134,28 @@ namespace Stexchange.Controllers
                             where m.ChatId == activeId
                             orderby m.Timestamp descending
                             select m.SenderId).Take(10).ToArray();
-            if (messages.Length < 10 || !Array.TrueForAll(messages, value => value == userId))
+            //what is happening here?
+            if (messages.Length < 10 || !Array.TrueForAll(messages, value => value == userId) )
             {
-                
-                var newMessage = new Message
+                string badword;
+                if (StandardMessages.ContainsProfanity(message.ToLower(), out badword) == false)
                 {
-                    ChatId = activeId,
-                    Content = message,
-                    SenderId = userId
+                    var newMessage = new Message
+                    {
+                        ChatId = activeId,
+                        Content = message,
+                        SenderId = userId
 
-                };
-                _db.Messages.Add(newMessage);
-                _db.SaveChanges();
+                    };
+                    _db.Messages.Add(newMessage);
+                    _db.SaveChanges();
+                }
+                else
+                { 
+                    TempData["SwearMessage"] = badword;
+                    TempData.Keep("SwearMessage");
+                    return RedirectToAction("Chat");
+                }
 
             }
             else

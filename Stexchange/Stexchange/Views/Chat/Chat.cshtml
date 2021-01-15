@@ -8,6 +8,18 @@
 
 <link rel="stylesheet" href="~/css/chat.css" />
 
+@if (TempData["SwearMessage"] is object){
+    <form id="errorpopup">
+        <div id="errorblock" onload="toggleElements()">
+            <h3>ERROR</h3>
+            
+                <p>@TempData["SwearMessage"]</p>
+            
+            <input type="button" value="OK" onclick="hideForm()" id="errorbutton" />
+        </div>
+    </form>
+}
+
 <div id="chatcontainer">
     <div id="conversationslist">
         <p id="chatinboxtitle">
