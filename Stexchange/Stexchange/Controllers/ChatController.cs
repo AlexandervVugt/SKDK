@@ -9,16 +9,18 @@ using Stexchange.Controllers.Exceptions;
 using Stexchange.Data;
 using Stexchange.Data.Models;
 using Stexchange.Models;
+using Newtonsoft.Json;
 
 namespace Stexchange.Controllers
 {
     public class ChatController : StexChangeController
     {
         private Database _db;
-
+        private List<Character> characters;
         public ChatController(Database db)
         {
             _db = db;
+            characters = JsonConvert.DeserializeObject<List<Character>>(System.IO.File.ReadAllText("Characters.json"));
         }
 
         /// <summary>
@@ -135,7 +137,11 @@ namespace Stexchange.Controllers
                             select m.SenderId).Take(10).ToArray();
             if (messages.Length < 10 || !Array.TrueForAll(messages, value => value == userId))
             {
-                
+               
+                foreach (var ch in characters)
+                {
+                    message = message.Replace(ch.div,"");
+                }
                 var newMessage = new Message
                 {
                     ChatId = activeId,
