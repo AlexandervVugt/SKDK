@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="~/css/chat.css" />
 <form id="confirmBlock" method="post" action="@Url.Action("Block")">
-    <p>Weet je het zeker?</p>
+    <p>Weet je zeker dat je deze gebruiker permanent wilt blokkeren?</p>
     <input type="number" name="chatId" hidden />
     <input type="text" name="block" value="chat" hidden />
     <input type="submit" id="blockUser" value="ja" onclick="setBlockInputs()" />

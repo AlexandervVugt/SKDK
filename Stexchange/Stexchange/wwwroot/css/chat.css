@@ -14,8 +14,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); }
-    html body main #confirmBlock h4 {
-      color: #005709; }
+    html body main #confirmBlock p {
+      color: #005709;
+      line-height: 3vh; }
     html body main #confirmBlock input[type="button"], html body main #confirmBlock input[type="submit"] {
       margin-left: 5%;
       margin-right: 10%;
@@ -28,13 +29,14 @@
       margin-top: 1%;
       cursor: pointer; }
   html body main #blockchat {
-    background: #a9a9a9;
+    background: #ef1212;
     position: absolute;
     width: 7%;
     height: 3%;
     margin-left: 85%;
     margin-top: .5%;
-    color: white; }
+    color: white;
+    font-size: 1.5vh; }
   html body main #chatcontainer {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: grid;

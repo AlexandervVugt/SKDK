@@ -10,7 +10,7 @@
 
 <form id="confirmBlock" action="@Url.Action("Block")" method="post">
     <h4>Blokkeer @Model.Listing.OwningUserName</h4>
-    <p>Weet je het zeker?</p>
+    <p>Weet je zeker dat je deze gebruiker permanent wilt blokkeren?</p>
     <input type="number" name="listingId" hidden />
     <input type="submit" value="ja" />
     <input type="button" value="nee" onclick="closeBlock('confirmBlock')" />
