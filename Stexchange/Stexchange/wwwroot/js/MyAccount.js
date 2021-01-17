@@ -330,8 +330,11 @@ function imagecount() {
 }
 
 function submitReviewForm() {
-    let rrId = document.querySelector("#reviewAdvertisementColumn > form > input[name='reviewId']");
+    let rrId = document.querySelector("#reviewAdvertisementColumn > form > input[name='reviewId']").value;
     let communication = document.querySelector("div.communicationrating > div > input:checked");
+    console.log(communication);
+    console.log(communication === null);
+    console.log(communication == null);
     communication = communication === null ? communication : communication.value;
     let quality = (document.querySelector("div.qualityrating").style.display == "none") ?
         null : document.querySelector("div.qualityrating > div > input:checked");
