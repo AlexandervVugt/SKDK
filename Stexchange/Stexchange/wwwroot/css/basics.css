@@ -28,7 +28,7 @@
           width: 100%;
           z-index: 3;
           position: fixed;
-          font-size: 4vw;
+          font-size: 3vw;
           background: white;
           border-bottom: 1px solid #26d1a4; }
           html body header .navbar-default ul {
@@ -44,6 +44,7 @@
             padding-left: 0.8vh;
             padding-right: 0.8vh;
             border-radius: 10px;
+            background-color: white;
             display: block;
             color: #26d1a4;
             text-align: center;
@@ -463,6 +464,7 @@
             padding-left: 0.8vh;
             padding-right: 0.8vh;
             border-radius: 10px;
+            background-color: white;
             display: block;
             color: #26d1a4;
             text-align: center;
