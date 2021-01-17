@@ -230,14 +230,22 @@ namespace Stexchange.Controllers
                                      where (c.Id == chatId)
                                      select c.ResponderId).FirstOrDefault();
                 }
-                var newBlock = new Block
+                try
                 {
-                    BlockerId = userId,
-                    BlockedId = blockedUserId
-                };
-                _db.Blocks.Add(newBlock);
-                _db.SaveChanges();
-                return RedirectToAction("Chat", "Chat");
+                    var newBlock = new Block
+                    {
+                        BlockerId = userId,
+                        BlockedId = blockedUserId
+                    };
+                    _db.Blocks.Add(newBlock);
+                    _db.SaveChanges();
+                    return RedirectToAction("Chat", "Chat");
+                }
+                catch (NullReferenceException)
+                {
+                    return RedirectToAction("Chat", "Chat");
+                }
+
 
 
             }

@@ -52,14 +52,12 @@ namespace Stexchange.Controllers
             try
             {
                 int userId = GetUserId();
-                List<int> blockedUsers = (from b in _db.Blocks
-                                          where b.BlockerId == userId
-                                          select b.BlockedId).ToList();
-                List<int> blockerUsers = (from b in _db.Blocks
-                                          where b.BlockedId == userId
-                                          select b.BlockerId).ToList();
                 listings = (from listing in listings
-                            where !(blockedUsers.Contains(listing.UserId)) && !(blockerUsers.Contains(listing.UserId))
+                            where !((from b in _db.Blocks
+                                     where b.BlockerId == userId
+                                     select b.BlockedId).ToList().Contains(listing.UserId)) && !((from b in _db.Blocks
+                                                                                                  where b.BlockedId == userId
+                                                                                                  select b.BlockerId).ToList().Contains(listing.UserId))
                             orderby listing.CreatedAt 
                             descending
                             select listing).ToList();
