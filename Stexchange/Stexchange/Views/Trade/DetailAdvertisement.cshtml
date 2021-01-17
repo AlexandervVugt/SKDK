@@ -18,6 +18,7 @@
     <input type="submit" value="ja" />
     <input type="button" value="nee" onclick="closeBlock('confirmBlock')" />
 </form>
+<div class="section">
     <div class="section-img">
         <img id="imgoutput" src="@Model.Listing.Pictures.First().GetImage()" />
         <a class="next" onclick="imageslider()">&#10095;</a>
@@ -61,34 +62,34 @@
     </div>
 </div>
 
-<div class="tabsection">
-    <div class="basic_tab tabs" onclick="switchtab('basic_information', 'basic_tab')">Algemene Informatie</div>
-    <div class="filters_tab tabs" onclick="switchtab('filters_information', 'filters_tab')">Verzorging</div>
-</div>
-
-<div class="plant_information">
-    <div class="basic_information infoblock">
-        <p>Nederlandse naam: @Model.Listing.NameNl</p>
-        <p>Latijnse naam: @Model.Listing.NameLatin</p>
-        <p>Hoeveelheid: @Model.Listing.Quantity</p>
-        <p>Beschrijving: @Model.Listing.Description</p>
-        <p>Geplaatst op @Model.Listing.CreatedAt</p>
+    <div class="tabsection">
+        <div class="basic_tab tabs" onclick="switchtab('basic_information', 'basic_tab')">Algemene Informatie</div>
+        <div class="filters_tab tabs" onclick="switchtab('filters_information', 'filters_tab')">Verzorging</div>
     </div>
-    <div class="filters_information infoblock">
-        <p>Standplaats: @(Model.Filterlist.TryGetValue("light", out string display) && display != "null" ? display : @nietVanToepassing)</p>
-        <p>Vocht: @(Model.Filterlist.TryGetValue("water", out display) && display != "null" ? display : @nietVanToepassing)</p>
-        <p>Eigenschap: @(Model.Filterlist.TryGetValue("planttype", out display) && display != "null" ? display : @nietVanToepassing)</p>
-        <p>Plantsoort: @(Model.Filterlist.TryGetValue("plantorder", out display) && display != "null" ? display : @nietVanToepassing)</p>
-        <p>Voeding: @(Model.Filterlist.TryGetValue("nutrients", out display) && display != "null" ? display : @nietVanToepassing)</p>
-        <p>Bodem: @(Model.Filterlist.TryGetValue("ph", out display) && display != "null" ? display : @nietVanToepassing)</p>
-        <p>Inheems: @(Model.Filterlist.TryGetValue("indigenous", out display) && display != "null" ? display : @nietVanToepassing)</p>
-        <p>Voorzien van pot: @(Model.Filterlist.TryGetValue("withpot", out display) && display != "null" ? display : @nietVanToepassing)</p>
-        <p>Gratis: @(Model.Filterlist.TryGetValue("giveaway", out display) && display != "null" ? display == "nee" ? "ruilen" : display : @nietVanToepassing)</p>
-    </div>
-</div>
 
-<script type="text/javascript" asp-append-version="true">
+    <div class="plant_information">
+        <div class="basic_information infoblock">
+            <p>Nederlandse naam: @Model.Listing.NameNl</p>
+            <p>Latijnse naam: @Model.Listing.NameLatin</p>
+            <p>Hoeveelheid: @Model.Listing.Quantity</p>
+            <p>Beschrijving: @Model.Listing.Description</p>
+            <p>Geplaatst op @Model.Listing.CreatedAt</p>
+        </div>
+        <div class="filters_information infoblock">
+            <p>Standplaats: @(Model.Filterlist.TryGetValue("light", out string display) && display != "null" ? display : @nietVanToepassing)</p>
+            <p>Vocht: @(Model.Filterlist.TryGetValue("water", out display) && display != "null" ? display : @nietVanToepassing)</p>
+            <p>Eigenschap: @(Model.Filterlist.TryGetValue("planttype", out display) && display != "null" ? display : @nietVanToepassing)</p>
+            <p>Plantsoort: @(Model.Filterlist.TryGetValue("plantorder", out display) && display != "null" ? display : @nietVanToepassing)</p>
+            <p>Voeding: @(Model.Filterlist.TryGetValue("nutrients", out display) && display != "null" ? display : @nietVanToepassing)</p>
+            <p>Bodem: @(Model.Filterlist.TryGetValue("ph", out display) && display != "null" ? display : @nietVanToepassing)</p>
+            <p>Inheems: @(Model.Filterlist.TryGetValue("indigenous", out display) && display != "null" ? display : @nietVanToepassing)</p>
+            <p>Voorzien van pot: @(Model.Filterlist.TryGetValue("withpot", out display) && display != "null" ? display : @nietVanToepassing)</p>
+            <p>Gratis: @(Model.Filterlist.TryGetValue("giveaway", out display) && display != "null" ? display == "nee" ? "ruilen" : display : @nietVanToepassing)</p>
+        </div>
+    </div>
+
+    <script type="text/javascript" asp-append-version="true">
     var imgList = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GetImages()));
-</script>
+    </script>
 
-<script type="text/javascript" src="~/js/DetailAdvertisement.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/DetailAdvertisement.js" asp-append-version="true"></script>
