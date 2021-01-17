@@ -14,6 +14,7 @@ $greenshadow: rgba(25, 255, 48, 0.5);
         body {
             main {
                 line-height: 2vh;
+
                 #confirmBlock {
                     display: none;
                     z-index: 3;
@@ -28,12 +29,12 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-    
+
                     p {
                         color: $darkgreen;
                         line-height: 3vh;
                     }
-    
+
                     input[type="button"], input[type="submit"] {
                         margin-left: 5%;
                         margin-right: 10%;
@@ -47,7 +48,7 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                         cursor: pointer;
                     }
                 }
-    
+
                 #blockchat {
                     background: #ef1212;
                     position: absolute;
@@ -58,6 +59,7 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                     color: white;
                     font-size: 1.5vh;
                 }
+
                 #errorpopup {
                     z-index: 3;
                     border: 2.5px solid $darkgreen;
@@ -291,6 +293,51 @@ $greenshadow: rgba(25, 255, 48, 0.5);
         body {
             main {
                 line-height: 2vh;
+
+                #confirmBlock {
+                    display: none;
+                    z-index: 3;
+                    border: 2.5px solid $darkgreen;
+                    margin: auto;
+                    width: 60vh;
+                    padding: 1%;
+                    border-radius: 1vh;
+                    text-align: center;
+                    background-color: white;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+
+                    p {
+                        color: $darkgreen;
+                        line-height: 3vh;
+                    }
+
+                    input[type="button"], input[type="submit"] {
+                        margin-left: 5%;
+                        margin-right: 10%;
+                        background-color: $darkgreen;
+                        width: 20%;
+                        border-radius: 1vh;
+                        height: calc(4vh);
+                        font-size: 2vh;
+                        color: white;
+                        margin-top: 1%;
+                        cursor: pointer;
+                    }
+                }
+
+                #blockchat {
+                    background: #ef1212;
+                    position: absolute;
+                    width: 7%;
+                    height: 3%;
+                    margin-left: 85%;
+                    margin-top: .5%;
+                    color: white;
+                    font-size: 1.5vh;
+                }
 
                 #errorpopup {
                     z-index: 3;

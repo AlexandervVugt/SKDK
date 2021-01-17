@@ -3,6 +3,50 @@
     width: 100%; }
     body main {
       width: 100%; }
+      body main #confirmBlock {
+        display: none;
+        z-index: 3;
+        border: 2.5px solid #005709;
+        margin: auto;
+        width: 60vh;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+        body main #confirmBlock h4 {
+          color: #005709;
+          margin-left: 0; }
+        body main #confirmBlock input[type="button"], body main #confirmBlock input[type="submit"] {
+          margin-left: 5%;
+          margin-right: 10%;
+          background-color: #005709;
+          width: 20%;
+          border-radius: 1vh;
+          height: calc(4vh);
+          font-size: 2vh;
+          color: white;
+          margin-top: 1%;
+          cursor: pointer; }
+      body main #blockUser, body main #sendmessage {
+        background-color: #015e54;
+        border: solid;
+        border-radius: 30px;
+        border-color: #3eaf91;
+        text-align: center;
+        display: block;
+        font-size: 2vh;
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        color: white;
+        margin-right: 1%;
+        margin-top: 3%;
+        width: 50%;
+        height: 4vh;
+        margin-left: 25%; }
       body main h4 {
         color: #005709;
         font-size: 30px;
@@ -113,6 +157,50 @@
     width: 100%; }
     body main {
       width: 100%; }
+      body main #confirmBlock {
+        display: none;
+        z-index: 3;
+        border: 2.5px solid #005709;
+        margin: auto;
+        width: 60vh;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+        body main #confirmBlock h4 {
+          color: #005709;
+          margin-left: 0; }
+        body main #confirmBlock input[type="button"], body main #confirmBlock input[type="submit"] {
+          margin-left: 5%;
+          margin-right: 10%;
+          background-color: #005709;
+          width: 20%;
+          border-radius: 1vh;
+          height: calc(4vh);
+          font-size: 2vh;
+          color: white;
+          margin-top: 1%;
+          cursor: pointer; }
+      body main #blockUser, body main #sendmessage {
+        background-color: #015e54;
+        border: solid;
+        border-radius: 30px;
+        border-color: #3eaf91;
+        text-align: center;
+        display: block;
+        font-size: 2vh;
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        color: white;
+        margin-right: 1%;
+        margin-top: 3%;
+        width: 50%;
+        height: 4vh;
+        margin-left: 25%; }
       body main h4 {
         color: #005709;
         font-size: 30px;
