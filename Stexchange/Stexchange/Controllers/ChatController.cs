@@ -142,6 +142,10 @@ namespace Stexchange.Controllers
                 string badword;
                 if (StandardMessages.ContainsProfanity(message.ToLower(), out badword) == false)
                 {
+                    foreach (var ch in characters)
+                    {
+                        message = message.Replace(ch.div, "");
+                    }
                     var newMessage = new Message
                     {
                         ChatId = activeId,
