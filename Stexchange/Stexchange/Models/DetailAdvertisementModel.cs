@@ -11,11 +11,13 @@ namespace Stexchange.Models
     {
         public Listing Listing { get; }
         public Dictionary<string, string> Filterlist { get; }
+        public int UserId { get; }
 
-        public DetailAdvertisementModel(Listing listing, Dictionary<string, string> filterlist)
+        public DetailAdvertisementModel(Listing listing, Dictionary<string, string> filterlist, int userid)
         {
             Listing = listing;
             Filterlist = filterlist;
+            UserId = userid;
         }
 
         public List<string> GetImages()

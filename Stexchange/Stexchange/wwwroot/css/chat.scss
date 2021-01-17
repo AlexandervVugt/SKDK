@@ -14,7 +14,50 @@ $greenshadow: rgba(25, 255, 48, 0.5);
         body {
             main {
                 line-height: 2vh;
-
+                #confirmBlock {
+                    display: none;
+                    z-index: 3;
+                    border: 2.5px solid $darkgreen;
+                    margin: auto;
+                    width: 60vh;
+                    padding: 1%;
+                    border-radius: 1vh;
+                    text-align: center;
+                    background-color: white;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+    
+                    p {
+                        color: $darkgreen;
+                        line-height: 3vh;
+                    }
+    
+                    input[type="button"], input[type="submit"] {
+                        margin-left: 5%;
+                        margin-right: 10%;
+                        background-color: $darkgreen;
+                        width: 20%;
+                        border-radius: 1vh;
+                        height: calc(4vh);
+                        font-size: 2vh;
+                        color: white;
+                        margin-top: 1%;
+                        cursor: pointer;
+                    }
+                }
+    
+                #blockchat {
+                    background: #ef1212;
+                    position: absolute;
+                    width: 7%;
+                    height: 3%;
+                    margin-left: 85%;
+                    margin-top: .5%;
+                    color: white;
+                    font-size: 1.5vh;
+                }
                 #errorpopup {
                     z-index: 3;
                     border: 2.5px solid $darkgreen;
@@ -472,6 +515,39 @@ $greenshadow: rgba(25, 255, 48, 0.5);
                             text-transform: capitalize;
                         }
                     }
+                }
+                // .message_content {
+                //    word-wrap = break-word;
+                // }
+            }
+
+
+
+            #chatform {
+                display: grid;
+                grid-area: chatform;
+                grid-template-rows: 10% 80% 10%;
+                grid-template-columns: 1% 87% 1% 10% 1%;
+                grid-template-areas: '. . . . .''. typemessage . sendmessage .''. . . . .';
+                border-radius: 0 0vh 0.2vh 0;
+                background: $darkshadowwhite;
+                border-top: .1vh solid $darkshadow;
+
+
+                #typemessage {
+                    grid-area: typemessage;
+                    font-size: 1.8vh;
+                    border-radius: 0.2vh;
+                    padding-left: 1vh;
+                }
+
+                #sendmessage {
+                    grid-area: sendmessage;
+                    border-radius: 0.2vh;
+                    background: $darkshadow;
+                    color: white;
+                    font-size: 1.8vh;
+                    text-transform: capitalize;
                 }
             }
         }

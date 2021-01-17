@@ -157,6 +157,8 @@
           float: right;
           width: 30%;
           font-size: 2vh;
+          height: calc(58vh);
+          font-size: 2vh;
           height: calc(55vh); }
           body main .section .user_information #sendmsg {
             margin-top: 10%; }

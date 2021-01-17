@@ -46,13 +46,35 @@ namespace Stexchange.Controllers
         public IActionResult Trade()
         {
             BlockedPoller(); //Wait for our turn to read the resource
-
             //Shallow copy, this was accounted for in the design of this method.
             var listings = _listingCache.Values.ToList();
             listings.ForEach(listing => PrepareListing(ref listing));
             listings.ForEach(listing => listing.Owner.Rating = new User.RatingAggregation(
                                         from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating));
             listings = (from listing in listings orderby listing.CreatedAt descending select listing).ToList();
+            try
+            {
+                int userId = GetUserId();
+                listings = (from listing in listings
+                            where !((from b in _db.Blocks
+                                     where b.BlockerId == userId
+                                     select b.BlockedId).ToList().Contains(listing.UserId)) && !((from b in _db.Blocks
+                                                                                                  where b.BlockedId == userId
+                                                                                                  select b.BlockerId).ToList().Contains(listing.UserId))
+                            orderby listing.CreatedAt 
+                            descending
+                            select listing).ToList();
+            }
+            catch(InvalidSessionException)
+            {
+                listings = (from listing in listings
+                            orderby listing.CreatedAt 
+                            descending
+                            select listing).ToList();
+            }
+
+
+            
 
             var tradeModel = new TradeViewModel(listings);
  
@@ -71,8 +93,17 @@ namespace Stexchange.Controllers
                             from rating in _db.Ratings where rating.RevieweeId == listing.UserId select rating);
 
             _blocked = false; //Release the resource
-
-            return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters)));
+            //TODO: put the listing in a model for the detail page.
+            
+            try
+            {
+                return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters), GetUserId()));
+            }
+            catch (InvalidSessionException)
+            {
+                return View("DetailAdvertisement", model: new DetailAdvertisementModel(listing, FormatFilters(listing.Filters), -1));
+            }
+            
         }
 
         private Dictionary<string, string> FormatFilters(List<string> filters)
@@ -474,10 +505,45 @@ namespace Stexchange.Controllers
                 } 
                 searchList = (from advertisement in searchList orderby advertisement.CreatedAt descending select advertisement).ToList();
             }
+            if (Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
+            {
+                List<int> blockedUsers = (from b in _db.Blocks
+                                          where b.BlockerId == GetUserId()
+                                          select b.BlockedId).ToList();
+                List<int> blockerUsers = (from b in _db.Blocks
+                                          where b.BlockedId == GetUserId()
+                                          select b.BlockerId).ToList();
+                searchList.RemoveAll(l => blockedUsers.Contains(l.UserId) || blockerUsers.Contains(l.UserId));
+
+            }
 
             TempData["SearchResults"] = searchList.Count;
 
             return View("trade", new TradeViewModel(searchList));
+        }
+        public IActionResult Block(int listingId)
+        {
+          try
+           {
+                int blockedUserId = (from l in _db.Listings
+                                     where (l.Id == listingId)
+                                     select l.UserId).FirstOrDefault();
+                    var newBlock = new Block
+                    {
+                        BlockerId = GetUserId(),
+                        BlockedId = blockedUserId
+                    };
+                     _db.Blocks.Add(newBlock);
+                     _db.SaveChanges();
+                    return RedirectToAction("Trade", "Trade");
+                
+
+            }
+            catch (InvalidSessionException)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
         }
     }
 }

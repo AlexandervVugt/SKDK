@@ -11,7 +11,13 @@
 
 <h4>@Model.Listing.Title</h4>
 
-<div class="section">
+<form id="confirmBlock" action="@Url.Action("Block")" method="post">
+    <h4>Blokkeer @Model.Listing.OwningUserName</h4>
+    <p>Weet je zeker dat je deze gebruiker permanent wilt blokkeren?</p>
+    <input type="number" name="listingId" hidden />
+    <input type="submit" value="ja" />
+    <input type="button" value="nee" onclick="closeBlock('confirmBlock')" />
+</form>
     <div class="section-img">
         <img id="imgoutput" src="@Model.Listing.Pictures.First().GetImage()" />
         <a class="next" onclick="imageslider()">&#10095;</a>
@@ -43,10 +49,14 @@
         <span id="qualityReviews">(@Model.Listing.Owner.Rating.QualityCount)</span>
         @if (Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
         {
-            <form id="sendmsg" method="post" action="@Url.Action("NewChat","Chat", new {listId = Model.Listing.Id})">
-                <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
-                <input type="submit" id="sendmessage" value="Stuur een bericht" />
-            </form>
+            if (Model.Listing.UserId != Model.UserId && Model.UserId != -1)
+            {
+                <form id="sendmsg" method="post" action="@Url.Action("NewChat", "Chat", new { listId = Model.Listing.Id })">
+                    <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
+                    <input type="submit" id="sendmessage" value="Stuur een bericht" />
+                </form>
+                <input type="button" id="blockUser" value="Blokkeren" onclick="confirmToBlock(@Model.Listing.Id)" />
+            }
         }
     </div>
 </div>

@@ -7,6 +7,19 @@
 @using Stexchange.Data.Models
 
 <link rel="stylesheet" href="~/css/chat.css" />
+<form id="confirmBlock" method="post" action="@Url.Action("Block")">
+    <p>Weet je zeker dat je deze gebruiker permanent wilt blokkeren?</p>
+    <input type="number" name="chatId" hidden />
+    <input type="text" name="block" value="chat" hidden />
+    <input type="submit" id="blockUser" value="ja" onclick="setBlockInputs()" />
+    <input type="button" value="nee" onclick="closeBlock('confirmBlock')" />
+</form>
+
+
+@if (Model.ChatInbox.Any())
+{
+    <input type="button" id="blockchat" value="Blokkeren" onclick="confirmToBlock()" />
+}
 
 @if (TempData["SwearMessage"] is object){
     <form id="errorpopup">
@@ -33,7 +46,6 @@
         }
     </div>
     <div id="chattitle">
-        <!--Name of reciever-->
     </div>
     <div id="messagelist">
     </div>
@@ -44,6 +56,8 @@
     </form>
 
 </div>
+
+
 <script type="text/javascript">
     var temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ChatInbox));
     var userId = @Model.UserId;
@@ -53,7 +67,7 @@
     });
     window.onload = () => {
         let activeChat = @(TempData["Active"] ?? -1);
-        if (activeChat != -1) {
+        if (activeChat != -1 ) {
             displayConvo(activeChat);
         }
     };

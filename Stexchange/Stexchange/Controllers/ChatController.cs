@@ -34,12 +34,13 @@ namespace Stexchange.Controllers
         /// 
         public IActionResult Chat()
         {
-            
+
             int userId;
             try
             {
                 userId = GetUserId();
-            } catch (InvalidSessionException)
+            }
+            catch (InvalidSessionException)
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -69,12 +70,26 @@ namespace Stexchange.Controllers
                                     where listing.Id == chat.AdId
                                     select listing).First())
                                 .Complete()).ToList();
+            List<int> blockedUsers = (from b in _db.Blocks
+                                      where b.BlockerId == userId
+                                      select b.BlockedId).ToList();
+            List<int> blockerUsers = (from b in _db.Blocks
+                                      where b.BlockedId == userId
+                                      select b.BlockerId).ToList();
+            List<int> blockedAds = (from a in _db.Listings
+                                    where (blockedUsers.Contains(a.UserId))
+                                    select a.Id).ToList();
+            List<int> blockerAds = (from a in _db.Listings
+                                    where (blockerUsers.Contains(a.UserId))
+                                    select a.Id).ToList();
+
             chats = (from chat in chats
-                     where chat.Messages.Any()
+                     where chat.Messages.Any() && !(blockedAds.Contains(chat.AdId) || blockedUsers.Contains(chat.ResponderId))
+                                               && !(blockerAds.Contains(chat.AdId) || blockerUsers.Contains(chat.ResponderId))
                      orderby chat.Messages[0].Timestamp descending
                      select chat).ToList();
             
-      
+            
             try
             {
                 int recentChat = chats[0].Id;
@@ -86,6 +101,7 @@ namespace Stexchange.Controllers
                     {
                       RecentTimestamp = ch.Messages.Last().Timestamp;
                       recentChat = ch.Id;
+                      TempData["Active"] = recentChat;
                     }
                     
                 }
@@ -195,7 +211,7 @@ namespace Stexchange.Controllers
             {
                 ResponderId = userId,
                 AdId = listId
-
+                
             };
             try
             {
@@ -214,8 +230,47 @@ namespace Stexchange.Controllers
             }
             return RedirectToAction("Chat");
         }
+        public IActionResult Block(int chatId)
+        {
+            try
+            {
+                int userId = GetUserId();
+                int AdId = (from c in _db.Chats
+                            where (c.Id == chatId)
+                            select c.AdId).FirstOrDefault();
+                int blockedUserId = (from l in _db.Listings
+                                     where (l.Id == AdId)
+                                     select l.UserId).FirstOrDefault();
+                if (blockedUserId == userId)
+                {
+                    blockedUserId = (from c in _db.Chats
+                                     where (c.Id == chatId)
+                                     select c.ResponderId).FirstOrDefault();
+                }
+                try
+                {
+                    var newBlock = new Block
+                    {
+                        BlockerId = userId,
+                        BlockedId = blockedUserId
+                    };
+                    _db.Blocks.Add(newBlock);
+                    _db.SaveChanges();
+                    return RedirectToAction("Chat", "Chat");
+                }
+                catch (NullReferenceException)
+                {
+                    return RedirectToAction("Chat", "Chat");
+                }
 
 
 
+            }
+            catch (InvalidSessionException)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+        }
     }
 }
