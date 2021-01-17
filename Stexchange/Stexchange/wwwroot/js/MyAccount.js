@@ -330,10 +330,12 @@ function imagecount() {
 }
 
 function submitReviewForm() {
-    let rrId = document.querySelector("#reviewAdvertisementColumn > form > input[name='reviewId']").value;
-    let communication = document.querySelector("div.communicationrating > div > input:checked").value;
+    let rrId = document.querySelector("#reviewAdvertisementColumn > form > input[name='reviewId']");
+    let communication = document.querySelector("div.communicationrating > div > input:checked");
+    communication = communication === null ? communication : communication.value;
     let quality = (document.querySelector("div.qualityrating").style.display == "none") ?
-        null : document.querySelector("div.qualityrating > div > input:checked").value;
+        null : document.querySelector("div.qualityrating > div > input:checked");
+    quality = quality === null ? quality : quality.value;
     $.ajax({
         type: "POST",
         url: `/Account/PostReview?ratingRequestId=${rrId}&communication=${communication}&quality=${quality}`,
