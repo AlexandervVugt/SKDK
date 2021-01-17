@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,16 +10,18 @@ using Stexchange.Data;
 using Stexchange.Data.Helpers;
 using Stexchange.Data.Models;
 using Stexchange.Models;
+using Newtonsoft.Json;
 
 namespace Stexchange.Controllers
 {
     public class ChatController : StexChangeController
     {
         private Database _db;
-
+        private List<Character> characters;
         public ChatController(Database db)
         {
             _db = db;
+            characters = JsonConvert.DeserializeObject<List<Character>>(System.IO.File.ReadAllText("Characters.json"));
         }
 
         /// <summary>
