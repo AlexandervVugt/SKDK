@@ -2,23 +2,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - Stexchange</title>
-	<link rel="stylesheet" href="~/css/basics.css" />
-	<link runat="server" rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link runat="server" rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link runat="server" rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link runat="server" rel="manifest" href="/site.webmanifest">
-	<link runat="server" rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-	<meta runat="server" name="msapplication-TileColor" content="#da532c">
-	<meta runat="server" name="theme-color" content="#ffffff">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Stexchange</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/basics.css" />
+    <link runat="server" rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link runat="server" rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link runat="server" rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link runat="server" rel="manifest" href="/site.webmanifest">
+    <link runat="server" rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta runat="server" name="msapplication-TileColor" content="#da532c">
+    <meta runat="server" name="theme-color" content="#ffffff">
 
-	
+
 </head>
 <body>
-	<header>
-		<nav class="navbar-default">
+    <header>
+        <nav class="navbar-default">
             <ul>
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
@@ -30,7 +31,7 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Rules">WERKWIJZE</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Trade" asp-action="Trade">RUILEN</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Trade" asp-action="Trade">AANBOD</a>
                 </li>
                 @if (!(Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken)))
                 {
@@ -40,8 +41,12 @@
                 }
                 else
                 {
+                    <li class="nav-item mobilenav1">
+
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="PostAdvertisement"><i class="fa fa-plus-circle"></i>ADVERTENTIE PLAATSEN</a>
+                    </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="PostAdvertisement">ADVERTENTIE PLAATSEN</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="MyAccount">MIJN ACCOUNT</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">UITLOGGEN</a>
@@ -49,16 +54,17 @@
                 }
                 @if (Context.Request.Cookies.ContainsKey(StexChangeController.Cookies.SessionToken))
                 {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Chat">CHAT</a>
+                    <li class="nav-item mobilenav2">
+
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Chat"><i class="fa fa-envelope-o"></i>CHAT</a>
                     </li>
                 }
             </ul>
-		</nav>
-	</header>
-	<main role="main" class="pb-3" id="startchange">
-		@RenderBody()
-	</main>
+        </nav>
+    </header>
+    <main role="main" class="pb-3" id="startchange">
+        @RenderBody()
+    </main>
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -66,14 +72,20 @@
         </main>
     </div>
 
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	<script>
-		$(window).scroll(function () {
-			$('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
-		});
-	</script>
-	@RenderSection("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(window).scroll(function () {
+            $('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+
+    <footer>
+        <p>
+            &copy; HR<br>
+        </p>
+    </footer>
 </body>
 </html>

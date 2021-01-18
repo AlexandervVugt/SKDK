@@ -17,6 +17,23 @@ namespace Stexchange.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("Stexchange.Data.Models.Block", b =>
+                {
+                    b.Property<long>("BlockedId")
+                        .HasColumnName("blocked_id")
+                        .HasColumnType("bigint(20) unsigned");
+
+                    b.Property<long>("BlockerId")
+                        .HasColumnName("blocker_id")
+                        .HasColumnType("bigint(20) unsigned");
+
+                    b.HasKey("BlockedId", "BlockerId");
+
+                    b.HasIndex("BlockerId");
+
+                    b.ToTable("Blocks");
+                });
+
             modelBuilder.Entity("Stexchange.Data.Models.Chat", b =>
                 {
                     b.Property<int>("Id")
@@ -31,9 +48,6 @@ namespace Stexchange.Migrations
                     b.Property<long>("ResponderId")
                         .HasColumnName("responder_id")
                         .HasColumnType("bigint(20) unsigned");
-
-                    b.Property<long>("TempId")
-                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -136,15 +150,6 @@ namespace Stexchange.Migrations
                         .HasColumnType("bit(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<long>("TempId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TempId1")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TempId2")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnName("title")
@@ -201,6 +206,75 @@ namespace Stexchange.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("Stexchange.Data.Models.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("serial");
+
+                    b.Property<byte>("Communication")
+                        .HasColumnName("communication")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<byte?>("Quality")
+                        .HasColumnName("quality")
+                        .HasColumnType("tinyint unsigned");
+
+                    b.Property<long>("RevieweeId")
+                        .HasColumnName("reviewee")
+                        .HasColumnType("bigint(20) unsigned");
+
+                    b.Property<long>("ReviewerId")
+                        .HasColumnName("reviewer")
+                        .HasColumnType("bigint(20) unsigned");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RevieweeId");
+
+                    b.HasIndex("ReviewerId");
+
+                    b.ToTable("Ratings");
+                });
+
+            modelBuilder.Entity("Stexchange.Data.Models.RatingRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("serial");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("created_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("PlantName")
+                        .HasColumnName("plant_name")
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<bool>("RequestQuality")
+                        .HasColumnName("request_quality")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<long>("RevieweeId")
+                        .HasColumnName("reviewee")
+                        .HasColumnType("bigint(20) unsigned");
+
+                    b.Property<long>("ReviewerId")
+                        .HasColumnName("reviewer")
+                        .HasColumnType("bigint(20) unsigned");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RevieweeId");
+
+                    b.HasIndex("ReviewerId");
+
+                    b.ToTable("RatingRequests");
+                });
+
             modelBuilder.Entity("Stexchange.Data.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -234,15 +308,6 @@ namespace Stexchange.Migrations
                         .HasColumnName("postal_code")
                         .HasColumnType("char(6)");
 
-                    b.Property<long>("TempId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TempId1")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TempId2")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnName("username")
@@ -250,9 +315,11 @@ namespace Stexchange.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Email");
+                    b.HasIndex("Email")
+                        .IsUnique();
 
-                    b.HasAlternateKey("Username");
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -281,19 +348,32 @@ namespace Stexchange.Migrations
                     b.ToTable("UserVerifications");
                 });
 
+            modelBuilder.Entity("Stexchange.Data.Models.Block", b =>
+                {
+                    b.HasOne("Stexchange.Data.Models.User", "Blocked")
+                        .WithMany()
+                        .HasForeignKey("BlockedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Stexchange.Data.Models.User", "Blocker")
+                        .WithMany()
+                        .HasForeignKey("BlockerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Stexchange.Data.Models.Chat", b =>
                 {
                     b.HasOne("Stexchange.Data.Models.Listing", "Listing")
                         .WithMany()
                         .HasForeignKey("AdId")
-                        .HasPrincipalKey("TempId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Stexchange.Data.Models.User", "Responder")
-                        .WithMany("ChatInbox")
+                        .WithMany()
                         .HasForeignKey("ResponderId")
-                        .HasPrincipalKey("TempId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -303,7 +383,6 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.Listing", "Listing")
                         .WithMany()
                         .HasForeignKey("ListingId")
-                        .HasPrincipalKey("TempId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -319,7 +398,6 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.Listing", "Listing")
                         .WithMany("Pictures")
                         .HasForeignKey("ListingId")
-                        .HasPrincipalKey("TempId2")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -327,9 +405,8 @@ namespace Stexchange.Migrations
             modelBuilder.Entity("Stexchange.Data.Models.Listing", b =>
                 {
                     b.HasOne("Stexchange.Data.Models.User", "Owner")
-                        .WithMany("Listings")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .HasPrincipalKey("TempId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -339,14 +416,42 @@ namespace Stexchange.Migrations
                     b.HasOne("Stexchange.Data.Models.Chat", null)
                         .WithMany("Messages")
                         .HasForeignKey("ChatId")
-                        .HasPrincipalKey("TempId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Stexchange.Data.Models.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
-                        .HasPrincipalKey("TempId2")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Stexchange.Data.Models.Rating", b =>
+                {
+                    b.HasOne("Stexchange.Data.Models.User", "Reviewee")
+                        .WithMany()
+                        .HasForeignKey("RevieweeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Stexchange.Data.Models.User", "Reviewer")
+                        .WithMany()
+                        .HasForeignKey("ReviewerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Stexchange.Data.Models.RatingRequest", b =>
+                {
+                    b.HasOne("Stexchange.Data.Models.User", "Reviewee")
+                        .WithMany()
+                        .HasForeignKey("RevieweeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Stexchange.Data.Models.User", "Reviewer")
+                        .WithMany()
+                        .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

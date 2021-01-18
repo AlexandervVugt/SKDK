@@ -32,7 +32,8 @@ let image = document.getElementById("imgoutput");
 //let files = document.getElementById("imginput").files;
 
 /* span text*/
-let imagecounter = document.getElementById("imagecounter")
+let imagecounter = document.getElementById("imagecounter");
+imagecounter.style.display = "none";
 
 let currentImage = 0;
 function decCurrentImage(length) {
@@ -88,10 +89,43 @@ function filereader(files) {
     }
 }
 
+
 /*image counter*/
 function imagecount() {
     let files = document.getElementById("imginput").files;
     imagecounter.textContent = ((currentImage % files.length) + 1) + "/" + files.length;
+}
+
+window.onload = function () {
+    if (document.getElementById("errorpopup")) {
+        toggleElements();
+    }
+}
+
+function hideForm() {
+    let errorElement = document.getElementById("errorpopup");
+    errorElement.style.display = "none";
+    toggleElements();
+}
+
+function toggleElements() {
+    let inputs = document.getElementsByTagName("input");
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].id != "errorbutton") {
+            inputs[i].disabled = !inputs[i].disabled;
+        }
+    }
+
+    let selects = document.getElementsByTagName("select");
+    for (var i = 0; i < selects.length; i++) {
+        selects[i].disabled = !selects[i].disabled
+    }
+
+    let textarea = document.getElementsByClassName("descriptionInput");
+    textarea[0].disabled = !textarea[0].disabled;
+
+    let submitbutton = document.getElementById("advertisementsubmit");
+    submitbutton.disabled = !submitbutton.disabled;
 }
 
 

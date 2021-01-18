@@ -1,0 +1,1685 @@
+﻿$color-darkgreen: #465D43;
+$color-red: #C51014;
+$color-grey: #808080;
+$green: #26d1a4;
+$shadow: #b2e8d4;
+$darkgreen: #367a57;
+
+@media screen and (max-width: 600px) {
+    #profileColumn {
+        margin-left: 5%;
+        margin-right: 1%;
+        width: 80%;
+        float: left;
+        border: 1.5px solid $darkgreen;
+        padding: 5%;
+        line-height: 4vh;
+        margin-bottom: 10%;
+
+        h4 {
+            font-size: 2.5vh;
+            color: $darkgreen;
+        }
+
+        p {
+            font-size: 2vh;
+            color: $darkgreen;
+        }
+
+        .stars {
+            font-size: 2vh;
+            color: $darkgreen;
+        }
+
+        label {
+            float: right;
+        }
+
+        span {
+            font-size: 2vh;
+            float: right;
+            color: $darkgreen;
+        }
+
+        button {
+            border: 1.5px solid $darkgreen;
+            width: 80%;
+            height: 5vh;
+            margin-top: 3%;
+            margin-left: 10%;
+            margin-right: 10%;
+            text-align: center;
+            font-size: 2vh;
+            background-color: white;
+            color: $darkgreen;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+    }
+
+    #myadvertisementsColumn {
+        width: 90%;
+        text-align: center;
+        float: left;
+        margin-left: 5%;
+        margin-bottom: 20%;
+
+        h3 {
+            font-size: 2.5vh;
+            color: $darkgreen;
+        }
+
+        p {
+            color: $darkgreen;
+        }
+
+        .advertisementColumn {
+            margin-bottom: 1.5%;
+            background-color: rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+            border: 1.5px solid $darkgreen;
+
+            .advertisementInfo {
+                float: left;
+                padding: 1%;
+                width: 98%;
+
+                img {
+                    float: left;
+                    width: 100%;
+                    height: calc(100%);
+                    object-fit: cover;
+                }
+
+                h4 {
+                    font-size: 2vh;
+                    color: $darkgreen;
+                    float: left;
+                    width: 100%;
+                }
+
+                p {
+                    font-size: 1.8vh;
+                    float: left;
+                    width: 100%;
+                }
+            }
+
+            .advertisementOptions {
+                float: left;
+                padding: 1%;
+                width: 98%;
+
+                input {
+                    float: right;
+                    clear: both;
+                    background-color: $darkgreen;
+                    border: 1.5px solid $darkgreen;
+                    width: 100%;
+                    padding: 1%;
+                    height: 5vh;
+                    margin-bottom: 5%;
+                    text-align: center;
+                    font-size: 2vh;
+                    color: white;
+                }
+
+                .deleteButton {
+                    border: 1.5px solid $color-red;
+                    background-color: $color-red;
+                }
+
+                input[type=button]:hover {
+                    cursor: pointer;
+                }
+
+                input[type=checkbox] {
+                    display: none;
+                }
+                // inactive
+                .slider {
+                    position: relative;
+                    display: inline-block;
+                    float: right;
+                    clear: both;
+                    background-color: rgba(0, 0, 0, 0.2);
+                    border: 1.5px solid $darkgreen;
+                    width: 97.5%;
+                    padding: 1%;
+                    height: 4vh;
+                    margin-bottom: 5%;
+                    text-align: center;
+                    font-size: 2vh;
+                }
+
+                .slider:hover {
+                    cursor: pointer;
+                }
+                // round circle inside switch
+                .slider:before {
+                    position: absolute;
+                    content: "";
+                    height: 4vh;
+                    width: 4vh;
+                    left: 4px;
+                    background-color: white;
+                    -webkit-transition: .4s;
+                    transition: .4s;
+                }
+                // active
+                input:checked + .slider {
+                    background-color: $darkgreen;
+                }
+
+                input:focus + .slider {
+                    box-shadow: 0 0 1px $darkgreen;
+                }
+                // round circle end
+                input:checked + .slider:before {
+                    left: 82.5%;
+                }
+
+                .slider:after {
+                    content: 'INACTIEF';
+                    color: white;
+                    display: block;
+                    position: absolute;
+                    transform: translate(-50%,-50%);
+                    top: 50%;
+                    left: 50%;
+                    font-size: 2vh;
+                    font-family: Verdana, sans-serif;
+                }
+
+                input:checked + .slider:after {
+                    content: 'ACTIEF';
+                    color: white;
+                }
+
+                .slider.round {
+                    border-radius: 10px;
+                }
+
+                .slider.round:before {
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+
+    #requestForm {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        display: none;
+        width: 90%;
+        float: left;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1.5px solid $darkgreen;
+        color: $darkgreen;
+        padding-top: 0.5%;
+        padding-bottom: 1%;
+        padding-left: 2%;
+        padding-right: 2%;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h3 {
+            font-size: 2.5vh;
+            float: left;
+        }
+
+        p {
+            float: left;
+            clear: both;
+            font-size: 2vh;
+        }
+
+        label {
+            float: left;
+            clear: both;
+            font-size: 2vh;
+        }
+
+        select {
+            float: left;
+            clear: both;
+            width: 100%;
+            border: 2.5px solid $darkgreen;
+            background-color: rgba(255, 255, 255, 0.5);
+            height: calc(5vh);
+            font-size: 2vh;
+            padding-left: 1%;
+        }
+
+        input[type=number] {
+            float: left;
+            clear: both;
+            width: 98.5%;
+            height: calc(5vh);
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2.5px solid $darkgreen;
+            font-size: 2vh;
+            padding-left: 1%;
+        }
+
+        #confirmButton {
+            float: right;
+            clear: both;
+            background-color: $darkgreen;
+            border: 1.5px solid $darkgreen;
+            width: 40%;
+            height: 5vh;
+            margin-top: 4%;
+            text-align: center;
+            font-size: 2vh;
+            color: white;
+        }
+
+        #cancelButton {
+            float: right;
+            width: 10%;
+            margin-top: 2%;
+            background-color: $darkgreen;
+            text-align: center;
+            font-size: 2vh;
+            color: white;
+        }
+
+        input[type=button]:hover {
+            cursor: pointer;
+        }
+    }
+
+    #mySettingsColumn {
+        display: none;
+        width: 90%;
+        float: left;
+        margin-left: 5%;
+        margin-bottom: 20%;
+
+        h3 {
+            font-size: 2.5vh;
+            float: left;
+            margin-top: 1%;
+            color: $darkgreen;
+        }
+
+        #formColumn {
+            margin-bottom: 1.5%;
+            width: 90%;
+            padding: 5%;
+            height: 67vh;
+            border: 1.5px solid $darkgreen;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding-bottom: 1%;
+
+            label {
+                float: left;
+                clear: both;
+                font-size: 2vh;
+            }
+
+            input[type=text] {
+                float: left;
+                clear: both;
+                width: 98.5%;
+                height: calc(5vh);
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 2.5px solid $darkgreen;
+                font-size: 2vh;
+                padding-left: 1%;
+            }
+
+            #saveButton, #cancelButton {
+                background-color: $darkgreen;
+                text-align: center;
+                color: white;
+                float: right;
+                font-size: 2vh;
+            }
+
+            #saveButton {
+                clear: both;
+                border: 1.5px solid $darkgreen;
+                width: 40%;
+                height: 5vh;
+                margin-top: 4%;
+            }
+
+            #cancelButton {
+                width: 10%;
+                margin-top: 2.5%;
+            }
+
+            input[type=button]:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+
+    #ratingreviewColumn {
+        width: 90%;
+        text-align: center;
+        float: left;
+        margin-left: 5%;
+        display: none;
+
+        h3 {
+            font-size: 2.5vh;
+            color: $darkgreen;
+        }
+
+        h4 {
+            font-size: 2vh;
+            color: $darkgreen;
+        }
+
+        p {
+            color: $darkgreen;
+        }
+
+        .reviewRequest {
+            margin-bottom: 1.5%;
+            background-color: rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+            border: 1.5px solid $darkgreen;
+            line-height: 3vh;
+
+            .reviewInfo {
+                float: left;
+                width: 100%;
+                padding: 1%;
+
+                h4 {
+                    font-size: 2.2vh;
+                    color: $darkgreen;
+                }
+
+                p {
+                    font-size: 2vh;
+                }
+            }
+
+            .reviewOptions {
+                float: left;
+                width: 100%;
+                padding-bottom: 3%;
+                margin-top: 0.25%;
+
+                input {
+                    float: left;
+                    clear: both;
+                    background-color: $darkgreen;
+                    border: 1.5px solid $darkgreen;
+                    width: 80%;
+                    margin-left: 10%;
+                    height: 5vh;
+                    font-size: 2vh;
+                    color: white;
+                }
+
+                input[type=button]:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    #modifyAdvertismentForm {
+        display: none;
+        width: 90%;
+        float: left;
+        margin: 5%;
+        margin-bottom: 20%;
+        border: 1.5px solid $darkgreen;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding-bottom: 2vh;
+
+        h3 {
+            font-size: 2.5vh;
+            color: $darkgreen;
+            float: left;
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-top: 1%;
+        }
+
+        p, label {
+            font-size: 2vh;
+            color: $darkgreen;
+        }
+
+        #imgContainer {
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-top: 1%;
+
+            #imgoutput {
+                width: 100%;
+                margin-top: 1%;
+                height: calc(100%);
+                object-fit: cover;
+                border: 1.5px solid $darkgreen;
+            }
+
+            .imageslides {
+                text-align: center;
+                margin-bottom: 1%;
+                margin-top: 1%;
+
+                .previous {
+                    background-color: $darkgreen;
+                    padding: 2%;
+                    border-radius: 50vh;
+                    line-height: 0;
+                    color: white;
+                }
+
+                #imagecounter {
+                    margin-left: 10%;
+                    margin-right: 10%;
+                    line-height: 0;
+                    padding: 2%;
+                    color: white;
+                }
+
+                .next {
+                    background-color: $darkgreen;
+                    padding: 2%;
+                    border-radius: 50vh;
+                    line-height: 0;
+                    color: white;
+                }
+            }
+
+            input[type="file"] {
+                height: calc(3vh);
+                font-size: 2vh;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                cursor: pointer;
+                float: left;
+                margin-top: 1%;
+            }
+
+            label {
+                font-size: 2vh;
+                color: black;
+                width: 41%;
+                text-align: center;
+                float: right;
+
+                #removeImagesCheckbox {
+                    background-color: $darkgreen;
+                    width: 8%;
+                    margin-right: 2%;
+                    border-radius: 1vh;
+                    height: calc(4vh);
+                    font-size: 2vh;
+                    color: white;
+                    cursor: pointer;
+                    float: left;
+                }
+            }
+        }
+
+        #generalinformationContainer {
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-bottom: 3%;
+
+            label {
+                float: left;
+                clear: both;
+                font-size: 2vh;
+            }
+
+            input[type="text"], input[type="number"] {
+                float: left;
+                clear: both;
+                width: 100%;
+                height: calc(5vh);
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 2.5px solid $darkgreen;
+                font-size: 2vh;
+            }
+
+            textarea {
+                border: 2.5px solid $darkgreen;
+                width: 100%;
+                height: 200px;
+                resize: none;
+                font-size: 2vh;
+                color: black;
+            }
+        }
+
+        #requiredFiltersContainer {
+            padding-left: 3%;
+            padding-right: 3%;
+
+            label {
+                float: left;
+                clear: both;
+                font-size: 2vh;
+            }
+
+            input[type="text"], select {
+                float: left;
+                clear: both;
+                width: 100%;
+                height: calc(5vh);
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 2.5px solid $darkgreen;
+                font-size: 2vh;
+            }
+        }
+
+        p {
+            float: left;
+            clear: both;
+            background-color: $darkgreen;
+            color: white;
+            width: 94%;
+            margin-top: 2%;
+            margin-left: 3%;
+            margin-right: 3%;
+            height: 5vh;
+        }
+
+        #extrafiltersContainer {
+            padding: 3%;
+
+            label {
+                float: left;
+                clear: both;
+                font-size: 2vh;
+            }
+
+            select {
+                float: left;
+                clear: both;
+                width: 100%;
+                height: calc(5vh);
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 2.5px solid $darkgreen;
+                font-size: 2vh;
+            }
+        }
+
+        #advertisementsubmit {
+            float: right;
+            clear: both;
+            border: 1.5px solid $darkgreen;
+            background-color: $darkgreen;
+            color: white;
+            font-size: 2vh;
+            width: 40%;
+            height: 5vh;
+            margin-top: 3%;
+            margin-right: 3%;
+            transition: 0.5s;
+        }
+
+        #cancelButton {
+            float: right;
+            width: 10%;
+            margin-top: 2%;
+            margin-right: 3%;
+            background-color: $darkgreen;
+            text-align: center;
+            font-size: 2vh;
+            color: white;
+        }
+
+        input[type=button]:hover {
+            background-color: $darkgreen;
+            color: white;
+            cursor: pointer;
+        }
+    }
+
+    #reviewAdvertisementColumn {
+        display: none;
+        width: 80%;
+        padding: 5%;
+        margin-left: 5%;
+        margin-bottom: 15%;
+        float: left;
+        border: 1.5px solid $darkgreen;
+        background-color: rgba(255, 255, 255, 0.8);
+
+        p, h3 {
+            margin-left: 3%;
+            float: left;
+            clear: both;
+            color: $darkgreen;
+            font-size: 2.5vh;
+        }
+
+        p {
+            font-size: 2vh;
+        }
+
+        .stars {
+            margin-left: 5%;
+            float: left;
+            clear: both;
+        }
+
+        .qualityrating {
+            direction: rtl;
+        }
+
+        .communicationrating {
+            direction: rtl;
+        }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        label {
+            font-size: 50px;
+            cursor: pointer;
+            color: $color-grey;
+            -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+
+        label:hover {
+            color: $darkgreen;
+        }
+
+        label:hover ~ label {
+            color: $darkgreen;
+        }
+
+        input[type=radio]:checked ~ label {
+            color: $darkgreen;
+        }
+
+        #reviewsubmit {
+            float: right;
+            clear: both;
+            border: 1.5px solid $darkgreen;
+            background-color: $darkgreen;
+            color: white;
+            font-size: 2vh;
+            width: 60%;
+            height: 5vh;
+            margin-top: 3%;
+            margin-right: 3%;
+            margin-bottom: 1%;
+            transition: 0.5s;
+        }
+
+        #reviewsubmit:hover, #cancelButton:hover {
+            cursor: pointer
+        }
+
+        #cancelButton {
+            float: right;
+            width: 10%;
+            margin-top: 1%;
+            margin-right: 3%;
+            background-color: $darkgreen;
+            text-align: center;
+            font-size: 2vh;
+            color: white;
+        }
+    }
+
+    #errorpopup {
+        z-index: 3;
+        border: 2.5px solid $darkgreen;
+        margin: auto;
+        width: 60vh;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h3 {
+            color: $darkgreen;
+        }
+
+        #errorbutton {
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: $darkgreen;
+            width: 25%;
+            border-radius: 1vh;
+            height: calc(4vh);
+            font-size: 2vh;
+            color: white;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+    }
+
+    #confirmDelete {
+        display: none;
+        z-index: 3;
+        border: 2.5px solid $darkgreen;
+        margin: auto;
+        width: 90%;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h4 {
+            color: $darkgreen;
+        }
+
+        input[type="button"], input[type="submit"] {
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: $darkgreen;
+            width: 20%;
+            border-radius: 1vh;
+            height: calc(4vh);
+            font-size: 2vh;
+            color: white;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+    }
+
+    #confirmDeleteImages {
+        display: none;
+        z-index: 3;
+        border: 2.5px solid $darkgreen;
+        margin: auto;
+        width: 60vh;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h3 {
+            color: $darkgreen;
+        }
+
+        input[type="button"] {
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: $darkgreen;
+            width: 20%;
+            border-radius: 1vh;
+            height: calc(4vh);
+            font-size: 2vh;
+            color: white;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+    }
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $darkgreen;
+        opacity: 1; /* Firefox */
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: $darkgreen;
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+        color: $darkgreen;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #profileColumn {
+        margin-left: 5%;
+        margin-right: 1%;
+        width: 20%;
+        float: left;
+        border: 1.5px solid $darkgreen;
+        padding: 1%;
+        line-height: 4vh;
+
+        h4 {
+            font-size: 2.5vh;
+            color: $darkgreen;
+        }
+
+        p {
+            font-size: 2vh;
+            color: $darkgreen;
+        }
+
+        .stars {
+            font-size: 2vh;
+            color: $darkgreen;
+        }
+
+        label {
+            float: right;
+        }
+
+        span {
+            font-size: 2vh;
+            float: right;
+            color: $darkgreen;
+        }
+
+        button {
+            border: 1.5px solid $darkgreen;
+            width: 80%;
+            height: 5vh;
+            margin-top: 3%;
+            margin-left: 10%;
+            margin-right: 10%;
+            text-align: center;
+            font-size: 2vh;
+            background-color: white;
+            color: $darkgreen;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+    }
+
+    #myadvertisementsColumn {
+        width: 65%;
+        float: right;
+        margin-right: 6%;
+
+        h3 {
+            font-size: 2.5vh;
+            color: $darkgreen;
+        }
+
+        p {
+            color: $darkgreen;
+        }
+
+        .advertisementColumn {
+            margin-bottom: 1.5%;
+            background-color: rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+            display: flex;
+            border: 1.5px solid $darkgreen;
+
+            .advertisementInfo {
+                float: left;
+                padding: 1%;
+                width: 80%;
+
+                img {
+                    float: left;
+                    width: 25%;
+                    height: calc(100%);
+                    object-fit: cover;
+                }
+
+                h4 {
+                    margin-left: 26%;
+                    font-size: 2vh;
+                    color: $darkgreen;
+                }
+
+                p {
+                    margin-left: 26%;
+                    font-size: 1.8vh;
+                }
+            }
+
+            .advertisementOptions {
+                float: right;
+                padding: 1%;
+                width: 20%;
+
+                input {
+                    float: right;
+                    clear: both;
+                    background-color: $darkgreen;
+                    border: 1.5px solid $darkgreen;
+                    width: 100%;
+                    padding: 1%;
+                    height: 5vh;
+                    margin-bottom: 5%;
+                    margin-right: 10%;
+                    text-align: center;
+                    font-size: 2vh;
+                    color: white;
+                }
+
+                .deleteButton {
+                    border: 1.5px solid $color-red;
+                    background-color: $color-red;
+                }
+
+                input[type=button]:hover {
+                    cursor: pointer;
+                }
+
+                input[type=checkbox] {
+                    display: none;
+                }
+                // inactive
+                .slider {
+                    position: relative;
+                    display: inline-block;
+                    float: right;
+                    clear: both;
+                    background-color: rgba(0, 0, 0, 0.2);
+                    border: 1.5px solid $darkgreen;
+                    width: 97.5%;
+                    padding: 1%;
+                    height: 4vh;
+                    margin-bottom: 5%;
+                    margin-right: 10%;
+                    text-align: center;
+                    font-size: 2vh;
+                }
+
+                .slider:hover {
+                    cursor: pointer;
+                }
+                // round circle inside switch
+                .slider:before {
+                    position: absolute;
+                    content: "";
+                    height: 4vh;
+                    width: 4vh;
+                    left: 4px;
+                    background-color: white;
+                    -webkit-transition: .4s;
+                    transition: .4s;
+                }
+                // active
+                input:checked + .slider {
+                    background-color: $darkgreen;
+                }
+
+                input:focus + .slider {
+                    box-shadow: 0 0 1px $darkgreen;
+                }
+                // round circle end
+                input:checked + .slider:before {
+                    left: 82.5%;
+                }
+
+                .slider:after {
+                    content: 'INACTIEF';
+                    color: white;
+                    display: block;
+                    position: absolute;
+                    transform: translate(-50%,-50%);
+                    top: 50%;
+                    left: 50%;
+                    font-size: 2vh;
+                    font-family: Verdana, sans-serif;
+                }
+
+                input:checked + .slider:after {
+                    content: 'ACTIEF';
+                    color: white;
+                }
+
+                .slider.round {
+                    border-radius: 10px;
+                }
+
+                .slider.round:before {
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+
+    #requestForm {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        display: none;
+        width: 30%;
+        float: right;
+        margin-right: 6%;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1.5px solid $darkgreen;
+        color: $darkgreen;
+        padding-top: 0.5%;
+        padding-bottom: 1%;
+        padding-left: 2%;
+        padding-right: 2%;
+        position: fixed;
+        top: 50%;
+        left: 62%;
+        transform: translate(-50%, -50%);
+
+        h3 {
+            font-size: 2.5vh;
+            float: left;
+        }
+
+        p {
+            float: left;
+            clear: both;
+            font-size: 2vh;
+        }
+
+        label {
+            float: left;
+            clear: both;
+            font-size: 2vh;
+        }
+
+        select {
+            float: left;
+            clear: both;
+            width: 100%;
+            border: 2.5px solid $darkgreen;
+            background-color: rgba(255, 255, 255, 0.5);
+            height: calc(5vh);
+            font-size: 2vh;
+            padding-left: 1%;
+        }
+
+        input[type=number] {
+            float: left;
+            clear: both;
+            width: 98.5%;
+            height: calc(5vh);
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2.5px solid $darkgreen;
+            font-size: 2vh;
+            padding-left: 1%;
+        }
+
+        #confirmButton {
+            float: right;
+            clear: both;
+            background-color: $darkgreen;
+            border: 1.5px solid $darkgreen;
+            width: 40%;
+            height: 5vh;
+            margin-top: 4%;
+            text-align: center;
+            font-size: 2vh;
+            color: white;
+        }
+
+        #cancelButton {
+            float: right;
+            width: 10%;
+            margin-top: 2%;
+            background-color: $darkgreen;
+            text-align: center;
+            font-size: 2vh;
+            color: white;
+        }
+
+        input[type=button]:hover {
+            cursor: pointer;
+        }
+    }
+
+    #mySettingsColumn {
+        display: none;
+        width: 70%;
+        float: right;
+
+        h3 {
+            font-size: 2.5vh;
+            float: left;
+            margin-top: 1%;
+            color: $darkgreen;
+        }
+
+        #formColumn {
+            margin-bottom: 1.5%;
+            width: 65%;
+            height: 67vh;
+            border: 1.5px solid $darkgreen;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding-bottom: 1%;
+            padding-left: 2%;
+            padding-right: 2%;
+
+            label {
+                float: left;
+                clear: both;
+                font-size: 2vh;
+            }
+
+            input[type=text] {
+                float: left;
+                clear: both;
+                width: 98.5%;
+                height: calc(5vh);
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 2.5px solid $darkgreen;
+                font-size: 2vh;
+                padding-left: 1%;
+            }
+
+            #saveButton, #cancelButton {
+                background-color: $darkgreen;
+                text-align: center;
+                color: white;
+                float: right;
+                font-size: 2vh;
+            }
+
+            #saveButton {
+                clear: both;
+                border: 1.5px solid $darkgreen;
+                width: 40%;
+                height: 5vh;
+                margin-top: 4%;
+            }
+
+            #cancelButton {
+                width: 10%;
+                margin-top: 2.5%;
+            }
+
+            input[type=button]:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+
+    #ratingreviewColumn {
+        width: 65%;
+        float: right;
+        margin-right: 6%;
+        display: none;
+
+        h3 {
+            font-size: 2.5vh;
+            color: $darkgreen;
+        }
+
+        h4 {
+            font-size: 2vh;
+            color: $darkgreen;
+        }
+
+        p {
+            color: $darkgreen;
+        }
+
+        .reviewRequest {
+            margin-bottom: 1.5%;
+            background-color: rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+            border: 1.5px solid $darkgreen;
+            line-height: 3vh;
+
+            .reviewInfo {
+                float: left;
+                padding: 1%;
+
+                h4 {
+                    margin-left: 10%;
+                    font-size: 2.2vh;
+                    color: $darkgreen;
+                }
+
+                p {
+                    margin-left: 10%;
+                    font-size: 2vh;
+                }
+            }
+
+            .reviewOptions {
+                float: right;
+                padding: 1%;
+                margin-top: 0.25%;
+
+                input {
+                    float: right;
+                    clear: both;
+                    background-color: $darkgreen;
+                    border: 1.5px solid $darkgreen;
+                    width: 110%;
+                    padding: 1%;
+                    height: 5vh;
+                    margin-right: 10%;
+                    text-align: center;
+                    font-size: 2vh;
+                    color: white;
+                }
+
+                input[type=button]:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    #modifyAdvertismentForm {
+        display: none;
+        width: 55%;
+        float: right;
+        margin-right: 15%;
+        border: 1.5px solid $darkgreen;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding-bottom: 2vh;
+
+        h3 {
+            font-size: 2.5vh;
+            color: $darkgreen;
+            float: left;
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-top: 1%;
+        }
+
+        p, label {
+            font-size: 2vh;
+            color: $darkgreen;
+        }
+
+        #imgContainer {
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-top: 1%;
+
+            #imgoutput {
+                width: 100%;
+                margin-top: 1%;
+                height: calc(100%);
+                object-fit: cover;
+                border: 1.5px solid $darkgreen;
+            }
+
+            .imageslides {
+                text-align: center;
+                margin-bottom: 1%;
+                margin-top: 1%;
+
+                .previous {
+                    background-color: $darkgreen;
+                    padding: 2%;
+                    border-radius: 50vh;
+                    line-height: 0;
+                    color: white;
+                }
+
+                #imagecounter {
+                    margin-left: 10%;
+                    margin-right: 10%;
+                    line-height: 0;
+                    padding: 2%;
+                    color: white;
+                }
+
+                .next {
+                    background-color: $darkgreen;
+                    padding: 2%;
+                    border-radius: 50vh;
+                    line-height: 0;
+                    color: white;
+                }
+            }
+
+            input[type="file"] {
+                height: calc(3vh);
+                font-size: 2vh;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                cursor: pointer;
+                float: left;
+                margin-top: 1%;
+            }
+
+            label {
+                font-size: 2vh;
+                color: black;
+                width: 41%;
+                text-align: center;
+                float: right;
+
+                #removeImagesCheckbox {
+                    background-color: $darkgreen;
+                    width: 8%;
+                    margin-right: 2%;
+                    border-radius: 1vh;
+                    height: calc(4vh);
+                    font-size: 2vh;
+                    color: white;
+                    cursor: pointer;
+                    float: left;
+                }
+            }
+        }
+
+        #generalinformationContainer {
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-bottom: 3%;
+
+            label {
+                float: left;
+                clear: both;
+                font-size: 2vh;
+            }
+
+            input[type="text"], input[type="number"] {
+                float: left;
+                clear: both;
+                width: 100%;
+                height: calc(5vh);
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 2.5px solid $darkgreen;
+                font-size: 2vh;
+            }
+
+            textarea {
+                border: 2.5px solid $darkgreen;
+                width: 100%;
+                height: 200px;
+                resize: none;
+                font-size: 2vh;
+                color: black;
+            }
+        }
+
+        #requiredFiltersContainer {
+            padding-left: 3%;
+            padding-right: 3%;
+
+            label {
+                float: left;
+                clear: both;
+                font-size: 2vh;
+            }
+
+            input[type="text"], select {
+                float: left;
+                clear: both;
+                width: 100%;
+                height: calc(5vh);
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 2.5px solid $darkgreen;
+                font-size: 2vh;
+            }
+        }
+
+        p {
+            float: left;
+            clear: both;
+            background-color: $darkgreen;
+            color: white;
+            width: 94%;
+            margin-top: 2%;
+            margin-left: 3%;
+            margin-right: 3%;
+            height: 5vh;
+        }
+
+        #extrafiltersContainer {
+            padding: 3%;
+
+            label {
+                float: left;
+                clear: both;
+                font-size: 2vh;
+            }
+
+            select {
+                float: left;
+                clear: both;
+                width: 100%;
+                height: calc(5vh);
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 2.5px solid $darkgreen;
+                font-size: 2vh;
+            }
+        }
+
+        #advertisementsubmit {
+            float: right;
+            clear: both;
+            border: 1.5px solid $darkgreen;
+            background-color: $darkgreen;
+            color: white;
+            font-size: 2vh;
+            width: 40%;
+            height: 5vh;
+            margin-top: 3%;
+            margin-right: 3%;
+            transition: 0.5s;
+        }
+
+        #cancelButton {
+            float: right;
+            width: 10%;
+            margin-top: 2%;
+            margin-right: 3%;
+            background-color: $darkgreen;
+            text-align: center;
+            font-size: 2vh;
+            color: white;
+        }
+
+        input[type=button]:hover {
+            background-color: $darkgreen;
+            color: white;
+            cursor: pointer;
+        }
+    }
+
+    #reviewAdvertisementColumn {
+        display: none;
+        width: 50%;
+        float: right;
+        margin-right: 15%;
+        border: 1.5px solid $darkgreen;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 1.5vh;
+
+        p, h3 {
+            margin-left: 3%;
+            float: left;
+            clear: both;
+            color: $darkgreen;
+            font-size: 2.5vh;
+        }
+
+        p {
+            font-size: 2vh;
+        }
+
+        .stars {
+            margin-left: 5%;
+            float: left;
+            clear: both;
+        }
+
+        .qualityrating {
+            direction: rtl;
+        }
+
+        .communicationrating {
+            direction: rtl;
+        }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        label {
+            font-size: 50px;
+            cursor: pointer;
+            color: $color-grey;
+            -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+
+        label:hover {
+            color: $darkgreen;
+        }
+
+        label:hover ~ label {
+            color: $darkgreen;
+        }
+
+        input[type=radio]:checked ~ label {
+            color: $darkgreen;
+        }
+
+        #reviewsubmit {
+            float: right;
+            clear: both;
+            border: 1.5px solid $darkgreen;
+            background-color: $darkgreen;
+            color: white;
+            font-size: 2vh;
+            width: 40%;
+            height: 5vh;
+            margin-top: 3%;
+            margin-right: 3%;
+            margin-bottom: 1%;
+            transition: 0.5s;
+        }
+
+        #reviewsubmit:hover, #cancelButton:hover {
+            cursor: pointer
+        }
+
+        #cancelButton {
+            float: right;
+            width: 10%;
+            margin-top: 1%;
+            margin-right: 3%;
+            background-color: $darkgreen;
+            text-align: center;
+            font-size: 2vh;
+            color: white;
+        }
+    }
+
+    #errorpopup {
+        z-index: 3;
+        border: 2.5px solid $darkgreen;
+        margin: auto;
+        width: 60vh;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h3 {
+            color: $darkgreen;
+        }
+
+        #errorbutton {
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: $darkgreen;
+            width: 25%;
+            border-radius: 1vh;
+            height: calc(4vh);
+            font-size: 2vh;
+            color: white;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+    }
+
+    #confirmDelete {
+        display: none;
+        z-index: 3;
+        border: 2.5px solid $darkgreen;
+        margin: auto;
+        width: 60vh;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h4 {
+            color: $darkgreen;
+        }
+
+        input[type="button"], input[type="submit"] {
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: $darkgreen;
+            width: 20%;
+            border-radius: 1vh;
+            height: calc(4vh);
+            font-size: 2vh;
+            color: white;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+    }
+
+    #confirmDeleteImages {
+        display: none;
+        z-index: 3;
+        border: 2.5px solid $darkgreen;
+        margin: auto;
+        width: 60vh;
+        padding: 1%;
+        border-radius: 1vh;
+        text-align: center;
+        background-color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        h3 {
+            color: $darkgreen;
+        }
+
+        input[type="button"] {
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: $darkgreen;
+            width: 20%;
+            border-radius: 1vh;
+            height: calc(4vh);
+            font-size: 2vh;
+            color: white;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+    }
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $darkgreen;
+        opacity: 1; /* Firefox */
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: $darkgreen;
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+        color: $darkgreen;
+    }
+}

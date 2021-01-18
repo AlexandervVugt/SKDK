@@ -1,137 +1,412 @@
 ﻿
-
 $color-darkgreen: #005709;
 $color-lightgreen: #80ff8d;
 
-body {
-    width: 100%;
-
-    main {
+@media screen and (max-width: 600px) {
+    body {
         width: 100%;
 
-        input[type=submit] {
-            background-color: #015e54;
-            border: solid;
-            border-radius: 30px;
-            border-color: #3eaf91;
-            text-align: center;
-            display: block;
-            font-size: 2vh;
-            cursor: pointer;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            color: white;
-            margin-right: 1%;
-            margin-top: 3%;
-            width: 50%;
-            height: 4vh;
-            margin-left:25%;
-        }
+        main {
+            width: 100%;
 
-        input[type=button]:hover {
-            background-color: #3eaf91;
-        }
+            #confirmBlock {
+                display: none;
+                z-index: 3;
+                border: 2.5px solid $color-darkgreen;
+                margin: auto;
+                width: 60vh;
+                padding: 1%;
+                border-radius: 1vh;
+                text-align: center;
+                background-color: white;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
 
-        .section-img {
-            width: 65%;
-
-            #imgoutput {
-                border: 0.5px solid #3eaf91;
-                display: block;
-                float: left;
-                width: 100%;
-                height: calc(65vh);
-                object-fit: cover;
-            }
-        }
-
-        h4 {
-            font-size: 30px;
-            margin-left: 10%;
-        }
-
-        .section {
-            width: 80%;
-            margin-left: 10%;
-            margin-right: 10%;
-        }
-
-        .tabsection {
-            margin-top: 1%;
-            display: block;
-            margin-left: 10%;
-            margin-right: 10%;
-            border-bottom: 3px solid #015e54;
-            float: left;
-            width: 80%;
-            font-size: 20px;
-        }
-
-        .basic_tab {
-            padding: 8px 16px;
-            border: solid;
-            cursor: pointer;
-            background-color: #015e54;
-            color: white;
-            border: 2px solid #015e54;
-            float: left;
-            width: 200px;
-            height: 3%;
-            text-align: center;
-        }
-
-        .filters_tab {
-            padding: 8px 16px;
-            border: solid;
-            cursor: pointer;
-            background-color: white;
-            border: 2px solid #015e54;
-            float: left;
-            width: 200px;
-            height: 3%;
-            text-align: center;
-        }
-
-        .plant_information {
-            padding: 8px 16px;
-            margin-left: 10%;
-            border: 0.5px solid #015e54;
-            margin-right: 10%;
-            background-color: white;
-            float: left;
-            display: block;
-            width: 80%;
-            margin-bottom: 3%;
-        }
-
-        p {
-            font-size: 2vh;
-            font-weight: bold;
-        }
-
-        .user_information {
-            position: relative;
-            background-color: #015e54;
-            color: white;
-            padding: 8px 16px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            float: right;
-            width: 30%;
-            font-size: 2vh;
-            height: calc(55vh);
-
-            #sendmsg {
-                margin-top: 10%;
-
-                #typemessage {
-                    display: block;
-                    height: 2vh;
-                    width: 95%;
-                    padding: 2%;
-                    font-size: 2vh;
+                h4 {
+                    color: $color-darkgreen;
+                    margin-left: 0;
                 }
 
+                input[type="button"], input[type="submit"] {
+                    margin-left: 5%;
+                    margin-right: 10%;
+                    background-color: $color-darkgreen;
+                    width: 20%;
+                    border-radius: 1vh;
+                    height: calc(4vh);
+                    font-size: 2vh;
+                    color: white;
+                    margin-top: 1%;
+                    cursor: pointer;
+                }
+            }
 
+            #blockUser, #sendmessage {
+                background-color: #015e54;
+                border: solid;
+                border-radius: 30px;
+                border-color: #3eaf91;
+                text-align: center;
+                display: block;
+                font-size: 2vh;
+                cursor: pointer;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                color: white;
+                margin-right: 1%;
+                margin-top: 3%;
+                width: 50%;
+                height: 4vh;
+                margin-left: 25%;
+            }
+
+            h4 {
+                color: $color-darkgreen;
+                font-size: 30px;
+                margin-left: 10%;
+            }
+
+            .section {
+                width: 80%;
+                margin-left: 10%;
+                margin-right: 10%;
+
+                .section-img {
+                    position: relative;
+                    text-align: center;
+                    width: 100%;
+                    margin: 0;
+                    padding: 0;
+                    float: left;
+                    cursor: pointer;
+
+                    #imgoutput {
+                        border: 0.5px solid #3eaf91;
+                        display: block;
+                        float: left;
+                        width: 100%;
+                        object-fit: cover;
+                    }
+
+                    a {
+                        display: none;
+                        position: absolute;
+                        top: 50%;
+                        right: 1%;
+                        transform: translate(-50%, -50%);
+                        background-color: black;
+                        color: white;
+                        width: 5%;
+                        border-radius: 10%;
+                        opacity: 0.7;
+                    }
+                }
+
+                .user_information {
+                    position: relative;
+                    background-color: #015e54;
+                    color: white;
+                    padding: 4%;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                    float: right;
+                    width: 92%;
+                    font-size: 2vh;
+                    margin-top: 5%;
+
+                    #sendmsg {
+                        margin-top: 10%;
+
+                        #typemessage {
+                            display: block;
+                            height: 2vh;
+                            width: 95%;
+                            padding: 2%;
+                            font-size: 2vh;
+                        }
+
+                        input[type=submit] {
+                            background-color: #015e54;
+                            border: solid;
+                            border-radius: 30px;
+                            border-color: #3eaf91;
+                            text-align: center;
+                            display: block;
+                            font-size: 2vh;
+                            cursor: pointer;
+                            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                            color: white;
+                            margin-right: 1%;
+                            margin-top: 3%;
+                            width: 50%;
+                            height: 4vh;
+                            margin-left: 25%;
+                        }
+
+                        input[type=button]:hover {
+                            background-color: #3eaf91;
+                        }
+                    }
+                }
+            }
+
+
+            .tabsection {
+                margin-top: 1%;
+                display: block;
+                border: 2px solid #015e54;
+                float: left;
+                width: 79%;
+                margin-left: 10%;
+
+                .basic_tab {
+                    cursor: pointer;
+                    background-color: #015e54;
+                    color: white;
+                    float: left;
+                    width: 60%;
+                    font-size: 2vh;
+                    text-align: center;
+                }
+
+                .filters_tab {
+                    cursor: pointer;
+                    background-color: white;
+                    float: left;
+                    width: 40%;
+                    font-size: 2vh;
+                    text-align: center;
+                }
+            }
+
+
+
+            .plant_information {
+                padding: 5%;
+                margin-left: 10%;
+                border: 0.5px solid #015e54;
+                margin-right: 10%;
+                background-color: white;
+                float: left;
+                display: block;
+                width: 70%;
+                margin-bottom: 3%;
+            }
+
+            p {
+                font-size: 2vh;
+                font-weight: bold;
             }
         }
     }
 }
+
+@media screen and (min-width: 600px) {
+    body {
+        width: 100%;
+
+        main {
+            width: 100%;
+
+            #confirmBlock {
+                display: none;
+                z-index: 3;
+                border: 2.5px solid $color-darkgreen;
+                margin: auto;
+                width: 60vh;
+                padding: 1%;
+                border-radius: 1vh;
+                text-align: center;
+                background-color: white;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                h4 {
+                    color: $color-darkgreen;
+                    margin-left: 0;
+                }
+
+                input[type="button"], input[type="submit"] {
+                    margin-left: 5%;
+                    margin-right: 10%;
+                    background-color: $color-darkgreen;
+                    width: 20%;
+                    border-radius: 1vh;
+                    height: calc(4vh);
+                    font-size: 2vh;
+                    color: white;
+                    margin-top: 1%;
+                    cursor: pointer;
+                }
+            }
+
+            #blockUser, #sendmessage {
+                background-color: #015e54;
+                border: solid;
+                border-radius: 30px;
+                border-color: #3eaf91;
+                text-align: center;
+                display: block;
+                font-size: 2vh;
+                cursor: pointer;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                color: white;
+                margin-right: 1%;
+                margin-top: 3%;
+                width: 50%;
+                height: 4vh;
+                margin-left: 25%;
+            }
+
+            h4 {
+                color: $color-darkgreen;
+                font-size: 30px;
+                margin-left: 10%;
+            }
+
+            .section {
+                width: 80%;
+                margin-left: 10%;
+                margin-right: 10%;
+
+                .section-img {
+                    position: relative;
+                    text-align: center;
+                    width: 65%;
+                    height: calc(65vh);
+                    margin: 0;
+                    padding: 0;
+                    float: left;
+                    cursor: pointer;
+
+                    #imgoutput {
+                        border: 0.5px solid #3eaf91;
+                        display: block;
+                        float: left;
+                        width: 100%;
+                        height: calc(65vh);
+                        object-fit: cover;
+                    }
+
+                    a {
+                        display: none;
+                        position: absolute;
+                        top: 50%;
+                        right: 1%;
+                        transform: translate(-50%, -50%);
+                        background-color: black;
+                        color: white;
+                        width: 5%;
+                        border-radius: 10%;
+                        opacity: 0.7;
+                    }
+                }
+
+                .user_information {
+                    position: relative;
+                    background-color: #015e54;
+                    color: white;
+                    padding: 8px 16px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                    float: right;
+                    width: 30%;
+                    font-size: 2vh;
+                    height: calc(58vh);
+                    font-size: 2vh;
+                    height: calc(55vh);
+
+                    #sendmsg {
+                        margin-top: 10%;
+
+                        #typemessage {
+                            display: block;
+                            height: 2vh;
+                            width: 95%;
+                            padding: 2%;
+                            font-size: 2vh;
+                        }
+
+                        input[type=submit] {
+                            background-color: #015e54;
+                            border: solid;
+                            border-radius: 30px;
+                            border-color: #3eaf91;
+                            text-align: center;
+                            display: block;
+                            font-size: 2vh;
+                            cursor: pointer;
+                            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                            color: white;
+                            margin-right: 1%;
+                            margin-top: 3%;
+                            width: 50%;
+                            height: 4vh;
+                            margin-left: 25%;
+                        }
+
+                        input[type=button]:hover {
+                            background-color: #3eaf91;
+                        }
+                    }
+                }
+            }
+
+            .tabsection {
+                margin-top: 1%;
+                display: block;
+                margin-left: 10%;
+                margin-right: 10%;
+                border-bottom: 3px solid #015e54;
+                float: left;
+                width: 80%;
+                font-size: 20px;
+
+                .basic_tab {
+                    padding: 8px 16px;
+                    border: solid;
+                    cursor: pointer;
+                    background-color: #015e54;
+                    color: white;
+                    border: 2px solid #015e54;
+                    float: left;
+                    width: 200px;
+                    height: 3%;
+                    text-align: center;
+                }
+
+                .filters_tab {
+                    padding: 8px 16px;
+                    border: solid;
+                    cursor: pointer;
+                    background-color: white;
+                    border: 2px solid #015e54;
+                    float: left;
+                    width: 200px;
+                    height: 3%;
+                    text-align: center;
+                }
+            }
+
+            .plant_information {
+                padding: 8px 16px;
+                margin-left: 10%;
+                border: 0.5px solid #015e54;
+                margin-right: 10%;
+                background-color: white;
+                float: left;
+                display: block;
+                width: 80%;
+                margin-bottom: 3%;
+            }
+
+            p {
+                font-size: 2vh;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+

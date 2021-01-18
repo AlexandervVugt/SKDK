@@ -5,31 +5,35 @@ using Stexchange.Data.Models;
 using Stexchange.Models;
 using Stexchange.Services;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Stexchange.Data.Validation;
+using FluentValidation.Results;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Stexchange.Controllers
 {
 	public class LoginController : StexChangeController
 	{
-		public LoginController(Database db, IConfiguration config, EmailService emailService)
+		public LoginController(Database db, IConfiguration config, EmailService emailService, ILogger<LoginController> logger)
 		{
 			Database = db;
 			EmailService = emailService;
 			Config = config.GetSection("MailSettings");
+			Log = logger;
 		}
 
 		private Database Database { get; }
 		private EmailService EmailService { get; }
 		private IConfiguration Config { get; }
+		private ILogger Log { get; }
 		public IActionResult Login()
         {
             return View();
@@ -126,50 +130,44 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{user.Ve
 			{
 				if (ModelState.IsValid)
 				{
-					if (!new EmailAddressAttribute().IsValid(email))
-					{
-						TempData["Message"] = "InvalidEmail";
-						return View("Login");
-					}
+					List<string> errormessages = new List<string>();
 
-					if (email != vEmail)
+					RegisterValidator registerValidator = new RegisterValidator();
+                    ValidationResult resultsValidator = registerValidator.Validate(new RegisterModel 
+																						{ 
+																							Email = email ?? "",
+																							VEmail = vEmail ?? "",
+																							Password = password ?? "",
+																							Confirm_password = confirm_password ?? "",
+																							Username = username ?? "",
+																							Postalcode = postalcode ?? ""
+																						});
+					// Adds errormessages to list
+					if (!resultsValidator.IsValid) 
 					{
-						TempData["Message"] = "IncorrectEmails";
-						return View("Login");
-					}
-
-					// Checks if postal code is valid
-					if (!new Regex(@"\d{4}[A-Z]{2}", RegexOptions.IgnoreCase).IsMatch(postalcode))
-					{
-						TempData["Message"] = "InvalidPostalCode";
-						return View("Login");
-					}
-
-					if (password != confirm_password)
-					{
-						TempData["Message"] = "IncorrectPasswords";
-						return View("Login");
-					}
-
-					if (password.Length < 8)
-                    {
-						TempData["Message"] = "InvalidPassword";
-						return View("Login");
-					}
+						foreach (ValidationFailure error in resultsValidator.Errors)
+						{
+							errormessages.Add(error.ErrorMessage);
+						}
+					};
 
 					// Checks if email already exists in database
 					if (Database.Users.Any(u => u.Email == email))
 					{
-						TempData["Message"] = "EmailExists";
-						return View("Login");
+						errormessages.Add("E-mail is al gebruikt");
 					}
 
 					// Checks if username already exists in database
 					if (Database.Users.Any(u => u.Username == username))
 					{
-						TempData["Message"] = "UsernameTaken";
-						return View("Login");
+						errormessages.Add("Gebruikersnaam is al bezet");
 					}
+
+					if (errormessages.Count > 0)
+                    {
+						ViewBag.Messages = errormessages;
+						return View("Login");
+                    }
 
 					// Create a new UserVerification object with a new unique Guid and verification code
 					var verification = new UserVerification()
@@ -182,12 +180,16 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{user.Ve
 						Email = email,
 						Username = username,
 						Postal_Code = postalcode.ToUpper(),
-						Password = CreatePasswordHash(password, username),
+						Password = CreatePasswordHash(password, "qwerty"), //insert placeholder password
 						Created_At = DateTime.Now,
 						Verification = verification
 					};
 
 					await Database.AddAsync(new_User);
+					await Database.SaveChangesAsync();
+					User updateEntity = (from user in Database.Users where user.Username == username select user).First();
+					updateEntity.Password = CreatePasswordHash(password, updateEntity.Id.ToString());
+					Database.Update(updateEntity);
 					await Database.SaveChangesAsync();
 
 					//sends an email to verify the new account and return view("verify") page
@@ -204,8 +206,7 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 			}
 			catch (Exception ex)
 			{
-				ViewBag.Error = "Error: " + ex.ToString();
-				Console.WriteLine(ex.ToString());
+				Log.LogWarning(ex.ToString());
 			}
 			return View("Login");
 		}
@@ -239,18 +240,49 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 		{
 			if (ModelState.IsValid)
 			{
+				List<string> errormessages = new List<string>();
+
+				LoginValidator loginValidator = new LoginValidator();
+				ValidationResult resultsValidator = loginValidator.Validate(new LoginViewModel
+				{
+					UserNameEmail = emailOrUname,
+					Password = password
+				});
+
+				if (!resultsValidator.IsValid)
+                {
+					foreach (ValidationFailure error in resultsValidator.Errors)
+					{
+						errormessages.Add(error.ErrorMessage);
+					}
+				}
+
+				if (errormessages.Count > 0) 
+				{
+					ViewBag.LoginMessages = errormessages;
+					return View("Login"); 
+				}
+
 				string username = (from u in Database.Users
-								   where u.Email == emailOrUname
+								   where u.Email == emailOrUname || u.Username == emailOrUname
 								   select u.Username).FirstOrDefault();
 
 				var user = (from u in Database.Users
-							where u.Username == (username ?? emailOrUname) &&
-							u.Password == CreatePasswordHash(password, username ?? emailOrUname)
-							select u).FirstOrDefault();
+							where u.Username == (username ?? emailOrUname)
+							select u).AsEnumerable()
+							.Where(u => Enumerable.SequenceEqual(u.Password, CreatePasswordHash(password, u.Id.ToString())))
+							.FirstOrDefault();
+
 				// Checks if the combination exists
 				if (user is null)
 				{
-					TempData["message"] = (username is object) ? "wachtwoord error" : "username of email error";
+					if (username is object) 
+					{ 
+						errormessages.Add("Het wachtwoord is niet juist"); 
+					} else { 
+						errormessages.Add("Het e-mailadres of de gebruikersnaam is niet juist"); 
+					}
+					ViewBag.LoginMessages = errormessages;
 					return View("Login");
 				}
 				// Checks if the user is verified
@@ -266,7 +298,6 @@ https://{ControllerContext.HttpContext.Request.Host}/login/Verification/{new_Use
 		}
 		private void AddCookie(int Id, string Postal_Code)
 		{
-			ClearSessions(Id);
 			long sessionToken = CreateSession(new Tuple<int, string>(Id, Postal_Code));
 			var cookieOptions = new CookieOptions
 			{

@@ -50,7 +50,13 @@ namespace Stexchange.Services
 			workerThread = new Thread(() =>
 			{
 				var task = Run();
-				task.Wait();
+				try
+				{
+					task.Wait();
+				} catch (AggregateException ex)
+                {
+					Log.LogError(ex.ToString());
+                }
 			})
 			{ Name = "EmailSender" };
 			workerThread.Start();

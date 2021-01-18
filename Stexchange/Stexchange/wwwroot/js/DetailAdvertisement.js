@@ -22,10 +22,30 @@ function switchtab(infosection, tabname) {
     tabs[0].style.color = "white";
 }
 
+window.onload = function () {
+    if (imgList.length > 1) {
+        document.querySelector("#startchange > div.section > div.section-img > a").style.display = "block";
+    }
+}
 var imgcount = 1;
 function imageslider() {
     var image = document.getElementById("imgoutput");
     image.src = imgList[imgcount % imgList.length];
     imgcount++;
 }
+
+
+function confirmToBlock(id) {
+    let confirmMessage = document.getElementById("confirmBlock");
+    document.querySelector("#confirmBlock > [name='listingId']").value = id;
+    confirmMessage.style.display = "block";
+}
+
+
+function closeBlock(form) {
+    let blockForm = document.getElementById(form);
+    blockForm.style.display = "none";
+}
+
+
 

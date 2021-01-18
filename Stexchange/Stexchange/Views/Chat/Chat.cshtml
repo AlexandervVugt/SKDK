@@ -2,10 +2,36 @@
 @{
     ViewData["Title"] = "Chat";
 }
+
 @model ChatViewModel
 @using Stexchange.Data.Models
 
 <link rel="stylesheet" href="~/css/chat.css" />
+<form id="confirmBlock" method="post" action="@Url.Action("Block")">
+    <p>Weet je zeker dat je deze gebruiker permanent wilt blokkeren?</p>
+    <input type="number" name="chatId" hidden />
+    <input type="text" name="block" value="chat" hidden />
+    <input type="submit" id="blockUser" value="ja" onclick="setBlockInputs()" />
+    <input type="button" value="nee" onclick="closeBlock('confirmBlock')" />
+</form>
+
+
+@if (Model.ChatInbox.Any())
+{
+    <input type="button" id="blockchat" value="Blokkeren" onclick="confirmToBlock()" />
+}
+
+@if (TempData["SwearMessage"] is object){
+    <form id="errorpopup">
+        <div id="errorblock" onload="toggleElements()">
+            <h3>ERROR</h3>
+            
+                <p>"@TempData["SwearMessage"]" is niet toegestaan</p>
+            
+            <input type="button" value="OK" onclick="hideForm()" id="errorbutton" />
+        </div>
+    </form>
+}
 
 <div id="chatcontainer">
     <div id="conversationslist">
@@ -20,17 +46,17 @@
         }
     </div>
     <div id="chattitle">
-        <!--Name of reciever-->
     </div>
     <div id="messagelist">
     </div>
     <form id="chatform" method="post" action="PostMessage">
-        <input id="typemessage" type="text" name="message" placeholder="Stuur een message" />
+        <input id="typemessage" type="text" name="message" maxlength="1024" placeholder="Stuur een bericht" autocomplete="off" />
         <input id="active_chat" type="number" name="activeId" value="-1" hidden />
         <input type="submit" id="sendmessage" value="versturen" />
     </form>
 
 </div>
+
 
 <script type="text/javascript">
     var temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ChatInbox));
@@ -41,9 +67,20 @@
     });
     window.onload = () => {
         let activeChat = @(TempData["Active"] ?? -1);
-        if (activeChat != -1) {
+        if (activeChat != -1 ) {
             displayConvo(activeChat);
         }
     };
 </script>
+
 <script type="text/javascript" src="~/js/chat/conversation_switcher.js" asp-append-version="true"></script>
+
+<script type="text/javascript">
+    displayConvo(@Model.RecentChat)
+    let spamChat = @(TempData["Error"] ?? 0);
+    if (spamChat == 1) {
+        window.onload = function () {
+            alert("Wacht alstublieft op een reactie!");
+        }
+    }
+</script>

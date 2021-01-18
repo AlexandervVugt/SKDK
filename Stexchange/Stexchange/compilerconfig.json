@@ -16,7 +16,27 @@
     "inputFile": "wwwroot/css/chat.scss"
   },
   {
-      "inputFile": "wwwroot/css/postadvertisement.scss",
-      "outputFile": "wwwroot/css/postadvertisement.css"
+    "outputFile": "wwwroot/css/postadvertisement.css",
+    "inputFile": "wwwroot/css/postadvertisement.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Login.css",
+    "inputFile": "wwwroot/css/Login.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/VerificationVerify.css",
+    "inputFile": "wwwroot/css/VerificationVerify.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Posted.css",
+    "inputFile": "wwwroot/css/Posted.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/ReviewAdvertisement.css",
+    "inputFile": "wwwroot/css/ReviewAdvertisement.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/MyAccount.css",
+    "inputFile": "wwwroot/css/MyAccount.scss"
   }
 ]
