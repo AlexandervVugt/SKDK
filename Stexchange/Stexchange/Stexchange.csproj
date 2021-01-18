@@ -55,6 +55,7 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="wwwroot\txt\Profanity.txt" />
   </ItemGroup>
 
   <ItemGroup>

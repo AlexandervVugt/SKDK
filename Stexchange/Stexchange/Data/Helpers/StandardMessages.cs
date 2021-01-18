@@ -87,7 +87,7 @@ namespace Stexchange.Data.Helpers
 
         public static bool ContainsProfanity(string text, out string badword)
         {
-            string readProfanity = System.IO.File.ReadAllText(@"Data\Helpers\Profanity.txt");
+            string readProfanity = System.IO.File.ReadAllText(@"wwwroot\txt\Profanity.txt");
             List<string> profanity = readProfanity.ToLower().Trim().Split(',').ToList();
             badword = "";
 
