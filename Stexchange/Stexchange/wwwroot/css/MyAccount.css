@@ -40,7 +40,8 @@
     width: 90%;
     text-align: center;
     float: left;
-    margin-left: 5%; }
+    margin-left: 5%;
+    margin-bottom: 20%; }
     #myadvertisementsColumn h3 {
       font-size: 2.5vh;
       color: #367a57; }
@@ -50,28 +51,29 @@
       margin-bottom: 1.5%;
       background-color: rgba(255, 255, 255, 0.8);
       overflow: hidden;
-      display: flex;
       border: 1.5px solid #367a57; }
       #myadvertisementsColumn .advertisementColumn .advertisementInfo {
         float: left;
         padding: 1%;
-        width: 80%; }
+        width: 98%; }
         #myadvertisementsColumn .advertisementColumn .advertisementInfo img {
           float: left;
-          width: 25%;
+          width: 100%;
           height: calc(100%);
           object-fit: cover; }
         #myadvertisementsColumn .advertisementColumn .advertisementInfo h4 {
-          margin-left: 26%;
           font-size: 2vh;
-          color: #367a57; }
+          color: #367a57;
+          float: left;
+          width: 100%; }
         #myadvertisementsColumn .advertisementColumn .advertisementInfo p {
-          margin-left: 26%;
-          font-size: 1.8vh; }
+          font-size: 1.8vh;
+          float: left;
+          width: 100%; }
       #myadvertisementsColumn .advertisementColumn .advertisementOptions {
-        float: right;
+        float: left;
         padding: 1%;
-        width: 20%; }
+        width: 98%; }
         #myadvertisementsColumn .advertisementColumn .advertisementOptions input {
           float: right;
           clear: both;
@@ -81,7 +83,6 @@
           padding: 1%;
           height: 5vh;
           margin-bottom: 5%;
-          margin-right: 10%;
           text-align: center;
           font-size: 2vh;
           color: white; }
@@ -103,7 +104,6 @@
           padding: 1%;
           height: 4vh;
           margin-bottom: 5%;
-          margin-right: 10%;
           text-align: center;
           font-size: 2vh; }
         #myadvertisementsColumn .advertisementColumn .advertisementOptions .slider:hover {
@@ -143,9 +143,8 @@
   #requestForm {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: none;
-    width: 30%;
-    float: right;
-    margin-right: 6%;
+    width: 90%;
+    float: left;
     background-color: rgba(255, 255, 255, 0.9);
     border: 1.5px solid #367a57;
     color: #367a57;
@@ -155,7 +154,7 @@
     padding-right: 2%;
     position: fixed;
     top: 50%;
-    left: 62%;
+    left: 50%;
     transform: translate(-50%, -50%); }
     #requestForm h3 {
       font-size: 2.5vh;
@@ -304,9 +303,10 @@
           cursor: pointer; }
   #modifyAdvertismentForm {
     display: none;
-    width: 55%;
-    float: right;
-    margin-right: 15%;
+    width: 90%;
+    float: left;
+    margin: 5%;
+    margin-bottom: 20%;
     border: 1.5px solid #367a57;
     background-color: rgba(255, 255, 255, 0.8);
     padding-bottom: 2vh; }
@@ -557,7 +557,7 @@
     z-index: 3;
     border: 2.5px solid #367a57;
     margin: auto;
-    width: 60vh;
+    width: 90%;
     padding: 1%;
     border-radius: 1vh;
     text-align: center;

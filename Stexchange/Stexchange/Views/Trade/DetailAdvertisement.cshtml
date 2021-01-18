@@ -73,7 +73,7 @@
             <p>Latijnse naam: @Model.Listing.NameLatin</p>
             <p>Hoeveelheid: @Model.Listing.Quantity</p>
             <p>Beschrijving: @Model.Listing.Description</p>
-            <p>Geplaatst op @Model.Listing.CreatedAt</p>
+            <p>Geplaatst op @Model.Listing.CreatedAt.ToString("dd-MM-yyyy")</p>
         </div>
         <div class="filters_information infoblock">
             <p>Standplaats: @(Model.Filterlist.TryGetValue("light", out string display) && display != "null" ? display : @nietVanToepassing)</p>
