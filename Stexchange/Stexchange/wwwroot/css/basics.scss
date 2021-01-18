@@ -34,10 +34,9 @@ $darkshadowwhite: rgba(255,255,255,0.8);
 				height: 10%;
 
 				.navbar-default {
-					padding-top: 2%;
-					padding-left: 2%;
+					padding: 2%;
 					height: 4.5%;
-					width: 100%;
+					width: 96%;
 					z-index: 3;
 					position: fixed;
 					font-size: 3vw;
@@ -47,19 +46,18 @@ $darkshadowwhite: rgba(255,255,255,0.8);
 					ul {
 						list-style-type: none;
 						overflow: hidden;
+						display: flex;
+						padding-top: 3%;
 					}
 
 					li {
 						float: left;
-						margin-right: 0;
+						margin-right: 5%;
 					}
 
 					li a {
-						width: 100%;
-						padding-top: 0.3vh;
-						padding-bottom: 0.2vh;
-						padding-left: 0.8vh;
-						padding-right: 0.8vh;
+						width: 98%;
+						padding: 1%;
 						border-radius: 10px;
 						background-color: white;
 						display: block;

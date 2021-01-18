@@ -22,10 +22,9 @@
       html body header {
         height: 10%; }
         html body header .navbar-default {
-          padding-top: 2%;
-          padding-left: 2%;
+          padding: 2%;
           height: 4.5%;
-          width: 100%;
+          width: 96%;
           z-index: 3;
           position: fixed;
           font-size: 3vw;
@@ -33,16 +32,15 @@
           border-bottom: 1px solid #26d1a4; }
           html body header .navbar-default ul {
             list-style-type: none;
-            overflow: hidden; }
+            overflow: hidden;
+            display: flex;
+            padding-top: 3%; }
           html body header .navbar-default li {
             float: left;
-            margin-right: 0; }
+            margin-right: 5%; }
           html body header .navbar-default li a {
-            width: 100%;
-            padding-top: 0.3vh;
-            padding-bottom: 0.2vh;
-            padding-left: 0.8vh;
-            padding-right: 0.8vh;
+            width: 98%;
+            padding: 1%;
             border-radius: 10px;
             background-color: white;
             display: block;
