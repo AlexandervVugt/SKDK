@@ -155,6 +155,18 @@ namespace Stexchange.Controllers
                     (key, oldvalue) => newOrModified.Current);
             }
             newOrModified.Dispose();
+            if (_readable)
+            {
+                List<int> active_ids = (from listing in _db.Listings
+                                        where listing.Visible
+                                        select listing.Id).ToList();
+                foreach (int key in _listingCache.Keys) {
+                    if (!active_ids.Contains(key))
+                    {
+                        _listingCache.Remove(key, out Listing dispose);
+                    }
+                }
+            }
         }
 
         /// <summary>
