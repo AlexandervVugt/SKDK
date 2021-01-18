@@ -53,7 +53,7 @@
             if (Model.Listing.UserId != Model.UserId && Model.UserId != -1)
             {
                 <form id="sendmsg" method="post" action="@Url.Action("NewChat", "Chat", new { listId = Model.Listing.Id })">
-                    <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" />
+                    <input id="typemessage" type="text" name="message" placeholder="Stuur een bericht" autocomplete="off"/>
                     <input type="submit" id="sendmessage" value="Stuur een bericht" />
                 </form>
                 <input type="button" id="blockUser" value="Blokkeren" onclick="confirmToBlock(@Model.Listing.Id)" />
