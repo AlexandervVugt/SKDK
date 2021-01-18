@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Stexchange.Data;
@@ -50,7 +50,7 @@ namespace Stexchange.Services
                 Database database = scope.ServiceProvider.GetRequiredService<Database>();
                 foreach (RatingRequest rr in database.RatingRequests)
                 {
-                    if((rr.CreatedAt - DateTime.Now) >= TimeSpan.FromDays(3))
+                    if((DateTime.Now - rr.CreatedAt) >= TimeSpan.FromDays(3))
                     {
                         database.Remove(rr);
                     }
