@@ -9,8 +9,8 @@ using Stexchange.Data;
 namespace Stexchange.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20210108095409_Initial")]
-    partial class Initial
+    [Migration("20210118113648_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -216,7 +216,7 @@ namespace Stexchange.Migrations
                         .HasColumnType("serial");
 
                     b.Property<byte>("Communication")
-                        .HasColumnName("quantity")
+                        .HasColumnName("communication")
                         .HasColumnType("tinyint unsigned");
 
                     b.Property<byte?>("Quality")
@@ -251,6 +251,14 @@ namespace Stexchange.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("created_at")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("PlantName")
+                        .HasColumnName("plant_name")
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<bool>("RequestQuality")
+                        .HasColumnName("request_quality")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<long>("RevieweeId")
                         .HasColumnName("reviewee")

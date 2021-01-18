@@ -15,7 +15,7 @@ namespace Stexchange.Data.Models
         [Column("quality", TypeName = "tinyint unsigned"), Range(1, 6)]
         public byte? Quality { get; set; }
 
-        [Column("quantity", TypeName = "tinyint unsigned"), Range(1, 6)]
+        [Column("communication", TypeName = "tinyint unsigned"), Range(1, 6)]
         public byte Communication { get; set; }
 
         [Column("reviewer", TypeName = "bigint(20) unsigned")]

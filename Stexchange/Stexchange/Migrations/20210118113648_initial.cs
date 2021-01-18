@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace Stexchange.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -100,6 +100,8 @@ namespace Stexchange.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     reviewer = table.Column<long>(type: "bigint(20) unsigned", nullable: false),
                     reviewee = table.Column<long>(type: "bigint(20) unsigned", nullable: false),
+                    request_quality = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    plant_name = table.Column<string>(type: "varchar(30)", nullable: true),
                     created_at = table.Column<DateTime>(type: "datetime", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn)
                 },
@@ -127,7 +129,7 @@ namespace Stexchange.Migrations
                     id = table.Column<int>(type: "serial", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     quality = table.Column<byte>(type: "tinyint unsigned", nullable: true),
-                    quantity = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    communication = table.Column<byte>(type: "tinyint unsigned", nullable: false),
                     reviewer = table.Column<long>(type: "bigint(20) unsigned", nullable: false),
                     reviewee = table.Column<long>(type: "bigint(20) unsigned", nullable: false)
                 },

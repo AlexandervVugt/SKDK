@@ -214,7 +214,7 @@ namespace Stexchange.Migrations
                         .HasColumnType("serial");
 
                     b.Property<byte>("Communication")
-                        .HasColumnName("quantity")
+                        .HasColumnName("communication")
                         .HasColumnType("tinyint unsigned");
 
                     b.Property<byte?>("Quality")

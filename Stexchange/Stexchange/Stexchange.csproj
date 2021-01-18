@@ -38,8 +38,14 @@
     <Compile Remove="Migrations\20201119114021_mutable_guid.Designer.cs" />
     <Compile Remove="Migrations\20201206114741_fix_foreign_keys.cs" />
     <Compile Remove="Migrations\20201206114741_fix_foreign_keys.Designer.cs" />
+    <Compile Remove="Migrations\20210108095409_Initial.cs" />
+    <Compile Remove="Migrations\20210108095409_Initial.Designer.cs" />
     <Compile Remove="Migrations\20210108142247_rating_request_info.cs" />
     <Compile Remove="Migrations\20210108142247_rating_request_info.Designer.cs" />
+    <Compile Remove="Migrations\20210108142433_rating_request_info.cs" />
+    <Compile Remove="Migrations\20210108142433_rating_request_info.Designer.cs" />
+    <Compile Remove="Migrations\20210118112824_corrected_column_name.cs" />
+    <Compile Remove="Migrations\20210118112824_corrected_column_name.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
