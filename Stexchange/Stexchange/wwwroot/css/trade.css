@@ -388,6 +388,7 @@
           height: calc(60vh);
           margin-right: 3%;
           margin-bottom: 3%;
+          background-color: rgba(0, 0, 0, 0.5);
           background-color: rgba(0, 0, 0, 0.5); }
           html body #listings .Advertisement .distance {
             float: left;
@@ -395,7 +396,7 @@
             text-transform: uppercase;
             width: 80%;
             color: white;
-            font-size: 1vh;
+            font-size: 2vh;
             margin-left: 2%;
             font-weight: 200; }
           html body #listings .Advertisement .since {
@@ -404,7 +405,7 @@
             text-transform: uppercase;
             width: 80%;
             color: white;
-            font-size: 1vh;
+            font-size: 2vh;
             margin-left: 2%;
             font-weight: 200; }
           html body #listings .Advertisement .picture {
@@ -420,7 +421,7 @@
             margin-left: 2%;
             width: 50%;
             color: #80ff8d;
-            font-size: 1.5vh; }
+            font-size: 2vh; }
           html body #listings .Advertisement .description {
             float: left;
             margin-left: 2%;
@@ -434,7 +435,7 @@
             font-size: 2vh;
             line-height: 2.5vh; }
             html body #listings .Advertisement .starsrating p {
-              font-size: 1.5vh; }
+              font-size: 2vh; }
           html body #listings .Advertisement .filters {
             display: inline-block; }
             html body #listings .Advertisement .filters .filter_tag {
@@ -456,7 +457,7 @@
             color: #80ff8d;
             line-height: 2vh;
             text-align: right;
-            font-size: 1.5vh;
+            font-size: 2vh;
             text-transform: uppercase; }
       html body .fullwidth {
         width: 100%;
