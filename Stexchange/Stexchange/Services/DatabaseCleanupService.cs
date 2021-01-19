@@ -82,7 +82,7 @@ namespace Stexchange.Services
                         Log.LogTrace($"Removed advertisement ID {advertisement.Id} from user {advertisement.UserId}");
                     }else if (weeks > 2 && !advertisement.Renewed && advertisement.Visible)
                     {
-                        advertisement.Visible = false;
+                        //advertisement.Visible = false;
                     }
                 }
                 await database.SaveChangesAsync();
