@@ -1,2 +1,2 @@
 # SKDK
-Website en Android app voor Stadskwekerij De Kas.
+Website voor Stadskwekerij De Kas.
